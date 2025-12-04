@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Abbie's Angels – Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --gold: #f4b321;
+      --yellow: #ffd94a;
+      --blue: #0055a4;
+      --bg-light: #f7fafc;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-soft);
+      padding: 10px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .brand-logo {
+      width: 190px;
+      height: auto;
+      flex-shrink: 0;
+    }
+    .brand-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 0.95rem;
+    }
+    .nav-links a {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .nav-links a:hover {
+      color: var(--blue);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 28px auto 40px;
+      padding: 0 16px 16px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      color: var(--blue);
+    }
+    p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      margin: 26px 0 10px;
+      border-left: 4px solid var(--gold);
+      padding-left: 10px;
+      color: var(--blue);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .tile {
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    }
+    .tile img {
+      width: 100%;
+      height: 220px;
+      display: block;
+      object-fit: cover;
+    }
+    .tile-body {
+      padding: 10px 12px 12px;
+    }
+    .tile-body h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+      color: var(--blue);
+    }
+    .tile-body p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    .spotlight {
+      border-radius: 16px;
+      border: 1px solid var(--border-soft);
+      padding: 16px 18px;
+      background: #ffffff;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .spotlight img {
+	  width: 100%;
+	  max-height: 420px;   /* larger container so tall image fits */
+	  border-radius: 12px;
+	  display: block;
+	  object-fit: contain; /* show full image, no cropping */
+}
+    .spotlight h3 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+      color: var(--blue);
+    }
+    .spotlight p {
+      font-size: 0.94rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 16px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .spotlight {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="images/abbies-angels-logo.jpg" alt="Abbie's Angels logo">
+      </div>
+      <span>Abbie's Angels</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html#mission">Mission</a>
+      <a href="index.html#events">Events</a>
+      <a href="index.html#support">Ways to Help</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#team">Team</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>Gallery & Family Spotlight</h1>
+  <p>
+    Moments of joy, courage, and community with Abbie, her family, and the caregivers
+    Abbie's Angels walks alongside.
+  </p>
+
+  <h2>Event Highlights</h2>
+  <p>
+    Scenes from our gala, ice cream social, and special days on and off the field.
+  </p>
+  <div class="grid">
+    <div class="tile">
+      <img src="images/Ice-cream-social-2025.jpg" alt="Danielle at Abbie's Angels ice cream social table with blue banner">
+      <div class="tile-body">
+        <h3>Ice Cream Social 2025</h3>
+        <p>Danielle welcoming neighbors at our summer ice cream social with the Abbie's Angels table and banner.</p>
+      </div>
+    </div>
+    <div class="tile">
+      <img src="images/Abbie-and-Spencer-Brown-2025.jpg" alt="Abbie and Spencer Brown together on the field">
+      <div class="tile-body">
+        <h3>Abbie Meets Spencer Brown</h3>
+        <p>A special visit with Spencer Brown, celebrating Abbie and sharing Abbie's Angels bears.</p>
+      </div>
+    </div>
+    <div class="tile">
+      <img src="images/Abbie-and-Kate-2024.jpg" alt="Abbie with Kate Glazer from Hope Rises at the gala">
+      <div class="tile-body">
+        <h3>Gala Night with Hope Rises</h3>
+        <p>Abbie and Kate Glazer from Hope Rises at the 2024 Winter Gala, spreading encouragement and hope.</p>
+      </div>
+    </div>
+    <div class="tile">
+      <img src="images/Abbie-Josh.jpg" alt="Abbie and Josh at the first bear exchange in winter">
+      <div class="tile-body">
+        <h3>First Bear Exchange</h3>
+        <p>Abbie and Josh at their first bear exchange, marking a milestone in Abbie's journey.</p>
+      </div>
+    </div>
+    <div class="tile">
+      <img src="images/Abbie-Josh-new-bear-exchange.jpg" alt="Abbie and Josh on the practice field with new bears">
+      <div class="tile-body">
+        <h3>Practice Field Reunion</h3>
+        <p>Abbie and Josh reunited on the practice field for a second bear exchange and big smiles.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Family Spotlight</h2>
+  <p>
+    Each year, Abbie's Angels highlights a family whose story represents the
+    courage, love, and resilience of caregivers in our community.
+  </p>
+  <div class="spotlight">
+    <!-- Replace this with an actual photo of the Campbell / Piedmonte family when ready -->
+    <img src="images/20251203_165805063_iOS.jpg" alt="Campbell / Piedmonte family supported by Abbie's Angels">
+    <div>
+      <h3>Sponsored Family – 2025: The Campbell / Piedmonte Family</h3>
+      <p>
+        Our 2025 Gala is honoring Chelsea Campbell, 8‑year‑old twin to Charlotte and
+        little sister to Carter. After weeks of being ill, Chelsea was sent to the ER
+        on June 6, 2025 and was diagnosed with Acute Myeloid Leukemia. Her journey is
+        long, and recent tests show her leukemia is chemo‑resistant, with a bone marrow
+        transplant scheduled for December 22.
+      </p>
+      <p>
+        Chelsea’s parents, Twan Campbell and JoAnnah Piedmonte, are walking this road
+        alongside her. One of our board members, Laura Wexler, was blessed to be both
+        Chelsea’s and Abbie’s teacher when they were babies, which makes this
+        sponsorship especially meaningful to Abbie’s Angels.
+      </p>
+      <p>
+        To support Chelsea directly, visit her GoFundMe campaign:
+        <a href="https://www.gofundme.com/f/donate-to-chelseas-journey-to-health" target="_blank" rel="noopener">
+          Donate to Chelsea's Journey to Health
+        </a>.
+      </p>
+      <p>
+        Funds raised at the Gala also help Abbie’s Angels continue supporting our wider
+        community of caregivers facing complex medical needs.
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © Abbie's Angels. All rights reserved.
+</footer>
+
+</body>
+</html>

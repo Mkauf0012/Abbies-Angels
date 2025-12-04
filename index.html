@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Abbie's Angels</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --gold: #f4b321;
+      --yellow: #ffd94a;
+      --blue: #0055a4;
+      --accent-red: #c8102e;
+      --bg-light: #f7fafc;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+	  background: #ffffff;
+	  border-bottom: 1px solid var(--border-soft);
+	  padding: 10px 24px;
+	  position: sticky;
+	  top: 0;
+	  z-index: 10;
+	}
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .brand-logo {
+      width: 190px;
+      height: auto;
+      flex-shrink: 0;
+    }
+    .brand-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 0.95rem;
+    }
+    .nav-links a {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .nav-links a:hover {
+      color: var(--blue);
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at top left, #ffffff, var(--bg-light));
+      padding: 52px 16px 40px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .hero-overlay {
+      background: #ffffff;
+      border-radius: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 24px 22px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+      border: 1px solid var(--border-soft);
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: 2.1rem;
+      margin-bottom: 12px;
+      color: var(--blue);
+    }
+    .hero-tagline {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease, border-color 0.1s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--blue);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
+      border-color: var(--blue);
+    }
+    .btn-primary:hover {
+      background: #00346b;
+      border-color: #00346b;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.22);
+      text-decoration: none;
+    }
+    .btn-outline {
+      background: #ffffff;
+      color: var(--blue);
+      border-color: var(--blue);
+    }
+    .btn-outline:hover {
+      background: var(--blue);
+      color: #ffffff;
+      text-decoration: none;
+    }
+    .hero-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .hero-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px 16px 14px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      border: 1px solid var(--border-soft);
+    }
+    .hero-card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: var(--blue);
+    }
+    .hero-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .hero-card a { text-decoration: none; }
+    .hero-card a:hover img { transform: scale(1.01); }
+    .hero-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: block;
+      transition: transform 0.12s ease;
+      object-fit: cover;
+      height: 220px;
+      object-position: top;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: #000000;
+      margin-bottom: 8px;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 32px auto 48px;
+      padding: 0 16px;
+    }
+    section { margin-bottom: 40px; }
+    section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--gold);
+      padding-left: 10px;
+      color: var(--blue);
+    }
+    section p {
+      margin-bottom: 10px;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 16px 18px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    }
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      color: var(--blue);
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .card img {
+      width: 100%;
+      height: 220px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Events & Gatherings card: show entire photo */
+    .card-photo-events img {
+      height: auto;
+      object-fit: contain;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: flex-start;
+      margin-top: 10px;
+    }
+    .list {
+      padding-left: 16px;
+      font-size: 0.96rem;
+      color: var(--text-muted);
+    }
+    .list li { margin-bottom: 6px; }
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 18px 16px 26px;
+      background: #ffffff;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding-top: 32px;
+      }
+      .hero h1 {
+        font-size: 1.7rem;
+      }
+      .nav-links {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+	  .card img {
+	    height: auto;          /* let image grow with its aspect ratio */
+	    max-height: 260px;     /* optional: cap it so it doesn’t get huge */
+	    object-fit: contain;   /* show full image, no cropping */
+	  }
+
+	  .card-photo-events img {
+	    max-height: 260px;     /* keeps behavior consistent with other cards */
+	  }
+}
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="images/abbies-angels-logo.jpg" alt="Abbie's Angels logo">
+      </div>
+      <span>Abbie's Angels</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#mission">Mission</a>
+      <a href="#events">Events</a>
+      <a href="#support">Ways to Help</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-overlay">
+    <div class="hero-inner">
+      <div>
+        <div class="badge">501(c)(3) Nonprofit • Lockport, NY</div>
+        <h1>Community-powered support for caregivers of differently-abled children during times of medical emergencies.</h1>
+        <p class="hero-tagline">
+          Abbie's Angels walks alongside caregivers during medical crisis and beyond,
+          offering encouragement, practical resources, and a community that understands.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#support">Ways to Give & Help</a>
+          <a class="btn btn-outline" href="https://www.facebook.com/p/Abbies-Angels-61565888087840/" target="_blank" rel="noopener">
+            Follow on Facebook
+          </a>
+        </div>
+        <p class="hero-meta">
+          Your support helps connect families to services, equipment, and community support
+          they may not know exist.
+        </p>
+      </div>
+      <aside class="hero-card">
+        <a href="https://auctria.events/abbiesangels2025" target="_blank" rel="noopener">
+          <img src="images/abbies-angels-gala-callout.jpg"
+               alt="Abbie's Angels Winter Gala promo – click for tickets">
+        </a>
+        <h2>Abbie's Angels Winter Gala</h2>
+        <p><strong>Date:</strong> Friday, December 12, 2025</p>
+        <p><strong>Time:</strong> 7:00 – 11:00 PM</p>
+        <p><strong>Location:</strong> Salvatore's Hospitality, 6461 Transit Road</p>
+        <p>
+          Tap the image above to purchase tickets and join a powerful night of hope and
+          encouragement for caregivers across Western New York.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section id="mission">
+    <h2>Our Mission</h2>
+    <p>
+      Abbie's Angels is a 501(c)(3) nonprofit created to surround caregivers and families in our
+      community with practical help, encouragement, and connection as they navigate complex
+      medical needs with their differently abled children.
+    </p>
+    <p>
+      Through events, resources, and partnerships with local organizations, we aim to make sure
+      no caregiver feels alone in their hardest seasons.
+    </p>
+  </section>
+
+  <section id="what-we-do">
+    <h2>What We Do</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Caregiver Support</h3>
+        <p>
+          Helping families find the right resources during and after a medical crisis, from parking and meal
+          expenses to in-home support services, and equipment.  This way they spend less time searching and more time caring.
+        </p>
+      </div>
+      <div class="card card-photo-events">
+        <img src="images/abbies-angels-hero.jpg" alt="Abbie at the gala holding an Abbie's Angels bear">
+        <h3>Events & Gatherings</h3>
+        <p>
+          Host annual events like our Winter Gala to celebrate families, raise awareness, and
+          sustain support programs throughout the year.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Community Outreach</h3>
+        <p>
+          Partner with local hospitals, schools, organizations, and businesses to reach caregivers
+          who need encouragement, financial assistance, and connection to specialized services.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <h2>Events</h2>
+    <div class="two-col">
+      <div>
+        <p>
+          Abbie's Angels hosts special events that bring light into difficult seasons and
+          raise funds to sustain our mission all year.
+        </p>
+        <ul class="list">
+          <li>Annual Winter Gala with dinner, auctions, and inspiring stories.</li>
+          <li>Community fundraisers and awareness nights with local partners.</li>
+          <li>Future events highlighting families and caregivers in our community.</li>
+        </ul>
+        <p>
+          For the most up‑to‑date event schedule, visit our social media and click “Follow.”
+        </p>
+      </div>
+      <div class="card">
+        <h3>Get Gala Tickets</h3>
+        <p>
+          Join us at Salvatore's Hospitality for a night of generosity, stories, and hope.
+        </p>
+        <p>
+          This year’s Gala will help support Chelsea Campbell, an 8‑year‑old twin and little
+          sister who was diagnosed with Acute Myeloid Leukemia in June 2025 and is preparing
+          for a bone marrow transplant on December 22. Please keep Chelsea and her parents,
+          Twan Campbell and JoAnnah Piedmonte, in your thoughts.
+        </p>
+        <p>
+          One of our board members, Laura Wexler, had the joy of teaching both Chelsea and
+          Abbie when they were babies, making this year’s sponsorship especially close to
+          our hearts.
+        </p>
+        <p>
+          You can also support Chelsea directly through her GoFundMe:
+          <a href="https://www.gofundme.com/f/donate-to-chelseas-journey-to-health" target="_blank" rel="noopener">
+            Donate to Chelsea's Journey to Health
+          </a>.
+        </p>
+        <p>
+          <a href="https://auctria.events/abbiesangels2025" target="_blank" rel="noopener">
+            Click here to purchase Winter Gala tickets or become a sponsor on Auctria.
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="support">
+    <h2>Ways to Help</h2>
+    <div class="two-col">
+      <div>
+        <p>
+          Every gift, share, and hour of service helps us walk alongside more families in
+          honor of Abbie and all of our community’s warriors.
+        </p>
+        <ul class="list">
+          <li>Make a one‑time or recurring donation to support caregiver programs and events.</li>
+          <li>Sponsor an event, family, or specific initiative as an individual or business.</li>
+          <li>Volunteer at events, help with set‑up/tear‑down, or serve on a planning committee.</li>
+          <li>Share our posts and invite others to follow along on Facebook, Instagram, and LinkedIn.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Give Today</h3>
+        <p>
+          Online giving, checks, and in‑kind donations all make a tangible difference. To
+          arrange a donation or sponsorship, you can give through our Auctria page, mail a
+          gift, or reach out to our team to talk about the best way to help.
+        </p>
+        <p>
+          <a href="https://auctria.events/abbiesangels2025" target="_blank" rel="noopener">
+            Visit our Auctria page to donate or sponsor.
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <h2>Our Team</h2>
+    <p>
+      Abbie's Angels is led by a volunteer board, dedicated partners, and friends who
+      pour their time and talents into supporting caregivers and families.
+    </p>
+
+    <div class="cards">
+
+      <div class="card">
+        <img src="images/Lou-and-Stacie-mcnett-board-members.jpg" alt="Lou and Stacie McNett">
+        <h3>Lou & Stacie McNett</h3>
+        <p>Board Members</p>
+      </div>
+
+	<div class="card">
+	  <img src="images/Board-members-Laura-and-Scott-Wexler.jpg" alt="Laura and Scott Wexler">
+	  <h3>Laura & Scott Wexler</h3>
+	  <p>Board Members</p>
+	</div>
+
+
+      <div class="card">
+        <img src="images/Ken-Houseknecht-board-member.jpg" alt="Ken Houseknecht">
+        <h3>Ken Houseknecht</h3>
+        <p>Board Member</p>
+      </div>
+
+      <div class="card">
+        <img src="images/Board-member-Danielle-Hahn.jpg" alt="Danielle Hahn">
+        <h3>Danielle Hahn</h3>
+        <p>Board Member</p>
+      </div>
+    </div>
+
+   <h2 style="margin-top:28px;">Staff & Key Partners</h2>
+   <p>
+     These leaders and volunteers help shape events, storytelling, and day‑to‑day support
+     for Abbie's Angels families.
+   </p>
+
+   <div class="cards">
+     <div class="card">
+       <img src="images/Sophia-Call-marketing-team-lead.jpg" alt="Sophia Call">
+       <h3>Sophia Call</h3>
+       <p>Marketing Team Lead</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Patrice-Bruce-event-artistry.jpg" alt="Patrice Bruce">
+       <h3>Patrice Bruce</h3>
+       <p>Event Manager, Event Artistry</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Heather-Geary-volunteer.jpg" alt="Heather Geary">
+       <h3>Heather Geary</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Annabelle-Guercio-volunteer.jpg" alt="Annabelle Guercio">
+       <h3>Annabelle Guercio</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Christine-Marie-volunteer.jpg" alt="Christine Marie">
+       <h3>Christine Marie</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Trish-Verneus-Volunteer.jpg" alt="Trish Verneus">
+       <h3>Trish Verneus</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Sarah-Harmon-Volunteer.jpeg" alt="Sarah Harmon">
+       <h3>Sarah Harmon</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Adelina-Petrik-volunteer.jpg" alt="Adelina Petrik">
+       <h3>Adelina Petrik</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Kris-Fischer-volunteer.jpg" alt="Kris Fischer">
+       <h3>Kris Fischer</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Lexie-Pohrte-volunteer.jpg" alt="Lexie Pohrte">
+       <h3>Lexie Pohrte</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Mark-Wolfson-volunteer.jpg" alt="Mark Wolfson">
+       <h3>Mark Wolfson</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Adina-Toponak-volunteer.jpg" alt="Adina Toponak">
+       <h3>Adina Toponak</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Christina-Wells-volunteer.jpg" alt="Christina Wells">
+       <h3>Christina Wells</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Kevin-Johnson-volunteer.jpg" alt="Kevin Johnson">
+       <h3>Kevin Johnson</h3>
+       <p>Volunteer</p>
+     </div>
+
+     <div class="card">
+       <img src="images/Sofia-Bruce-volunteer.jpeg" alt="Sofia Bruce">
+       <h3>Sofia Bruce</h3>
+       <p>Volunteer</p>
+     </div>
+   </div>
+
+
+			  <section id="contact">
+			    <h2>Contact</h2>
+			    <p>
+			      Have a question, want to nominate a caregiver, or interested in partnering with
+			      Abbie's Angels? Reach out using the options below.
+			    </p>
+			    <div class="cards">
+			      <div class="card">
+			        <h3>General Inquiries</h3>
+			        <p>
+			          Message us directly on social media and a member of our volunteer team will respond
+			          as soon as possible.
+			        </p>
+			        <div class="social-row">
+			          <span>Connect:</span>
+			          <span class="social-icon">
+			            🌐
+			            <a href="https://www.facebook.com/p/Abbies-Angels-61565888087840/" target="_blank" rel="noopener">
+			              Facebook
+			            </a>
+			          </span>
+			          <span class="social-icon">
+			            📸
+			            <a href="https://www.instagram.com/abbiesangelsfoundation" target="_blank" rel="noopener">
+			              Instagram
+			            </a>
+			          </span>
+			          <span class="social-icon">
+			            💼
+			            <a href="https://www.linkedin.com/company/abbie-s-angels-foundation/" target="_blank" rel="noopener">
+			              LinkedIn
+			            </a>
+			          </span>
+			        </div>
+			      </div>
+			      <div class="card">
+			        <h3>Mailing / Email</h3>
+			        <p>
+			          Use our mailing address for letters, checks, and sponsorship forms.
+			        </p>
+			        <p>
+			          Abbie's Angels<br>
+			          36 Gaffney Rd.<br>
+			          Lockport, NY 14094
+			        </p>
+			        <p>
+			          Email: <a href="mailto:abbiesangels17@gmail.com">abbiesangels17@gmail.com</a>
+			        </p>
+			      </div>
+			    </div>
+			  </section>
+			</main>
+
+			<footer>
+			  <div class="footer-inner">
+			    <span>© Abbie's Angels. All rights reserved.</span>
+			    <span>Abbie's Angels is a 501(c)(3) organization. EIN: 33-2629458.</span>
+			  </div>
+			</footer>
+
+			</body>
+</html>
