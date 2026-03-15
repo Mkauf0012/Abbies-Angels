@@ -9,9 +9,6 @@ backend:
   name: proxy
   proxy_url: http://localhost:8081/api/v1
 
-# Allow editorial workflow (draft -> review -> publish)
-publish_mode: editorial_workflow
-
 # Where uploaded images get stored in the repo
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
