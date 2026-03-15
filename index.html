@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Abbie's Angels</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
   <style>
     :root {
@@ -315,13 +316,13 @@
 
     @media (max-width: 600px) {
 	  .card img {
-	    height: auto;          /* let image grow with its aspect ratio */
-	    max-height: 260px;     /* optional: cap it so it doesn’t get huge */
-	    object-fit: contain;   /* show full image, no cropping */
+	    height: auto;
+	    max-height: 260px;
+	    object-fit: contain;
 	  }
 
 	  .card-photo-events img {
-	    max-height: 260px;     /* keeps behavior consistent with other cards */
+	    max-height: 260px;
 	  }
 	  }
 		.visitor-count {
@@ -454,7 +455,7 @@
           <li>Future events highlighting families and caregivers in our community.</li>
         </ul>
         <p>
-          For the most up‑to‑date event schedule, visit our social media and click “Follow.”
+          For the most up‑to‑date event schedule, visit our social media and click "Follow."
         </p>
       </div>
       <div class="card">
@@ -463,14 +464,14 @@
           Join us at Salvatore's Hospitality for a night of generosity, stories, and hope.
         </p>
         <p>
-          This year’s Gala will help support Chelsea Campbell, an 8‑year‑old twin and little
+          This year's Gala will help support Chelsea Campbell, an 8‑year‑old twin and little
           sister who was diagnosed with Acute Myeloid Leukemia in June 2025 and is preparing
           for a bone marrow transplant on December 22. Please keep Chelsea and her parents,
           Twan Campbell and JoAnnah Piedmonte, in your thoughts.
         </p>
         <p>
           One of our board members, Laura Wexler, had the joy of teaching both Chelsea and
-          Abbie when they were babies, making this year’s sponsorship especially close to
+          Abbie when they were babies, making this year's sponsorship especially close to
           our hearts.
         </p>
         <p>
@@ -494,7 +495,7 @@
       <div>
         <p>
           Every gift, share, and hour of service helps us walk alongside more families in
-          honor of Abbie and all of our community’s warriors.
+          honor of Abbie and all of our community's warriors.
         </p>
         <ul class="list">
           <li>Make a one‑time or recurring donation to support caregiver programs and events.</li>
@@ -723,8 +724,17 @@
 			  </div>
 			</footer>
 
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', user => {
+      if (!user) {
+        window.netlifyIdentity.on('login', () => {
+          document.location.href = '/admin/';
+        });
+      }
+    });
+  }
+</script>
 
-			</body>
-
+</body>
 </html>
-
