@@ -1,0 +1,10 @@
+# Local Decap CMS dev files — do not commit
+admin/config.local.yml
+admin/index.local.html
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
