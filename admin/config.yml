@@ -6,11 +6,11 @@ media_folder: "images"
 public_folder: "/images"
 
 collections:
-  - name: "settings"
-    label: "Site Settings"
-    files:
-      - label: "General"
-        name: "general"
-        file: "_data/settings.json"
-        fields:
-          - { label: "Site Title", name: "title", widget: "string" }
+  - name: "media"
+    label: "Media"
+    folder: "images"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
