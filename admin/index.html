@@ -4,10 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abbies Angels | Admin</title>
+  <!-- Netlify Identity Widget — handles login/logout for CMS users -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <!-- Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </head>
 <body>
-  <!-- Decap CMS will mount here -->
+  <!-- Decap CMS mounts here -->
+  <script>
+    // Redirect to /admin after login so the CMS loads immediately
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function (user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function () {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
