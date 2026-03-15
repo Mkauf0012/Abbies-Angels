@@ -5,113 +5,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abbies Angels | Admin (Local)</title>
   <script>
-    // Point Decap at the local config instead of config.yml
     window.CMS_MANUAL_INIT = true;
   </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script>
-    CMS.init({ config: {
-      load_config_file: false,
-      backend: {
-        name: 'proxy',
-        proxy_url: 'http://localhost:8081/api/v1'
-      },
-      publish_mode: 'editorial_workflow',
-      media_folder: 'images/uploads',
-      public_folder: '/images/uploads',
-      collections: [
-        {
-          name: 'events',
-          label: 'Events',
-          label_singular: 'Event',
-          folder: '_data/events',
-          create: true,
-          slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
-          fields: [
-            { label: 'Event Name', name: 'title', widget: 'string' },
-            { label: 'Date', name: 'date', widget: 'datetime' },
-            { label: 'Location', name: 'location', widget: 'string', required: false },
-            { label: 'Description', name: 'description', widget: 'text' },
-            { label: 'Registration Link', name: 'link', widget: 'string', required: false },
-            { label: 'Featured Image', name: 'image', widget: 'image', required: false }
-          ]
-        },
-        {
-          name: 'highlights',
-          label: 'Highlights',
-          label_singular: 'Highlight',
-          folder: '_data/highlights',
-          create: true,
-          slug: '{{year}}-{{month}}-{{slug}}',
-          fields: [
-            { label: 'Title', name: 'title', widget: 'string' },
-            { label: 'Month', name: 'month', widget: 'string', hint: 'e.g. March 2026' },
-            { label: 'Category', name: 'category', widget: 'select', options: ['Family Spotlight', 'Resource', 'Monthly Sponsor', 'Community Partner'] },
-            { label: 'Summary', name: 'summary', widget: 'text' },
-            { label: 'Featured Image', name: 'image', widget: 'image', required: false },
-            { label: 'Link (optional)', name: 'link', widget: 'string', required: false }
-          ]
-        },
-        {
-          name: 'homepage',
-          label: 'Homepage',
-          files: [
-            {
-              label: 'Hero Section',
-              name: 'hero',
-              file: '_data/homepage/hero.yml',
-              fields: [
-                { label: 'Headline', name: 'headline', widget: 'string' },
-                { label: 'Subheadline', name: 'subheadline', widget: 'text' },
-                { label: 'Primary Button Text', name: 'cta_primary_text', widget: 'string' },
-                { label: 'Primary Button Link', name: 'cta_primary_link', widget: 'string' },
-                { label: 'Secondary Button Text', name: 'cta_secondary_text', widget: 'string', required: false },
-                { label: 'Secondary Button Link', name: 'cta_secondary_link', widget: 'string', required: false }
-              ]
-            },
-            {
-              label: 'Mission Statement',
-              name: 'mission',
-              file: '_data/homepage/mission.yml',
-              fields: [
-                { label: 'Mission Heading', name: 'heading', widget: 'string' },
-                { label: 'Mission Body', name: 'body', widget: 'text' }
-              ]
-            }
-          ]
-        },
-        {
-          name: 'settings',
-          label: 'Site Settings',
-          files: [
-            {
-              label: 'Donation Button',
-              name: 'donation',
-              file: '_data/settings/donation.yml',
-              fields: [
-                { label: 'Donate Button Text', name: 'button_text', widget: 'string' },
-                { label: 'Donate Button URL', name: 'button_url', widget: 'string' },
-                { label: 'Show Donate Button', name: 'enabled', widget: 'boolean' }
-              ]
-            },
-            {
-              label: 'Contact Info',
-              name: 'contact',
-              file: '_data/settings/contact.yml',
-              fields: [
-                { label: 'Email Address', name: 'email', widget: 'string' },
-                { label: 'Phone (optional)', name: 'phone', widget: 'string', required: false },
-                { label: 'Facebook URL', name: 'facebook', widget: 'string', required: false },
-                { label: 'Instagram URL', name: 'instagram', widget: 'string', required: false }
-              ]
-            }
-          ]
-        }
-      ]
-    }});
-  </script>
 </head>
 <body>
   <!-- Decap CMS mounts here -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      CMS.init({ config: {
+        load_config_file: false,
+        backend: {
+          name: 'proxy',
+          proxy_url: 'http://localhost:8081/api/v1'
+        },
+        publish_mode: 'editorial_workflow',
+        media_folder: 'images/uploads',
+        public_folder: '/images/uploads',
+        collections: [
+          {
+            name: 'events',
+            label: 'Events',
+            label_singular: 'Event',
+            folder: '_data/events',
+            create: true,
+            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+            fields: [
+              { label: 'Event Name', name: 'title', widget: 'string' },
+              { label: 'Date', name: 'date', widget: 'datetime' },
+              { label: 'Location', name: 'location', widget: 'string', required: false },
+              { label: 'Description', name: 'description', widget: 'text' },
+              { label: 'Registration Link', name: 'link', widget: 'string', required: false },
+              { label: 'Featured Image', name: 'image', widget: 'image', required: false }
+            ]
+          },
+          {
+            name: 'highlights',
+            label: 'Highlights',
+            label_singular: 'Highlight',
+            folder: '_data/highlights',
+            create: true,
+            slug: '{{year}}-{{month}}-{{slug}}',
+            fields: [
+              { label: 'Title', name: 'title', widget: 'string' },
+              { label: 'Month', name: 'month', widget: 'string', hint: 'e.g. March 2026' },
+              { label: 'Category', name: 'category', widget: 'select', options: ['Family Spotlight', 'Resource', 'Monthly Sponsor', 'Community Partner'] },
+              { label: 'Summary', name: 'summary', widget: 'text' },
+              { label: 'Featured Image', name: 'image', widget: 'image', required: false },
+              { label: 'Link (optional)', name: 'link', widget: 'string', required: false }
+            ]
+          },
+          {
+            name: 'homepage',
+            label: 'Homepage',
+            files: [
+              {
+                label: 'Hero Section',
+                name: 'hero',
+                file: '_data/homepage/hero.yml',
+                fields: [
+                  { label: 'Headline', name: 'headline', widget: 'string' },
+                  { label: 'Subheadline', name: 'subheadline', widget: 'text' },
+                  { label: 'Primary Button Text', name: 'cta_primary_text', widget: 'string' },
+                  { label: 'Primary Button Link', name: 'cta_primary_link', widget: 'string' },
+                  { label: 'Secondary Button Text', name: 'cta_secondary_text', widget: 'string', required: false },
+                  { label: 'Secondary Button Link', name: 'cta_secondary_link', widget: 'string', required: false }
+                ]
+              },
+              {
+                label: 'Mission Statement',
+                name: 'mission',
+                file: '_data/homepage/mission.yml',
+                fields: [
+                  { label: 'Mission Heading', name: 'heading', widget: 'string' },
+                  { label: 'Mission Body', name: 'body', widget: 'text' }
+                ]
+              }
+            ]
+          },
+          {
+            name: 'settings',
+            label: 'Site Settings',
+            files: [
+              {
+                label: 'Donation Button',
+                name: 'donation',
+                file: '_data/settings/donation.yml',
+                fields: [
+                  { label: 'Donate Button Text', name: 'button_text', widget: 'string' },
+                  { label: 'Donate Button URL', name: 'button_url', widget: 'string' },
+                  { label: 'Show Donate Button', name: 'enabled', widget: 'boolean' }
+                ]
+              },
+              {
+                label: 'Contact Info',
+                name: 'contact',
+                file: '_data/settings/contact.yml',
+                fields: [
+                  { label: 'Email Address', name: 'email', widget: 'string' },
+                  { label: 'Phone (optional)', name: 'phone', widget: 'string', required: false },
+                  { label: 'Facebook URL', name: 'facebook', widget: 'string', required: false },
+                  { label: 'Instagram URL', name: 'instagram', widget: 'string', required: false }
+                ]
+              }
+            ]
+          }
+        ]
+      }});
+    });
+  </script>
 </body>
 </html>
