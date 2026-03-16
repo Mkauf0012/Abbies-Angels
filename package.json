@@ -1,0 +1,14 @@
+{
+  "name": "abbies-angels",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^4.5.0",
+    "js-yaml": "^4.1.0"
+  }
+}

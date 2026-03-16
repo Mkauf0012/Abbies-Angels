@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import { readFileSync } from 'fs';
+import { load } from 'js-yaml';
+import { join } from 'path';
+
+function loadYaml(rel) {
+  try {
+    return load(readFileSync(join(process.cwd(), '_data', rel), 'utf8')) || {};
+  } catch { return {}; }
+}
+
+const page      = loadYaml('gallery/page.yml');
+const spotlight = loadYaml('gallery/spotlight.yml');
+const tilesData = loadYaml('gallery/tiles.yml');
+const tiles     = tilesData.tiles || [];
+---
+<Base title="Abbie's Angels – Gallery">
+<style>
+  main { max-width: 1100px; margin: 28px auto 40px; padding: 0 16px 16px; }
+  h1 { font-size: 1.8rem; margin-bottom: 6px; color: var(--blue); }
+  p { color: var(--text-muted); font-size: 0.98rem; margin-bottom: 12px; }
+  h2 { font-size: 1.4rem; margin: 26px 0 10px; border-left: 4px solid var(--gold); padding-left: 10px; color: var(--blue); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; margin-top: 10px; }
+  .tile { border-radius: 14px; border: 1px solid var(--border-soft); overflow: hidden; background: #fff; box-shadow: 0 6px 18px rgba(15,23,42,0.04); }
+  .tile img { width: 100%; height: 220px; display: block; object-fit: cover; }
+  .tile-body { padding: 10px 12px 12px; }
+  .tile-body h3 { font-size: 1rem; margin-bottom: 4px; color: var(--blue); }
+  .tile-body p { font-size: 0.9rem; margin-bottom: 0; }
+  .spotlight {
+    border-radius: 16px; border: 1px solid var(--border-soft);
+    padding: 16px 18px; background: #fff;
+    box-shadow: 0 8px 22px rgba(15,23,42,0.05); margin-top: 10px;
+    display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1.2fr);
+    gap: 18px; align-items: start;
+  }
+  .spotlight img { width: 100%; max-height: 420px; border-radius: 12px; display: block; object-fit: contain; }
+  .spotlight h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--blue); }
+  .spotlight p { font-size: 0.94rem; }
+  @media (max-width: 768px) { .spotlight { grid-template-columns: 1fr; } }
+</style>
+
+<main>
+  <h1>{page.title}</h1>
+  <p>{page.intro}</p>
+
+  <h2>{page.highlights_heading}</h2>
+  <p>{page.highlights_intro}</p>
+  <div class="grid">
+    {tiles.map(t => (
+      <div class="tile">
+        <img src={`/${t.image}`} alt={t.alt}>
+        <div class="tile-body">
+          <h3>{t.title}</h3>
+          <p>{t.caption}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>{page.spotlight_heading}</h2>
+  <p>{page.spotlight_intro}</p>
+  <div class="spotlight">
+    <img src={`/${spotlight.image}`} alt={spotlight.image_alt}>
+    <div>
+      <h3>{spotlight.title}</h3>
+      <p>{spotlight.body_1}</p>
+      <p>{spotlight.body_2}</p>
+      <p>
+        {spotlight.body_3}
+        {spotlight.gofundme_url && (
+          <a href={spotlight.gofundme_url} target="_blank" rel="noopener">
+            {spotlight.gofundme_label}
+          </a>
+        )}.
+      </p>
+      {spotlight.body_4 && <p>{spotlight.body_4}</p>}
+    </div>
+  </div>
+</main>
+</Base>
