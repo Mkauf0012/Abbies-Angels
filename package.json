@@ -12,7 +12,7 @@
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "@stackbit/cms-git": "^0.5.0",
-    "@stackbit/types": "^0.7.0"
+    "@stackbit/cms-git": "^1.0.0",
+    "@stackbit/types": "^2.0.0"
   }
 }
