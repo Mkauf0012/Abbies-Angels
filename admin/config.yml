@@ -26,7 +26,7 @@ collections:
       - { label: "Registration Link", name: "link", widget: "string", required: false }
       - { label: "Featured Image", name: "image", widget: "image", required: false }
 
-  # --- HIGHLIGHTS / SPONSORSHIPS (individual entries) ---
+  # --- HIGHLIGHTS / SPONSORSHIPS ---
   - name: "highlights"
     label: "Highlights"
     label_singular: "Highlight"
@@ -41,7 +41,7 @@ collections:
       - { label: "Featured Image", name: "image", widget: "image", required: false }
       - { label: "Link (optional)", name: "link", widget: "string", required: false }
 
-  # --- PAGE SECTIONS (file-based, one file per section) ---
+  # --- HOMEPAGE SECTIONS ---
   - name: "homepage"
     label: "Homepage"
     files:
@@ -56,6 +56,19 @@ collections:
           - { label: "Secondary Button Text", name: "cta_secondary_text", widget: "string", required: false }
           - { label: "Secondary Button Link", name: "cta_secondary_link", widget: "string", required: false }
           - { label: "Meta Text (below buttons)", name: "hero_meta", widget: "string", required: false }
+
+      - label: "Hero Card (right side)"
+        name: "hero_card"
+        file: "_data/homepage/hero_card.yml"
+        fields:
+          - { label: "Card Title", name: "title", widget: "string" }
+          - { label: "Event Date", name: "date_label", widget: "string" }
+          - { label: "Event Time", name: "time_label", widget: "string" }
+          - { label: "Location", name: "location_label", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Card Image", name: "image", widget: "image" }
+          - { label: "Image Alt Text", name: "image_alt", widget: "string" }
+          - { label: "Ticket / CTA URL", name: "ticket_url", widget: "string" }
 
       - label: "Mission Section"
         name: "mission"
@@ -77,6 +90,7 @@ collections:
           - { label: "Card 3 Title", name: "card_3_title", widget: "string" }
           - { label: "Card 3 Body", name: "card_3_body", widget: "text" }
 
+  # --- PAGE SECTIONS ---
   - name: "sections"
     label: "Page Sections"
     files:
@@ -113,6 +127,83 @@ collections:
           - { label: "Give Today Card Body", name: "card_body", widget: "text" }
           - { label: "Give Today Link Label", name: "card_link_label", widget: "string" }
           - { label: "Give Today Link URL", name: "card_link_url", widget: "string" }
+
+      - label: "Contact Section Intro"
+        name: "contact_intro"
+        file: "_data/sections/contact_intro.yml"
+        fields:
+          - { label: "Section Heading", name: "heading", widget: "string" }
+          - { label: "Intro Paragraph", name: "intro", widget: "text" }
+
+  # --- GALLERY PAGE ---
+  - name: "gallery"
+    label: "Gallery Page"
+    files:
+      - label: "Page Intro"
+        name: "gallery_page"
+        file: "_data/gallery/page.yml"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Page Intro", name: "intro", widget: "text" }
+          - { label: "Event Highlights Heading", name: "highlights_heading", widget: "string" }
+          - { label: "Event Highlights Intro", name: "highlights_intro", widget: "text" }
+          - { label: "Family Spotlight Heading", name: "spotlight_heading", widget: "string" }
+          - { label: "Family Spotlight Intro", name: "spotlight_intro", widget: "text" }
+
+      - label: "Family Spotlight"
+        name: "spotlight"
+        file: "_data/gallery/spotlight.yml"
+        fields:
+          - { label: "Spotlight Title", name: "title", widget: "string" }
+          - { label: "Photo", name: "image", widget: "image" }
+          - { label: "Photo Alt Text", name: "image_alt", widget: "string" }
+          - { label: "Paragraph 1", name: "body_1", widget: "text" }
+          - { label: "Paragraph 2", name: "body_2", widget: "text" }
+          - { label: "Paragraph 3 (before GoFundMe link)", name: "body_3", widget: "string", required: false }
+          - { label: "GoFundMe Link Label", name: "gofundme_label", widget: "string", required: false }
+          - { label: "GoFundMe URL", name: "gofundme_url", widget: "string", required: false }
+          - { label: "Paragraph 4", name: "body_4", widget: "text", required: false }
+
+      - label: "Gallery Tiles"
+        name: "tiles"
+        file: "_data/gallery/tiles.yml"
+        fields:
+          - label: "Tiles"
+            name: "tiles"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string" }
+              - { label: "Caption", name: "caption", widget: "text" }
+
+  # --- TEAM ---
+  - name: "team"
+    label: "Team"
+    files:
+      - label: "Board Members"
+        name: "board"
+        file: "_data/team/board.yml"
+        fields:
+          - label: "Members"
+            name: "members"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image" }
+
+      - label: "Staff & Volunteers"
+        name: "staff"
+        file: "_data/team/staff.yml"
+        fields:
+          - label: "Members"
+            name: "members"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image" }
 
   # --- SITE SETTINGS ---
   - name: "settings"
