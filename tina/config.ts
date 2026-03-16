@@ -1,21 +1,37 @@
 import { defineConfig } from "tinacms";
 
-export default defineConfig({
-  branch: "main",
+// Your hosting provider likely exposes this as an environment variable
+const branch =
+  process.env.GITHUB_BRANCH ||
+  process.env.VERCEL_GIT_COMMIT_REF ||
+  process.env.HEAD ||
+  "main";
 
-  clientId: "f59c2a31-2913-4e06-a5f1-36ad54eb6fc4",
-  token: "13b83d4477d0ce33a0661d692976e1f1803c01cf",
+export default defineConfig({
+  branch,
+
+  // Get this from tina.io
+  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+  // Get this from tina.io
+  token: process.env.TINA_TOKEN,
 
   build: {
     outputFolder: "admin",
     publicFolder: "public",
   },
+  // Uncomment to allow cross-origin requests from non-localhost origins
+  // during local development (e.g. GitHub Codespaces, Gitpod, Docker).
+  // Use 'private' to allow all private-network IPs (WSL2, Docker, etc.)
+  // server: {
+  //   allowedOrigins: ['https://your-codespace.github.dev'],
+  // },
   media: {
     tina: {
       mediaRoot: "",
       publicFolder: "public",
     },
   },
+  // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
   schema: {
     collections: [
       {
