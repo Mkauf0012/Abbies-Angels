@@ -1,7 +1,7 @@
 import { defineConfig } from "tinacms";
 
 export default defineConfig({
-  branch: "feature/astro-conversion",
+  branch: "main",
 
   clientId: "f59c2a31-2913-4e06-a5f1-36ad54eb6fc4",
   token: "13b83d4477d0ce33a0661d692976e1f1803c01cf",
