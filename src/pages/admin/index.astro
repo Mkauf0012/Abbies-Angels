@@ -1,10 +1,4 @@
 ---
-// Serves Decap CMS admin at /admin/ through Astro's dev server.
-// public/admin/index.html handles production static serving.
-// No layout — this is a raw standalone HTML page.
-const { default: fs } = await import('node:fs/promises');
-const { default: path } = await import('node:path');
-const filePath = path.resolve('./public/admin/index.html');
-const html = await fs.readFile(filePath, 'utf-8');
+// Placeholder - CMS admin will be wired after Astro render is approved
+return Astro.redirect('/');
 ---
-<Fragment set:html={html} />
