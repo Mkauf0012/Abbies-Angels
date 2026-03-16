@@ -7,7 +7,6 @@ const { title = "Abbie's Angels" } = Astro.props;
   <meta charset="UTF-8">
   <title>{title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
     :root {
       --gold: #f4b321;
@@ -114,17 +113,5 @@ const { title = "Abbie's Angels" } = Astro.props;
     </span>
   </div>
 </footer>
-
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on('init', user => {
-      if (!user) {
-        window.netlifyIdentity.on('login', () => {
-          document.location.href = '/admin/';
-        });
-      }
-    });
-  }
-</script>
 </body>
 </html>

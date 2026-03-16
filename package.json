@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "astro": "^4.5.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "@astrojs/netlify": "^5.5.0",
+    "@netlify/visual-editor": "^1.0.0"
   }
 }
