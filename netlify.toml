@@ -5,7 +5,5 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# Enable Netlify Visual Editor
-[plugins]
-  [[plugins]]
+[[plugins]]
   package = "@netlify/visual-editor"
