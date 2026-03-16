@@ -2,13 +2,9 @@
 # Docs: https://decapcms.org/docs/
 
 backend:
-  name: github
-  repo: AAKRON/Abbies-Angels
-  branch: main  # Branch to update when publishing (switch to main when ready)
-  base_url: https://api.netlify.com  # OAuth proxy — swap for your own if not using Netlify Identity
-
-# Allow editorial workflow (draft -> review -> publish)
-publish_mode: editorial_workflow
+  name: git-gateway
+  branch: main
+  site_url: https://dancing-treacle-6631ef.netlify.app
 
 # Where uploaded images get stored in the repo
 media_folder: "images/uploads"
