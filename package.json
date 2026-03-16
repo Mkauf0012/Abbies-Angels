@@ -3,16 +3,16 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "tinacms dev -c \"astro dev\"",
+    "build": "tinacms build && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
     "astro": "^4.5.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "tinacms": "^2.0.0"
   },
   "devDependencies": {
-    "@stackbit/cms-git": "^1.0.37",
-    "@stackbit/types": "^2.1.15"
+    "@tinacms/cli": "^2.0.0"
   }
 }
