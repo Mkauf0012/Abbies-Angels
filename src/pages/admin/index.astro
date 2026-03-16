@@ -1,0 +1,6 @@
+---
+// This page exists solely to make Astro's dev server serve /admin/
+// In production, public/admin/index.html is served directly as a static file.
+const html = await Astro.glob('/public/admin/index.html').catch(() => null);
+---
+<script>window.location.replace('/admin/index.html');</script>
