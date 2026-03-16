@@ -1,0 +1,12 @@
+/* Decap CMS preview pane styles — mirrors site design */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #222;
+  background: #f7fafc;
+  line-height: 1.6;
+}
+h1 { color: #0055a4; }
+h2 { color: #0055a4; }
+h3 { color: #0055a4; }
+a { color: #0055a4; }
