@@ -1,0 +1,279 @@
+---
+import Base from '../layouts/Base.astro';
+import { readFileSync } from 'fs';
+import { load } from 'js-yaml';
+import { join } from 'path';
+
+function loadYaml(rel) {
+  try {
+    return load(readFileSync(join(process.cwd(), '_data', rel), 'utf8')) || {};
+  } catch { return {}; }
+}
+
+const hero      = loadYaml('homepage/hero.yml');
+const heroCard  = loadYaml('homepage/hero_card.yml');
+const mission   = loadYaml('homepage/mission.yml');
+const whatWeDo  = loadYaml('homepage/what_we_do.yml');
+const events    = loadYaml('sections/events.yml');
+const support   = loadYaml('sections/support.yml');
+const contact   = loadYaml('settings/contact.yml');
+const contactI  = loadYaml('sections/contact_intro.yml');
+const board     = loadYaml('team/board.yml');
+const staff     = loadYaml('team/staff.yml');
+---
+<Base title="Abbie's Angels">
+<style>
+  .hero {
+    background: radial-gradient(circle at top left, #ffffff, var(--bg-light));
+    padding: 52px 16px 40px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .hero-overlay {
+    background: #ffffff;
+    border-radius: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 24px 22px;
+    box-shadow: 0 12px 35px rgba(15,23,42,0.08);
+    border: 1px solid var(--border-soft);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+    gap: 24px;
+    align-items: center;
+  }
+  .hero h1 { font-size: 2.1rem; margin-bottom: 12px; color: var(--blue); }
+  .hero-tagline { font-size: 1.02rem; color: var(--text-muted); margin-bottom: 20px; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 18px; border-radius: 999px; font-size: 0.95rem; font-weight: 600;
+    border: 2px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+  }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 4px 10px rgba(15,23,42,0.18); border-color: var(--blue); }
+  .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-1px); text-decoration: none; }
+  .btn-outline { background: #fff; color: var(--blue); border-color: var(--blue); }
+  .btn-outline:hover { background: var(--blue); color: #fff; text-decoration: none; }
+  .hero-meta { font-size: 0.9rem; color: var(--text-muted); }
+  .hero-card {
+    background: #fff; border-radius: 16px; padding: 16px 16px 14px;
+    box-shadow: 0 10px 30px rgba(15,23,42,0.08); border: 1px solid var(--border-soft);
+  }
+  .hero-card h2 { font-size: 1.05rem; margin-bottom: 8px; color: var(--blue); }
+  .hero-card p { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 8px; }
+  .hero-card img {
+    width: 100%; border-radius: 12px; margin-bottom: 10px; display: block;
+    object-fit: cover; height: 220px; object-position: top;
+    transition: transform 0.12s ease;
+  }
+  .hero-card a:hover img { transform: scale(1.01); }
+  .badge {
+    display: inline-block; font-size: 0.8rem; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 4px 10px; border-radius: 999px;
+    background: var(--yellow); color: #000; margin-bottom: 8px;
+  }
+  main { max-width: 1100px; margin: 32px auto 48px; padding: 0 16px; }
+  section { margin-bottom: 40px; }
+  section h2 {
+    font-size: 1.5rem; margin-bottom: 12px;
+    border-left: 4px solid var(--gold); padding-left: 10px; color: var(--blue);
+  }
+  section p { margin-bottom: 10px; color: var(--text-muted); font-size: 0.98rem; }
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+    gap: 20px; margin-top: 10px;
+  }
+  .card {
+    background: #fff; border-radius: 14px; padding: 16px 18px;
+    border: 1px solid var(--border-soft); box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+  }
+  .card h3 { font-size: 1.05rem; margin-bottom: 6px; color: var(--blue); }
+  .card p { font-size: 0.9rem; color: var(--text-muted); }
+  .card img { width: 100%; height: 220px; border-radius: 10px; margin-bottom: 8px; display: block; object-fit: cover; }
+  .card-photo-events img { height: auto; object-fit: contain; }
+  .two-col {
+    display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+    gap: 24px; align-items: flex-start; margin-top: 10px;
+  }
+  .list { padding-left: 16px; font-size: 0.96rem; color: var(--text-muted); }
+  .list li { margin-bottom: 6px; }
+  .social-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; }
+  .social-icon { display: inline-flex; align-items: center; gap: 4px; }
+  @media (max-width: 768px) {
+    .hero-inner, .two-col { grid-template-columns: 1fr; }
+    .hero { padding-top: 32px; }
+    .hero h1 { font-size: 1.7rem; }
+  }
+  @media (max-width: 600px) {
+    .card img { height: auto; max-height: 260px; object-fit: contain; }
+    .card-photo-events img { max-height: 260px; }
+  }
+</style>
+
+<section class="hero">
+  <div class="hero-overlay">
+    <div class="hero-inner">
+      <div>
+        <div class="badge">501(c)(3) Nonprofit &bull; Lockport, NY</div>
+        <h1>{hero.headline}</h1>
+        <p class="hero-tagline">{hero.subheadline}</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href={hero.cta_primary_link}>{hero.cta_primary_text}</a>
+          {hero.cta_secondary_link && (
+            <a class="btn btn-outline" href={hero.cta_secondary_link} target="_blank" rel="noopener">
+              {hero.cta_secondary_text}
+            </a>
+          )}
+        </div>
+        <p class="hero-meta">{hero.hero_meta}</p>
+      </div>
+      <aside class="hero-card">
+        <a href={heroCard.ticket_url} target="_blank" rel="noopener">
+          <img src={`/${heroCard.image}`} alt={heroCard.image_alt}>
+        </a>
+        <h2>{heroCard.title}</h2>
+        <p><strong>Date:</strong> {heroCard.date_label}</p>
+        <p><strong>Time:</strong> {heroCard.time_label}</p>
+        <p><strong>Location:</strong> {heroCard.location_label}</p>
+        <p>{heroCard.description}</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section id="mission">
+    <h2>{mission.heading}</h2>
+    <p>{mission.body_1}</p>
+    {mission.body_2 && <p>{mission.body_2}</p>}
+  </section>
+
+  <section id="what-we-do">
+    <h2>{whatWeDo.heading}</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>{whatWeDo.card_1_title}</h3>
+        <p>{whatWeDo.card_1_body}</p>
+      </div>
+      <div class="card card-photo-events">
+        <img src="/images/abbies-angels-hero.jpg" alt="Abbie at the gala holding an Abbie's Angels bear">
+        <h3>{whatWeDo.card_2_title}</h3>
+        <p>{whatWeDo.card_2_body}</p>
+      </div>
+      <div class="card">
+        <h3>{whatWeDo.card_3_title}</h3>
+        <p>{whatWeDo.card_3_body}</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <h2>{events.heading}</h2>
+    <div class="two-col">
+      <div>
+        <p>{events.intro}</p>
+        <ul class="list">
+          <li>{events.bullet_1}</li>
+          <li>{events.bullet_2}</li>
+          <li>{events.bullet_3}</li>
+        </ul>
+        {events.footer_note && <p>{events.footer_note}</p>}
+      </div>
+      <div class="card">
+        <h3>{events.featured_card_title}</h3>
+        <p>{events.featured_card_intro}</p>
+        <p>{events.featured_card_body}</p>
+        {events.featured_card_wexler_note && <p>{events.featured_card_wexler_note}</p>}
+        {events.featured_card_gofundme_url && (
+          <p>
+            <a href={events.featured_card_gofundme_url} target="_blank" rel="noopener">
+              {events.featured_card_gofundme_label}
+            </a>
+          </p>
+        )}
+        <p>
+          <a href={events.featured_card_tickets_url} target="_blank" rel="noopener">
+            {events.featured_card_tickets_label}
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="support">
+    <h2>{support.heading}</h2>
+    <div class="two-col">
+      <div>
+        <p>{support.intro}</p>
+        <ul class="list">
+          <li>{support.bullet_1}</li>
+          <li>{support.bullet_2}</li>
+          <li>{support.bullet_3}</li>
+          {support.bullet_4 && <li>{support.bullet_4}</li>}
+        </ul>
+      </div>
+      <div class="card">
+        <h3>{support.card_title}</h3>
+        <p>{support.card_body}</p>
+        <p><a href={support.card_link_url} target="_blank" rel="noopener">{support.card_link_label}</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <h2>Our Team</h2>
+    <p>Abbie's Angels is led by a volunteer board, dedicated partners, and friends who pour their time and talents into supporting caregivers and families.</p>
+    <div class="cards">
+      {board.members && board.members.map(m => (
+        <div class="card">
+          <img src={`/${m.image}`} alt={m.name}>
+          <h3>{m.name}</h3>
+          <p>{m.title}</p>
+        </div>
+      ))}
+    </div>
+    <h2 style="margin-top:28px;">Staff &amp; Key Partners</h2>
+    <p>These leaders and volunteers help shape events, storytelling, and day-to-day support for Abbie's Angels families.</p>
+    <div class="cards">
+      {staff.members && staff.members.map(m => (
+        <div class="card">
+          <img src={`/${m.image}`} alt={m.name}>
+          <h3>{m.name}</h3>
+          <p>{m.title}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>{contactI.heading}</h2>
+    <p>{contactI.intro}</p>
+    <div class="cards">
+      <div class="card">
+        <h3>General Inquiries</h3>
+        <p>Message us directly on social media and a member of our volunteer team will respond as soon as possible.</p>
+        <div class="social-row">
+          <span>Connect:</span>
+          {contact.facebook && (
+            <span class="social-icon">&#127760; <a href={contact.facebook} target="_blank" rel="noopener">Facebook</a></span>
+          )}
+          {contact.instagram && (
+            <span class="social-icon">&#128248; <a href={contact.instagram} target="_blank" rel="noopener">Instagram</a></span>
+          )}
+          {contact.linkedin && (
+            <span class="social-icon">&#128188; <a href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a></span>
+          )}
+        </div>
+      </div>
+      <div class="card">
+        <h3>Mailing / Email</h3>
+        <p>Use our mailing address for letters, checks, and sponsorship forms.</p>
+        <p>{contact.mailing_name}<br/>{contact.mailing_street}<br/>{contact.mailing_city}</p>
+        <p>Email: <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+</Base>
