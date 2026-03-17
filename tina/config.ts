@@ -1,9 +1,9 @@
 import { defineConfig } from "tinacms";
 
 export default defineConfig({
-  branch: process.env.TINA_BRANCH ?? "main",
-  clientId: process.env.PUBLIC_TINA_CLIENT_ID ?? process.env.TINA_PUBLIC_CLIENT_ID ?? "",
-  token: process.env.TINA_TOKEN ?? "",
+  branch: "main",
+  clientId: "f20ee16d-b53a-4382-bff0-7fe8adf96472",
+  token: "9da37bda035d1a40011b21dd8f4eb28a247fe65a",
 
   build: {
     outputFolder: "admin",
@@ -18,12 +18,12 @@ export default defineConfig({
 
   schema: {
     collections: [
-      // ── Homepage: Hero ──────────────────────────────────────────
+      // ── Homepage: Hero ──────────────────────────────────────────────
       {
         name: "hero",
         label: "Homepage – Hero",
         path: "_data/homepage",
-        match: { include: "hero", exclude: "hero_card" },
+        match: { include: "hero" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
@@ -37,7 +37,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Homepage: Hero Card (Event Callout) ────────────────────
+      // ── Homepage: Hero Card (Event Callout) ────────────────────────
       {
         name: "hero_card",
         label: "Homepage – Hero Card",
@@ -57,7 +57,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Homepage: Mission ──────────────────────────────────────
+      // ── Homepage: Mission ─────────────────────────────────────────
       {
         name: "mission",
         label: "Homepage – Mission",
@@ -72,7 +72,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Homepage: What We Do ───────────────────────────────────
+      // ── Homepage: What We Do ──────────────────────────────────────
       {
         name: "what_we_do",
         label: "Homepage – What We Do",
@@ -91,7 +91,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Section: Events ────────────────────────────────────────
+      // ── Section: Events ───────────────────────────────────────────
       {
         name: "events",
         label: "Section – Events",
@@ -117,7 +117,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Section: Support ───────────────────────────────────────
+      // ── Section: Support ──────────────────────────────────────────
       {
         name: "support",
         label: "Section – Ways to Help",
@@ -139,7 +139,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Section: Contact Intro ─────────────────────────────────
+      // ── Section: Contact Intro ────────────────────────────────────
       {
         name: "contact_intro",
         label: "Section – Contact Intro",
@@ -153,12 +153,12 @@ export default defineConfig({
         ],
       },
 
-      // ── Settings: Contact ──────────────────────────────────────
+      // ── Settings: Contact ─────────────────────────────────────────
       {
         name: "contact",
         label: "Settings – Contact",
         path: "_data/settings",
-        match: { include: "contact", exclude: "contact_intro" },
+        match: { include: "contact" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
@@ -173,7 +173,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Settings: Donation ─────────────────────────────────────
+      // ── Settings: Donation ────────────────────────────────────────
       {
         name: "donation",
         label: "Settings – Donation",
@@ -187,7 +187,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Team: Board Members ────────────────────────────────────
+      // ── Team: Board Members ───────────────────────────────────────
       {
         name: "board",
         label: "Team – Board Members",
@@ -211,7 +211,7 @@ export default defineConfig({
         ],
       },
 
-      // ── Team: Staff & Partners ─────────────────────────────────
+      // ── Team: Staff & Partners ────────────────────────────────────
       {
         name: "staff",
         label: "Team – Staff & Partners",
