@@ -20,7 +20,7 @@ var config_default = defineConfig({
         name: "hero",
         label: "Homepage \u2013 Hero",
         path: "_data/homepage",
-        match: { include: "hero_main" },
+        match: { include: "hero" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
@@ -37,7 +37,7 @@ var config_default = defineConfig({
         name: "hero_card",
         label: "Homepage \u2013 Hero Card",
         path: "_data/homepage",
-        match: { include: "hero_event_card" },
+        match: { include: "hero_card" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
