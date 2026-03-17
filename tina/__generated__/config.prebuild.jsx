@@ -1,7 +1,7 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
 var config_default = defineConfig({
-  branch: "main",
+  branch: process.env.TINA_BRANCH ?? "main",
   clientId: process.env.TINA_PUBLIC_CLIENT_ID,
   token: process.env.TINA_TOKEN,
   build: {
@@ -20,7 +20,7 @@ var config_default = defineConfig({
         name: "hero",
         label: "Homepage \u2013 Hero",
         path: "_data/homepage",
-        match: { include: "hero", exclude: "hero_*" },
+        match: { include: "hero" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
