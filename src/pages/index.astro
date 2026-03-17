@@ -9,7 +9,7 @@ const client = createClient({
   useCdn: true,
 });
 
-function sanityImage(img) {
+function sanityImage(img: any) {
   if (!img?.asset?._ref) return '';
   const ref = img.asset._ref;
   const parts = ref.split('-');
@@ -19,19 +19,24 @@ function sanityImage(img) {
   return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
 }
 
-const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, board, staff] =
+const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support, contactI, contact, board, staff] =
   await Promise.all([
     client.fetch(`*[_type == "hero"][0]`),
     client.fetch(`*[_type == "hero_card"][0]`),
     client.fetch(`*[_type == "mission"][0]`),
     client.fetch(`*[_type == "what_we_do"][0]`),
     client.fetch(`*[_type == "events"][0]`),
+    client.fetch(`*[_type == "event" && featured == true && published == true][0]`),
     client.fetch(`*[_type == "support"][0]`),
     client.fetch(`*[_type == "contact_intro"][0]`),
     client.fetch(`*[_type == "contact"][0]`),
     client.fetch(`*[_type == "board"][0]`),
     client.fetch(`*[_type == "staff"][0]`),
   ]);
+
+// Fall back to hero_card data if no featured event is set yet
+const displayEvent = featuredEvent || null;
+const displayCard = heroCard || null;
 ---
 <Base title="Abbie's Angels">
 <style>
@@ -68,6 +73,7 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
   .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-1px); text-decoration: none; }
   .btn-outline { background: #fff; color: var(--blue); border-color: var(--blue); }
   .btn-outline:hover { background: var(--blue); color: #fff; text-decoration: none; }
+  .btn-sm { padding: 7px 14px; font-size: 0.88rem; }
   .hero-meta { font-size: 0.9rem; color: var(--text-muted); }
   .hero-card {
     background: #fff; border-radius: 16px; padding: 16px 16px 14px;
@@ -111,6 +117,13 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
   }
   .list { padding-left: 16px; font-size: 0.96rem; color: var(--text-muted); }
   .list li { margin-bottom: 6px; }
+  .event-meta { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px; }
+  .view-all-link {
+    display: inline-block; margin-top: 14px;
+    font-size: 0.95rem; font-weight: 600; color: var(--blue);
+    text-decoration: none;
+  }
+  .view-all-link:hover { text-decoration: underline; }
   .social-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; }
   .social-icon { display: inline-flex; align-items: center; gap: 4px; }
   @media (max-width: 768px) {
@@ -141,15 +154,43 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
         </div>
         <p class="hero-meta">{hero.hero_meta}</p>
       </div>
+
+      {/* Hero card: prefer featured event, fall back to hero_card */}
       <aside class="hero-card">
-        <a href={heroCard.ticket_url} target="_blank" rel="noopener">
-          {sanityImage(heroCard.image) && <img src={sanityImage(heroCard.image)} alt={heroCard.image_alt}>}
-        </a>
-        <h2>{heroCard.title}</h2>
-        <p><strong>Date:</strong> {heroCard.date_label}</p>
-        <p><strong>Time:</strong> {heroCard.time_label}</p>
-        <p><strong>Location:</strong> {heroCard.location_label}</p>
-        <p>{heroCard.description}</p>
+        {displayEvent ? (
+          <>
+            {sanityImage(displayEvent.image) && (
+              <a href="/events">
+                <img src={sanityImage(displayEvent.image)} alt={displayEvent.image_alt || displayEvent.title} />
+              </a>
+            )}
+            <h2>{displayEvent.title}</h2>
+            {(displayEvent.date_label || displayEvent.date) && (
+              <p><strong>Date:</strong> {displayEvent.date_label || displayEvent.date}</p>
+            )}
+            {displayEvent.time_label && <p><strong>Time:</strong> {displayEvent.time_label}</p>}
+            {displayEvent.location && <p><strong>Location:</strong> {displayEvent.location}</p>}
+            {displayEvent.description && <p>{displayEvent.description}</p>}
+            {displayEvent.ticket_url && (
+              <a class="btn btn-primary btn-sm" href={displayEvent.ticket_url} target="_blank" rel="noopener">
+                {displayEvent.ticket_label || 'Get Tickets'}
+              </a>
+            )}
+          </>
+        ) : displayCard ? (
+          <>
+            {sanityImage(displayCard.image) && (
+              <a href={displayCard.ticket_url} target="_blank" rel="noopener">
+                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt} />
+              </a>
+            )}
+            <h2>{displayCard.title}</h2>
+            <p><strong>Date:</strong> {displayCard.date_label}</p>
+            <p><strong>Time:</strong> {displayCard.time_label}</p>
+            <p><strong>Location:</strong> {displayCard.location_label}</p>
+            <p>{displayCard.description}</p>
+          </>
+        ) : null}
       </aside>
     </div>
   </div>
@@ -182,35 +223,33 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
   </section>
 
   <section id="events">
-    <h2>{events.heading}</h2>
+    <h2>{eventsSection?.heading || 'Events'}</h2>
     <div class="two-col">
       <div>
-        <p>{events.intro}</p>
-        <ul class="list">
-          <li>{events.bullet_1}</li>
-          <li>{events.bullet_2}</li>
-          <li>{events.bullet_3}</li>
-        </ul>
-        {events.footer_note && <p>{events.footer_note}</p>}
+        <p>{eventsSection?.intro}</p>
+        {eventsSection?.footer_note && <p>{eventsSection.footer_note}</p>}
+        <a class="view-all-link" href="/events">
+          {eventsSection?.view_all_label || 'View All Events →'}
+        </a>
       </div>
-      <div class="card">
-        <h3>{events.featured_card_title}</h3>
-        <p>{events.featured_card_intro}</p>
-        <p>{events.featured_card_body}</p>
-        {events.featured_card_wexler_note && <p>{events.featured_card_wexler_note}</p>}
-        {events.featured_card_gofundme_url && (
-          <p>
-            <a href={events.featured_card_gofundme_url} target="_blank" rel="noopener">
-              {events.featured_card_gofundme_label}
+      {displayEvent && (
+        <div class="card">
+          <h3>{displayEvent.title}</h3>
+          <div class="event-meta">
+            {(displayEvent.date_label || displayEvent.date) && (
+              <span>&#128197; {displayEvent.date_label || displayEvent.date}</span>
+            )}
+            {displayEvent.time_label && <span> &nbsp;&bull;&nbsp; &#128336; {displayEvent.time_label}</span>}
+          </div>
+          {displayEvent.location && <p>&#128205; {displayEvent.location}</p>}
+          {displayEvent.description && <p>{displayEvent.description}</p>}
+          {displayEvent.ticket_url && (
+            <a class="btn btn-primary btn-sm" href={displayEvent.ticket_url} target="_blank" rel="noopener">
+              {displayEvent.ticket_label || 'Get Tickets'}
             </a>
-          </p>
-        )}
-        <p>
-          <a href={events.featured_card_tickets_url} target="_blank" rel="noopener">
-            {events.featured_card_tickets_label}
-          </a>
-        </p>
-      </div>
+          )}
+        </div>
+      )}
     </div>
   </section>
 
@@ -238,7 +277,7 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
     <h2>Our Team</h2>
     <p>Abbie's Angels is led by a volunteer board, dedicated partners, and friends who pour their time and talents into supporting caregivers and families.</p>
     <div class="cards">
-      {board.members && board.members.map(m => (
+      {board.members && board.members.map((m: any) => (
         <div class="card">
           {m.image && <img src={m.image} alt={m.name}>}
           <h3>{m.name}</h3>
@@ -249,7 +288,7 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
     <h2 style="margin-top:28px;">Staff &amp; Key Partners</h2>
     <p>These leaders and volunteers help shape events, storytelling, and day-to-day support for Abbie's Angels families.</p>
     <div class="cards">
-      {staff.members && staff.members.map(m => (
+      {staff.members && staff.members.map((m: any) => (
         <div class="card">
           {m.image && <img src={m.image} alt={m.name}>}
           <h3>{m.name}</h3>
