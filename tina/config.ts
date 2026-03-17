@@ -2,7 +2,7 @@ import { defineConfig } from "tinacms";
 
 export default defineConfig({
   branch: "main",
-  clientId: process.env.TINA_CLIENT_ID!,
+  clientId: process.env.TINA_PUBLIC_CLIENT_ID!,
   token: process.env.TINA_TOKEN!,
 
   build: {
@@ -115,14 +115,14 @@ export default defineConfig({
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
-          { type: "string", name: "heading",        label: "Heading" },
-          { type: "string", name: "intro",          label: "Intro",         ui: { component: "textarea" } },
-          { type: "string", name: "bullet_1",       label: "Bullet 1" },
-          { type: "string", name: "bullet_2",       label: "Bullet 2" },
-          { type: "string", name: "bullet_3",       label: "Bullet 3" },
-          { type: "string", name: "bullet_4",       label: "Bullet 4" },
-          { type: "string", name: "card_title",     label: "Card Title" },
-          { type: "string", name: "card_body",      label: "Card Body",     ui: { component: "textarea" } },
+          { type: "string", name: "heading",         label: "Heading" },
+          { type: "string", name: "intro",           label: "Intro",         ui: { component: "textarea" } },
+          { type: "string", name: "bullet_1",        label: "Bullet 1" },
+          { type: "string", name: "bullet_2",        label: "Bullet 2" },
+          { type: "string", name: "bullet_3",        label: "Bullet 3" },
+          { type: "string", name: "bullet_4",        label: "Bullet 4" },
+          { type: "string", name: "card_title",      label: "Card Title" },
+          { type: "string", name: "card_body",       label: "Card Body",     ui: { component: "textarea" } },
           { type: "string", name: "card_link_label", label: "Card Link Label" },
           { type: "string", name: "card_link_url",   label: "Card Link URL" },
         ],
