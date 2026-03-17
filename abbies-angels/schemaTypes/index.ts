@@ -60,7 +60,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Homepage – Hero Card',
     type: 'document',
     icon: () => '📌',
-    description: 'The featured event card displayed alongside the hero banner.',
+    description: 'The featured event card displayed alongside the hero banner. Note: this is now auto-populated from whichever Event has "Featured" checked. Only edit here if you need a manual override.',
     fields: [
       {
         name: 'title',
@@ -113,6 +113,106 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         description: 'Link to purchase tickets or register for the event.',
       },
     ],
+  },
+  {
+    name: 'event',
+    title: 'Events – Event',
+    type: 'document',
+    icon: () => '🎟️',
+    description: 'An individual event. Set "Published" to show it on the site. Set "Featured" to highlight it on the homepage hero.',
+    fields: [
+      {
+        name: 'title',
+        title: 'Event Title',
+        type: 'string',
+        description: 'Name of the event, e.g. "Winter Gala 2026".',
+        validation: (R: any) => R.required(),
+      },
+      {
+        name: 'date',
+        title: 'Date',
+        type: 'date',
+        options: {dateFormat: 'MMMM D, YYYY'},
+        description: 'Date of the event. Used for sorting and display.',
+        validation: (R: any) => R.required(),
+      },
+      {
+        name: 'date_label',
+        title: 'Date Display Label',
+        type: 'string',
+        description: 'How the date appears on the site, e.g. "Saturday, December 14, 2026". Overrides the raw date if set.',
+      },
+      {
+        name: 'time_label',
+        title: 'Time',
+        type: 'string',
+        description: 'Display time for the event, e.g. "6:00 PM – 10:00 PM".',
+      },
+      {
+        name: 'location',
+        title: 'Location',
+        type: 'string',
+        description: 'Venue name and/or address.',
+      },
+      {
+        name: 'description',
+        title: 'Description',
+        type: 'text',
+        rows: 5,
+        description: 'Full description of the event shown on the Events page.',
+      },
+      {
+        name: 'image',
+        title: 'Event Image',
+        type: 'image',
+        options: {hotspot: true},
+        description: 'Photo for this event. Landscape images work best.',
+      },
+      {
+        name: 'image_alt',
+        title: 'Image Alt Text',
+        type: 'string',
+        description: 'Brief description of the image for accessibility.',
+      },
+      {
+        name: 'ticket_url',
+        title: 'Ticket / Registration URL',
+        type: 'string',
+        description: 'Link to purchase tickets or register. Leave blank if no tickets needed.',
+      },
+      {
+        name: 'ticket_label',
+        title: 'Ticket Button Label',
+        type: 'string',
+        description: 'Text on the ticket button, e.g. "Get Tickets" or "Register Now". Defaults to "Get Tickets" if blank.',
+      },
+      {
+        name: 'published',
+        title: 'Published',
+        type: 'boolean',
+        description: 'Turn on to show this event on the Events page. Turn off to hide it without deleting.',
+        initialValue: false,
+      },
+      {
+        name: 'featured',
+        title: 'Featured on Homepage',
+        type: 'boolean',
+        description: 'Turn on to show this event in the homepage hero card. Only one event should be featured at a time.',
+        initialValue: false,
+      },
+    ],
+    preview: {
+      select: {
+        title: 'title',
+        subtitle: 'date',
+        published: 'published',
+        featured: 'featured',
+      },
+      prepare({title, subtitle, published, featured}: any) {
+        const flags = [published ? '✅ Published' : '🚫 Hidden', featured ? '⭐ Featured' : ''].filter(Boolean).join(' · ')
+        return {title, subtitle: `${subtitle || ''} — ${flags}`}
+      },
+    },
   },
   {
     name: 'mission',
@@ -199,10 +299,10 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   },
   {
     name: 'events',
-    title: 'Section – Events',
+    title: 'Section – Events (Homepage)',
     type: 'document',
     icon: () => '🎉',
-    description: 'The Events section — intro text, bullet points, and the featured event card.',
+    description: 'The Events section intro text on the homepage. Individual events are now managed under "Events – Event".',
     fields: [
       {
         name: 'heading',
@@ -218,24 +318,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         description: 'Opening paragraph describing the types of events Abbie\'s Angels hosts.',
       },
       {
-        name: 'bullet_1',
-        title: 'Bullet 1',
-        type: 'string',
-        description: 'First bullet point describing an event type or activity.',
-      },
-      {
-        name: 'bullet_2',
-        title: 'Bullet 2',
-        type: 'string',
-        description: 'Second bullet point.',
-      },
-      {
-        name: 'bullet_3',
-        title: 'Bullet 3',
-        type: 'string',
-        description: 'Third bullet point.',
-      },
-      {
         name: 'footer_note',
         title: 'Footer Note',
         type: 'text',
@@ -243,55 +325,10 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         description: 'Small note at the bottom of the section, e.g. directing visitors to social media for updates.',
       },
       {
-        name: 'featured_card_title',
-        title: 'Featured Card – Title',
+        name: 'view_all_label',
+        title: 'View All Button Label',
         type: 'string',
-        description: 'Heading on the featured event card, e.g. "Get Gala Tickets".',
-      },
-      {
-        name: 'featured_card_intro',
-        title: 'Featured Card – Intro',
-        type: 'text',
-        rows: 2,
-        description: 'Short intro line on the featured card — venue, vibe, one sentence.',
-      },
-      {
-        name: 'featured_card_body',
-        title: 'Featured Card – Body',
-        type: 'text',
-        rows: 4,
-        description: 'Main body of the featured card. This is where the family story or event details go.',
-      },
-      {
-        name: 'featured_card_wexler_note',
-        title: 'Featured Card – Personal Note',
-        type: 'text',
-        rows: 2,
-        description: 'Optional personal note from a board member connecting them to the featured family.',
-      },
-      {
-        name: 'featured_card_gofundme_label',
-        title: 'GoFundMe – Button Label',
-        type: 'string',
-        description: 'Text on the GoFundMe donation link.',
-      },
-      {
-        name: 'featured_card_gofundme_url',
-        title: 'GoFundMe – URL',
-        type: 'string',
-        description: 'Full URL to the GoFundMe campaign page.',
-      },
-      {
-        name: 'featured_card_tickets_label',
-        title: 'Tickets – Button Label',
-        type: 'string',
-        description: 'Text on the ticket purchase link.',
-      },
-      {
-        name: 'featured_card_tickets_url',
-        title: 'Tickets – URL',
-        type: 'string',
-        description: 'Full URL to the ticketing page, e.g. Auctria.',
+        description: 'Text on the "View All Events" link. Defaults to "View All Events →" if blank.',
       },
     ],
   },
