@@ -23,7 +23,7 @@ export default defineConfig({
         name: "hero",
         label: "Homepage – Hero",
         path: "_data/homepage",
-        match: { include: "hero" },
+        match: { include: "hero", exclude: "hero_card" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
@@ -158,7 +158,7 @@ export default defineConfig({
         name: "contact",
         label: "Settings – Contact",
         path: "_data/settings",
-        match: { include: "contact" },
+        match: { include: "contact", exclude: "contact_intro" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
