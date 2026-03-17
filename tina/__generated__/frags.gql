@@ -1,0 +1,116 @@
+fragment HeroParts on Hero {
+  __typename
+  headline
+  subheadline
+  cta_primary_text
+  cta_primary_link
+  cta_secondary_text
+  cta_secondary_link
+  hero_meta
+}
+
+fragment Hero_cardParts on Hero_card {
+  __typename
+  title
+  date_label
+  time_label
+  location_label
+  description
+  image
+  image_alt
+  ticket_url
+}
+
+fragment MissionParts on Mission {
+  __typename
+  heading
+  body_1
+  body_2
+}
+
+fragment What_we_doParts on What_we_do {
+  __typename
+  heading
+  card_1_title
+  card_1_body
+  card_2_title
+  card_2_body
+  card_3_title
+  card_3_body
+}
+
+fragment EventsParts on Events {
+  __typename
+  heading
+  intro
+  bullet_1
+  bullet_2
+  bullet_3
+  footer_note
+  featured_card_title
+  featured_card_intro
+  featured_card_body
+  featured_card_wexler_note
+  featured_card_gofundme_label
+  featured_card_gofundme_url
+  featured_card_tickets_label
+  featured_card_tickets_url
+}
+
+fragment SupportParts on Support {
+  __typename
+  heading
+  intro
+  bullet_1
+  bullet_2
+  bullet_3
+  bullet_4
+  card_title
+  card_body
+  card_link_label
+  card_link_url
+}
+
+fragment Contact_introParts on Contact_intro {
+  __typename
+  heading
+  intro
+}
+
+fragment ContactParts on Contact {
+  __typename
+  email
+  phone
+  facebook
+  instagram
+  linkedin
+  mailing_name
+  mailing_street
+  mailing_city
+}
+
+fragment DonationParts on Donation {
+  __typename
+  url
+  label
+}
+
+fragment BoardParts on Board {
+  __typename
+  members {
+    __typename
+    name
+    title
+    image
+  }
+}
+
+fragment StaffParts on Staff {
+  __typename
+  members {
+    __typename
+    name
+    title
+    image
+  }
+}
