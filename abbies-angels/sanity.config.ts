@@ -16,15 +16,23 @@ export default defineConfig({
           .items([
             S.listItem().title('Homepage').child(
               S.list().title('Homepage').items([
-                S.documentListItem().schemaType('hero').id('hero').title('Hero'),
-                S.documentListItem().schemaType('hero_card').id('hero_card').title('Hero Card'),
+                S.documentListItem().schemaType('hero').id('hero').title('Hero Banner'),
+                S.documentListItem().schemaType('hero_card').id('hero_card').title('Hero Card (Manual Override)'),
                 S.documentListItem().schemaType('mission').id('mission').title('Mission'),
                 S.documentListItem().schemaType('what_we_do').id('what_we_do').title('What We Do'),
               ])
             ),
+            S.divider(),
+            S.listItem().title('Events').child(
+              S.list().title('Events').items([
+                S.documentListItem().schemaType('events').id('events').title('Events Page – Intro Text'),
+                S.divider(),
+                S.documentTypeList('event').title('All Events'),
+              ])
+            ),
+            S.divider(),
             S.listItem().title('Sections').child(
               S.list().title('Sections').items([
-                S.documentListItem().schemaType('events').id('events').title('Events'),
                 S.documentListItem().schemaType('support').id('support').title('Ways to Help'),
                 S.documentListItem().schemaType('contact_intro').id('contact_intro').title('Contact Intro'),
               ])
