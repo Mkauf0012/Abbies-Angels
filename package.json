@@ -8,6 +8,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@sanity/client": "^7.17.0",
     "astro": "^4.5.0",
     "js-yaml": "^4.1.0",
     "tinacms": "^2.0.0"

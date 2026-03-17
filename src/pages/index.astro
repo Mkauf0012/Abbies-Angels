@@ -1,25 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
-import { readFileSync } from 'fs';
-import { load } from 'js-yaml';
-import { join } from 'path';
+import { createClient } from '@sanity/client';
 
-function loadYaml(rel) {
-  try {
-    return load(readFileSync(join(process.cwd(), '_data', rel), 'utf8')) || {};
-  } catch { return {}; }
-}
+const client = createClient({
+  projectId: '7o31gm3n',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  useCdn: true,
+});
 
-const hero      = loadYaml('homepage/hero.yml');
-const heroCard  = loadYaml('homepage/hero_card.yml');
-const mission   = loadYaml('homepage/mission.yml');
-const whatWeDo  = loadYaml('homepage/what_we_do.yml');
-const events    = loadYaml('sections/events.yml');
-const support   = loadYaml('sections/support.yml');
-const contact   = loadYaml('settings/contact.yml');
-const contactI  = loadYaml('sections/contact_intro.yml');
-const board     = loadYaml('team/board.yml');
-const staff     = loadYaml('team/staff.yml');
+const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, board, staff] =
+  await Promise.all([
+    client.fetch(`*[_type == "hero"][0]`),
+    client.fetch(`*[_type == "hero_card"][0]`),
+    client.fetch(`*[_type == "mission"][0]`),
+    client.fetch(`*[_type == "what_we_do"][0]`),
+    client.fetch(`*[_type == "events"][0]`),
+    client.fetch(`*[_type == "support"][0]`),
+    client.fetch(`*[_type == "contact_intro"][0]`),
+    client.fetch(`*[_type == "contact"][0]`),
+    client.fetch(`*[_type == "board"][0]`),
+    client.fetch(`*[_type == "staff"][0]`),
+  ]);
 ---
 <Base title="Abbie's Angels">
 <style>
