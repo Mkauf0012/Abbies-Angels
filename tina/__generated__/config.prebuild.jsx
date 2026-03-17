@@ -1,9 +1,9 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
 var config_default = defineConfig({
-  branch: process.env.TINA_BRANCH ?? "main",
-  clientId: process.env.PUBLIC_TINA_CLIENT_ID ?? process.env.TINA_PUBLIC_CLIENT_ID ?? "",
-  token: process.env.TINA_TOKEN ?? "",
+  branch: "main",
+  clientId: process.env.TINA_PUBLIC_CLIENT_ID,
+  token: process.env.TINA_TOKEN,
   build: {
     outputFolder: "admin",
     publicFolder: "public"
@@ -16,12 +16,11 @@ var config_default = defineConfig({
   },
   schema: {
     collections: [
-      // ── Homepage: Hero ──────────────────────────────────────────
       {
         name: "hero",
         label: "Homepage \u2013 Hero",
         path: "_data/homepage",
-        match: { include: "hero", exclude: "hero_card" },
+        match: { include: "hero_main" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
@@ -34,12 +33,11 @@ var config_default = defineConfig({
           { type: "string", name: "hero_meta", label: "Hero Meta Text", ui: { component: "textarea" } }
         ]
       },
-      // ── Homepage: Hero Card (Event Callout) ────────────────────
       {
         name: "hero_card",
         label: "Homepage \u2013 Hero Card",
         path: "_data/homepage",
-        match: { include: "hero_card" },
+        match: { include: "hero_event_card" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
@@ -53,7 +51,6 @@ var config_default = defineConfig({
           { type: "string", name: "ticket_url", label: "Ticket URL" }
         ]
       },
-      // ── Homepage: Mission ──────────────────────────────────────
       {
         name: "mission",
         label: "Homepage \u2013 Mission",
@@ -67,7 +64,6 @@ var config_default = defineConfig({
           { type: "string", name: "body_2", label: "Body Paragraph 2", ui: { component: "textarea" } }
         ]
       },
-      // ── Homepage: What We Do ───────────────────────────────────
       {
         name: "what_we_do",
         label: "Homepage \u2013 What We Do",
@@ -85,7 +81,6 @@ var config_default = defineConfig({
           { type: "string", name: "card_3_body", label: "Card 3 Body", ui: { component: "textarea" } }
         ]
       },
-      // ── Section: Events ────────────────────────────────────────
       {
         name: "events",
         label: "Section \u2013 Events",
@@ -110,7 +105,6 @@ var config_default = defineConfig({
           { type: "string", name: "featured_card_tickets_url", label: "Tickets URL" }
         ]
       },
-      // ── Section: Support ───────────────────────────────────────
       {
         name: "support",
         label: "Section \u2013 Ways to Help",
@@ -131,7 +125,6 @@ var config_default = defineConfig({
           { type: "string", name: "card_link_url", label: "Card Link URL" }
         ]
       },
-      // ── Section: Contact Intro ─────────────────────────────────
       {
         name: "contact_intro",
         label: "Section \u2013 Contact Intro",
@@ -144,12 +137,11 @@ var config_default = defineConfig({
           { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } }
         ]
       },
-      // ── Settings: Contact ──────────────────────────────────────
       {
         name: "contact",
         label: "Settings \u2013 Contact",
         path: "_data/settings",
-        match: { include: "contact", exclude: "contact_intro" },
+        match: { include: "contact" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
@@ -163,7 +155,6 @@ var config_default = defineConfig({
           { type: "string", name: "mailing_city", label: "Mailing City" }
         ]
       },
-      // ── Settings: Donation ─────────────────────────────────────
       {
         name: "donation",
         label: "Settings \u2013 Donation",
@@ -176,7 +167,6 @@ var config_default = defineConfig({
           { type: "string", name: "label", label: "Donation Button Label" }
         ]
       },
-      // ── Team: Board Members ────────────────────────────────────
       {
         name: "board",
         label: "Team \u2013 Board Members",
@@ -199,7 +189,6 @@ var config_default = defineConfig({
           }
         ]
       },
-      // ── Team: Staff & Partners ─────────────────────────────────
       {
         name: "staff",
         label: "Team \u2013 Staff & Partners",
