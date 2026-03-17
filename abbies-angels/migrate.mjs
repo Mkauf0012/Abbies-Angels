@@ -11,11 +11,26 @@ const client = createClient({
   useCdn: false,
 })
 
-const root = path.resolve('..') // points to Abbies-Angels repo root
+const BASE_URL = 'https://abbies-angels.pages.dev'
+const root = path.resolve('..')
 
 function readYaml(filePath) {
   return yaml.load(fs.readFileSync(filePath, 'utf8'))
 }
+
+function fixTeamImages(data) {
+  if (!data?.members) return data
+  return {
+    ...data,
+    members: data.members.map(m => ({
+      ...m,
+      image: m.image ? `${BASE_URL}/${m.image}` : ''
+    }))
+  }
+}
+
+const board = fixTeamImages(readYaml(path.join(root, '_data/team/board.yml')))
+const staff = fixTeamImages(readYaml(path.join(root, '_data/team/staff.yml')))
 
 const docs = [
   { _id: 'hero',          _type: 'hero',          ...readYaml(path.join(root, '_data/homepage/hero.yml')) },
@@ -27,8 +42,8 @@ const docs = [
   { _id: 'contact_intro', _type: 'contact_intro', ...readYaml(path.join(root, '_data/sections/contact_intro.yml')) },
   { _id: 'contact',       _type: 'contact',       ...readYaml(path.join(root, '_data/settings/contact.yml')) },
   { _id: 'donation',      _type: 'donation',      ...readYaml(path.join(root, '_data/settings/donation.yml')) },
-  { _id: 'board',         _type: 'board',         ...readYaml(path.join(root, '_data/team/board.yml')) },
-  { _id: 'staff',         _type: 'staff',         ...readYaml(path.join(root, '_data/team/staff.yml')) },
+  { _id: 'board',         _type: 'board',         ...board },
+  { _id: 'staff',         _type: 'staff',         ...staff },
 ]
 
 for (const doc of docs) {

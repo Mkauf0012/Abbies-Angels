@@ -104,7 +104,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         name: 'image_alt',
         title: 'Image Alt Text',
         type: 'string',
-        description: 'Brief description of the image for screen readers and accessibility, e.g. "Gala dinner tables set up at Salvatore\'s".',
+        description: 'Brief description of the image for screen readers and accessibility.',
       },
       {
         name: 'ticket_url',
@@ -273,7 +273,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         name: 'featured_card_gofundme_label',
         title: 'GoFundMe – Button Label',
         type: 'string',
-        description: 'Text on the GoFundMe donation link, e.g. "Donate to Chelsea\'s Journey to Health".',
+        description: 'Text on the GoFundMe donation link.',
       },
       {
         name: 'featured_card_gofundme_url',
@@ -319,7 +319,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         name: 'bullet_1',
         title: 'Bullet 1',
         type: 'string',
-        description: 'First way to help, e.g. "Donate directly through GoFundMe".',
+        description: 'First way to help.',
       },
       {
         name: 'bullet_2',
@@ -343,7 +343,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         name: 'card_title',
         title: 'Card – Title',
         type: 'string',
-        description: 'Heading on the support card, e.g. "Make a Difference Today".',
+        description: 'Heading on the support card.',
       },
       {
         name: 'card_body',
@@ -411,7 +411,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         name: 'facebook',
         title: 'Facebook URL',
         type: 'string',
-        description: 'Full URL to the Facebook page, e.g. https://www.facebook.com/...',
+        description: 'Full URL to the Facebook page.',
       },
       {
         name: 'instagram',
@@ -499,10 +499,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
             },
             {
               name: 'image',
-              title: 'Photo',
-              type: 'image',
-              options: {hotspot: true},
-              description: 'Headshot or photo. Square images work best.',
+              title: 'Photo URL',
+              type: 'string',
+              description: 'URL to the photo. Images are hosted on the website — do not change unless replacing with a new upload.',
             },
           ],
         }],
@@ -540,10 +539,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
             },
             {
               name: 'image',
-              title: 'Photo',
-              type: 'image',
-              options: {hotspot: true},
-              description: 'Headshot or photo. Square images work best.',
+              title: 'Photo URL',
+              type: 'string',
+              description: 'URL to the photo. Images are hosted on the website — do not change unless replacing with a new upload.',
             },
           ],
         }],

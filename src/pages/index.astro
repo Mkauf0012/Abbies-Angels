@@ -13,7 +13,6 @@ function sanityImage(img) {
   if (!img?.asset?._ref) return '';
   const ref = img.asset._ref;
   const parts = ref.split('-');
-  // format: image-{id}-{dimensions}-{ext}
   const ext = parts[parts.length - 1];
   const dimensions = parts[parts.length - 2];
   const id = parts.slice(1, parts.length - 2).join('-');
@@ -241,7 +240,7 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
     <div class="cards">
       {board.members && board.members.map(m => (
         <div class="card">
-          {sanityImage(m.image) && <img src={sanityImage(m.image)} alt={m.name}>}
+          {m.image && <img src={m.image} alt={m.name}>}
           <h3>{m.name}</h3>
           <p>{m.title}</p>
         </div>
@@ -252,7 +251,7 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
     <div class="cards">
       {staff.members && staff.members.map(m => (
         <div class="card">
-          {sanityImage(m.image) && <img src={sanityImage(m.image)} alt={m.name}>}
+          {m.image && <img src={m.image} alt={m.name}>}
           <h3>{m.name}</h3>
           <p>{m.title}</p>
         </div>
