@@ -9,6 +9,17 @@ const client = createClient({
   useCdn: true,
 });
 
+function sanityImage(img) {
+  if (!img?.asset?._ref) return '';
+  const ref = img.asset._ref;
+  const parts = ref.split('-');
+  // format: image-{id}-{dimensions}-{ext}
+  const ext = parts[parts.length - 1];
+  const dimensions = parts[parts.length - 2];
+  const id = parts.slice(1, parts.length - 2).join('-');
+  return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
+}
+
 const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, board, staff] =
   await Promise.all([
     client.fetch(`*[_type == "hero"][0]`),
@@ -133,7 +144,7 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
       </div>
       <aside class="hero-card">
         <a href={heroCard.ticket_url} target="_blank" rel="noopener">
-          <img src={`/${heroCard.image}`} alt={heroCard.image_alt}>
+          {sanityImage(heroCard.image) && <img src={sanityImage(heroCard.image)} alt={heroCard.image_alt}>}
         </a>
         <h2>{heroCard.title}</h2>
         <p><strong>Date:</strong> {heroCard.date_label}</p>
@@ -230,7 +241,7 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
     <div class="cards">
       {board.members && board.members.map(m => (
         <div class="card">
-          <img src={`/${m.image}`} alt={m.name}>
+          {sanityImage(m.image) && <img src={sanityImage(m.image)} alt={m.name}>}
           <h3>{m.name}</h3>
           <p>{m.title}</p>
         </div>
@@ -241,7 +252,7 @@ const [hero, heroCard, mission, whatWeDo, events, support, contactI, contact, bo
     <div class="cards">
       {staff.members && staff.members.map(m => (
         <div class="card">
-          <img src={`/${m.image}`} alt={m.name}>
+          {sanityImage(m.image) && <img src={sanityImage(m.image)} alt={m.name}>}
           <h3>{m.name}</h3>
           <p>{m.title}</p>
         </div>
