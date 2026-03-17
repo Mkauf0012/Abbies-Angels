@@ -22,7 +22,7 @@ export default defineConfig({
         name: "hero",
         label: "Homepage – Hero",
         path: "_data/homepage",
-        match: { include: "hero_main" },
+        match: { include: "hero" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
@@ -39,7 +39,7 @@ export default defineConfig({
         name: "hero_card",
         label: "Homepage – Hero Card",
         path: "_data/homepage",
-        match: { include: "hero_event_card" },
+        match: { include: "hero_card" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
