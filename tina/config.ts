@@ -22,7 +22,7 @@ export default defineConfig({
         name: "hero",
         label: "Homepage – Hero",
         path: "_data/homepage",
-        match: { include: "hero" },
+        match: { include: "hero", exclude: "hero_*" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [

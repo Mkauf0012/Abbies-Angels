@@ -20,7 +20,7 @@ var config_default = defineConfig({
         name: "hero",
         label: "Homepage \u2013 Hero",
         path: "_data/homepage",
-        match: { include: "hero" },
+        match: { include: "hero", exclude: "hero_*" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
