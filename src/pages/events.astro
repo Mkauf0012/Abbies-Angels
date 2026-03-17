@@ -1,0 +1,254 @@
+---
+import Base from '../layouts/Base.astro';
+import { createClient } from '@sanity/client';
+
+const client = createClient({
+  projectId: '7o31gm3n',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  useCdn: true,
+});
+
+function sanityImage(img: any) {
+  if (!img?.asset?._ref) return '';
+  const ref = img.asset._ref;
+  const parts = ref.split('-');
+  const ext = parts[parts.length - 1];
+  const dimensions = parts[parts.length - 2];
+  const id = parts.slice(1, parts.length - 2).join('-');
+  return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
+}
+
+const [eventsSection, allEvents] = await Promise.all([
+  client.fetch(`*[_type == "events"][0]`),
+  client.fetch(`*[_type == "event" && published == true] | order(date asc)`),
+]);
+
+const featured = allEvents.find((e: any) => e.featured);
+const upcoming = allEvents.filter((e: any) => !e.featured);
+---
+<Base title="Events – Abbie's Angels">
+<style>
+  .page-hero {
+    background: radial-gradient(circle at top left, #ffffff, var(--bg-light));
+    padding: 40px 16px 32px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .page-hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .page-hero h1 {
+    font-size: 2rem;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .page-hero p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 680px;
+  }
+  main { max-width: 1100px; margin: 36px auto 56px; padding: 0 16px; }
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--gold);
+    padding-left: 10px;
+    color: var(--blue);
+  }
+  /* Featured event */
+  .featured-event {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 8px 24px rgba(15,23,42,0.07);
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+  .featured-event img {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+  .featured-event-body {
+    padding: 24px 24px 24px 0;
+  }
+  .featured-badge {
+    display: inline-block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: #000;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .featured-event-body h3 {
+    font-size: 1.5rem;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+  .event-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .event-meta span { display: flex; align-items: center; gap: 5px; }
+  .featured-event-body p {
+    font-size: 0.96rem;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 2px solid transparent;
+    text-decoration: none;
+    transition: transform 0.1s ease, background 0.1s ease;
+  }
+  .btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-1px); text-decoration: none; }
+  /* Event grid */
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 10px;
+  }
+  .event-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .event-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+  .event-card-body {
+    padding: 16px 18px 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .event-card-body h3 {
+    font-size: 1.05rem;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .event-card-body p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    flex: 1;
+  }
+  .no-events {
+    text-align: center;
+    padding: 48px 16px;
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+  @media (max-width: 768px) {
+    .featured-event { grid-template-columns: 1fr; }
+    .featured-event img { min-height: 220px; height: 220px; }
+    .featured-event-body { padding: 16px; }
+  }
+</style>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <h1>{eventsSection?.heading || 'Events'}</h1>
+    {eventsSection?.intro && <p>{eventsSection.intro}</p>}
+  </div>
+</div>
+
+<main>
+  {featured && (
+    <section>
+      <h2>Featured Event</h2>
+      <div class="featured-event">
+        {sanityImage(featured.image) && (
+          <img src={sanityImage(featured.image)} alt={featured.image_alt || featured.title} />
+        )}
+        <div class="featured-event-body">
+          <span class="featured-badge">&#11088; Featured</span>
+          <h3>{featured.title}</h3>
+          <div class="event-meta">
+            {(featured.date_label || featured.date) && (
+              <span>&#128197; {featured.date_label || featured.date}</span>
+            )}
+            {featured.time_label && <span>&#128336; {featured.time_label}</span>}
+            {featured.location && <span>&#128205; {featured.location}</span>}
+          </div>
+          {featured.description && <p>{featured.description}</p>}
+          {featured.ticket_url && (
+            <a class="btn btn-primary" href={featured.ticket_url} target="_blank" rel="noopener">
+              {featured.ticket_label || 'Get Tickets'}
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {upcoming.length > 0 && (
+    <section>
+      <h2>{featured ? 'More Upcoming Events' : 'Upcoming Events'}</h2>
+      <div class="events-grid">
+        {upcoming.map((ev: any) => (
+          <div class="event-card">
+            {sanityImage(ev.image) && (
+              <img src={sanityImage(ev.image)} alt={ev.image_alt || ev.title} />
+            )}
+            <div class="event-card-body">
+              <h3>{ev.title}</h3>
+              <div class="event-meta">
+                {(ev.date_label || ev.date) && <span>&#128197; {ev.date_label || ev.date}</span>}
+                {ev.time_label && <span>&#128336; {ev.time_label}</span>}
+                {ev.location && <span>&#128205; {ev.location}</span>}
+              </div>
+              {ev.description && <p>{ev.description}</p>}
+              {ev.ticket_url && (
+                <a class="btn btn-primary" href={ev.ticket_url} target="_blank" rel="noopener">
+                  {ev.ticket_label || 'Get Tickets'}
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {allEvents.length === 0 && (
+    <div class="no-events">
+      <p>No upcoming events at this time. Check back soon or follow us on social media for updates!</p>
+    </div>
+  )}
+
+  {eventsSection?.footer_note && (
+    <p style="margin-top: 32px; color: var(--text-muted); font-size: 0.95rem;">{eventsSection.footer_note}</p>
+  )}
+</main>
+</Base>
