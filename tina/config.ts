@@ -1,10 +1,9 @@
 import { defineConfig } from "tinacms";
 
 export default defineConfig({
-  branch: "main",
-  clientId: import.meta.env.PUBLIC_TINA_CLIENT_ID!,
-  token: import.meta.env.PUBLIC_TINA_TOKEN!,
-
+  branch: process.env.TINA_BRANCH ?? "main",
+  clientId: process.env.TINA_PUBLIC_CLIENT_ID!,
+  token: process.env.TINA_TOKEN!,
 
   build: {
     outputFolder: "admin",
@@ -23,7 +22,7 @@ export default defineConfig({
         name: "hero",
         label: "Homepage – Hero",
         path: "_data/homepage",
-        match: { include: "hero", exclude: "hero_*" },
+        match: { include: "hero" },
         format: "yaml",
         ui: { allowedActions: { create: false, delete: false } },
         fields: [
