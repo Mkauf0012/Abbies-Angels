@@ -6,7 +6,7 @@ const client = createClient({
   projectId: '7o31gm3n',
   dataset: 'production',
   apiVersion: '2024-01-01',
-  useCdn: true,
+  useCdn: false,
 });
 
 function sanityImage(img: any) {
@@ -21,7 +21,7 @@ function sanityImage(img: any) {
 
 const [eventsSection, allEvents] = await Promise.all([
   client.fetch(`*[_type == "events"][0]`),
-  client.fetch(`*[_type == "event" && published == true] | order(date asc)`),
+  client.fetch(`*[_type == "event" && published != false] | order(date asc)`),
 ]);
 
 const featured = allEvents.find((e: any) => e.featured);
