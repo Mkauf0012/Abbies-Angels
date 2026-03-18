@@ -19,6 +19,16 @@ function sanityImage(img: any) {
   return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
 }
 
+function formatDate(dateStr: string) {
+  if (!dateStr) return '';
+  // If already a friendly label (contains letters beyond month abbr), return as-is
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+}
+
 const [eventsSection, allEvents] = await Promise.all([
   client.fetch(`*[_type == "events"][0]`),
   client.fetch(`*[_type == "event" && published != false] | order(date asc)`),
@@ -34,34 +44,20 @@ const upcoming = allEvents.filter((e: any) => !e.featured);
     padding: 40px 16px 32px;
     border-bottom: 1px solid var(--border-soft);
   }
-  .page-hero-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .page-hero h1 {
-    font-size: 2rem;
-    color: var(--blue);
-    margin-bottom: 8px;
-  }
-  .page-hero p {
-    font-size: 1rem;
-    color: var(--text-muted);
-    max-width: 680px;
-  }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; }
+  .page-hero h1 { font-size: 2rem; color: var(--blue); margin-bottom: 8px; }
+  .page-hero p { font-size: 1rem; color: var(--text-muted); max-width: 680px; }
   main { max-width: 1100px; margin: 36px auto 56px; padding: 0 16px; }
   h2 {
-    font-size: 1.4rem;
-    margin-bottom: 16px;
-    border-left: 4px solid var(--gold);
-    padding-left: 10px;
-    color: var(--blue);
+    font-size: 1.4rem; margin-bottom: 16px;
+    border-left: 4px solid var(--gold); padding-left: 10px; color: var(--blue);
   }
-  /* Featured event */
+  /* Featured */
   .featured-event {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: 24px;
-    align-items: start;
+    gap: 0;
+    align-items: stretch;
     background: #fff;
     border-radius: 16px;
     border: 1px solid var(--border-soft);
@@ -70,109 +66,57 @@ const upcoming = allEvents.filter((e: any) => !e.featured);
     margin-bottom: 48px;
   }
   .featured-event img {
-    width: 100%;
-    height: 100%;
-    min-height: 280px;
-    object-fit: cover;
-    display: block;
+    width: 100%; height: 100%; min-height: 280px; object-fit: cover; display: block;
   }
-  .featured-event-body {
-    padding: 24px 24px 24px 0;
-  }
+  .featured-event-body { padding: 28px 28px 28px 24px; display: flex; flex-direction: column; justify-content: center; }
   .featured-badge {
-    display: inline-block;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: var(--yellow);
-    color: #000;
-    margin-bottom: 10px;
-    font-weight: 600;
+    display: inline-block; font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 4px 10px; border-radius: 999px;
+    background: var(--yellow); color: #000; margin-bottom: 12px; font-weight: 600;
+    width: fit-content;
   }
-  .featured-event-body h3 {
-    font-size: 1.5rem;
-    color: var(--blue);
-    margin-bottom: 10px;
-  }
+  .featured-event-body h3 { font-size: 1.5rem; color: var(--blue); margin-bottom: 10px; }
   .event-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 20px;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-bottom: 14px;
+    display: flex; flex-wrap: wrap; gap: 6px 16px;
+    font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;
   }
   .event-meta span { display: flex; align-items: center; gap: 5px; }
-  .featured-event-body p {
-    font-size: 0.96rem;
-    color: var(--text-muted);
-    margin-bottom: 16px;
-    line-height: 1.6;
-  }
+  .featured-event-body p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 18px; line-height: 1.65; }
+  /* Buttons */
   .btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border: 2px solid transparent;
-    text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 22px; border-radius: 999px; font-size: 0.92rem; font-weight: 600;
+    border: 2px solid transparent; text-decoration: none; width: fit-content;
     transition: transform 0.1s ease, background 0.1s ease;
   }
   .btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); }
   .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-1px); text-decoration: none; }
-  /* Event grid */
+  /* Grid */
   .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px; margin-top: 10px;
   }
   .event-card {
-    background: #fff;
-    border-radius: 14px;
-    border: 1px solid var(--border-soft);
+    background: #fff; border-radius: 14px; border: 1px solid var(--border-soft);
     box-shadow: 0 6px 18px rgba(15,23,42,0.04);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    overflow: hidden; display: flex; flex-direction: column;
   }
-  .event-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-  }
+  .event-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
   .event-card-body {
-    padding: 16px 18px 18px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    padding: 16px 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 8px;
   }
-  .event-card-body h3 {
-    font-size: 1.05rem;
-    color: var(--blue);
-    margin-bottom: 8px;
-  }
-  .event-card-body p {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-    flex: 1;
-  }
+  .event-card-body h3 { font-size: 1.05rem; color: var(--blue); margin: 0; }
+  .event-card-body .desc { font-size: 0.9rem; color: var(--text-muted); flex: 1; margin: 0; }
   .no-events {
-    text-align: center;
-    padding: 48px 16px;
-    color: var(--text-muted);
-    font-size: 1rem;
+    text-align: center; padding: 56px 16px;
+    color: var(--text-muted); font-size: 1rem;
   }
+  .footer-note { margin-top: 36px; color: var(--text-muted); font-size: 0.92rem; }
   @media (max-width: 768px) {
     .featured-event { grid-template-columns: 1fr; }
-    .featured-event img { min-height: 220px; height: 220px; }
-    .featured-event-body { padding: 16px; }
+    .featured-event img { min-height: 200px; height: 200px; }
+    .featured-event-body { padding: 18px; }
   }
 </style>
 
@@ -196,7 +140,7 @@ const upcoming = allEvents.filter((e: any) => !e.featured);
           <h3>{featured.title}</h3>
           <div class="event-meta">
             {(featured.date_label || featured.date) && (
-              <span>&#128197; {featured.date_label || featured.date}</span>
+              <span>&#128197; {featured.date_label || formatDate(featured.date)}</span>
             )}
             {featured.time_label && <span>&#128336; {featured.time_label}</span>}
             {featured.location && <span>&#128205; {featured.location}</span>}
@@ -224,11 +168,11 @@ const upcoming = allEvents.filter((e: any) => !e.featured);
             <div class="event-card-body">
               <h3>{ev.title}</h3>
               <div class="event-meta">
-                {(ev.date_label || ev.date) && <span>&#128197; {ev.date_label || ev.date}</span>}
+                {(ev.date_label || ev.date) && <span>&#128197; {ev.date_label || formatDate(ev.date)}</span>}
                 {ev.time_label && <span>&#128336; {ev.time_label}</span>}
                 {ev.location && <span>&#128205; {ev.location}</span>}
               </div>
-              {ev.description && <p>{ev.description}</p>}
+              {ev.description && <p class="desc">{ev.description}</p>}
               {ev.ticket_url && (
                 <a class="btn btn-primary" href={ev.ticket_url} target="_blank" rel="noopener">
                   {ev.ticket_label || 'Get Tickets'}
@@ -248,7 +192,7 @@ const upcoming = allEvents.filter((e: any) => !e.featured);
   )}
 
   {eventsSection?.footer_note && (
-    <p style="margin-top: 32px; color: var(--text-muted); font-size: 0.95rem;">{eventsSection.footer_note}</p>
+    <p class="footer-note">{eventsSection.footer_note}</p>
   )}
 </main>
 </Base>
