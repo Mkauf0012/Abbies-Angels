@@ -26,7 +26,10 @@ export default defineConfig({
             S.listItem().title('Events').child(
               S.list().title('Events').items([
                 S.documentListItem().schemaType('events').id('events').title('Events Page – Intro Text'),
-                S.documentTypeList('event').title('All Events'),
+                S.listItem()
+                  .title('All Events')
+                  .schemaType('event')
+                  .child(S.documentTypeList('event').title('All Events')),
               ])
             ),
             S.divider(),
