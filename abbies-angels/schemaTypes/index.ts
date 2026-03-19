@@ -8,13 +8,13 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     icon: () => '🏠',
     description: 'The main banner at the top of the homepage — headline, subheadline, and call-to-action buttons.',
     fields: [
-      { name: 'headline', title: 'Headline', type: 'string', description: 'The large bold text at the top of the page.', validation: (R: any) => R.required() },
-      { name: 'subheadline', title: 'Subheadline', type: 'text', rows: 3, description: 'Supporting text beneath the headline.' },
+      { name: 'headline', title: 'Headline', type: 'string', validation: (R: any) => R.required() },
+      { name: 'subheadline', title: 'Subheadline', type: 'text', rows: 3 },
       { name: 'cta_primary_text', title: 'Primary Button Text', type: 'string' },
       { name: 'cta_primary_link', title: 'Primary Button Link', type: 'string', description: 'Use #section-id to scroll, or a full URL.' },
       { name: 'cta_secondary_text', title: 'Secondary Button Text', type: 'string' },
       { name: 'cta_secondary_link', title: 'Secondary Button Link', type: 'string' },
-      { name: 'hero_meta', title: 'Meta Text', type: 'text', rows: 2, description: 'Small impact statement shown below the buttons.' },
+      { name: 'hero_meta', title: 'Meta Text', type: 'text', rows: 2 },
     ],
   },
   {
@@ -22,7 +22,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Homepage – Hero Card (Manual Override)',
     type: 'document',
     icon: () => '📌',
-    description: 'Only used if no Event has "Featured on Homepage" checked. Otherwise the featured Event drives this card automatically.',
+    description: 'Only used if no Event has "Featured on Homepage" checked.',
     fields: [
       { name: 'title', title: 'Event Title', type: 'string' },
       { name: 'date_label', title: 'Date', type: 'string' },
@@ -43,7 +43,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     fields: [
       { name: 'title', title: 'Event Title', type: 'string', validation: (R: any) => R.required() },
       { name: 'date', title: 'Date', type: 'date', options: { dateFormat: 'MMMM D, YYYY' }, validation: (R: any) => R.required() },
-      { name: 'date_label', title: 'Date Display Label', type: 'string', description: 'Friendly override, e.g. "Saturday, December 14, 2026". Leave blank to auto-format.' },
+      { name: 'date_label', title: 'Date Display Label', type: 'string', description: 'Friendly override e.g. "Saturday, December 14, 2026". Leave blank to auto-format.' },
       { name: 'time_label', title: 'Time', type: 'string', description: 'e.g. "6:00 PM – 10:00 PM"' },
       { name: 'location', title: 'Location', type: 'string' },
       { name: 'description', title: 'Description', type: 'text', rows: 5 },
@@ -67,11 +67,10 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Homepage – Mission',
     type: 'document',
     icon: () => '💜',
-    description: 'The mission statement section on the homepage.',
     fields: [
       { name: 'heading', title: 'Heading', type: 'string' },
       { name: 'body_1', title: 'Body Paragraph 1', type: 'text', rows: 4 },
-      { name: 'body_2', title: 'Body Paragraph 2', type: 'text', rows: 4, description: 'Optional second paragraph.' },
+      { name: 'body_2', title: 'Body Paragraph 2', type: 'text', rows: 4 },
     ],
   },
   {
@@ -79,7 +78,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Homepage – What We Do',
     type: 'document',
     icon: () => '🤝',
-    description: 'The three-card "What We Do" section on the homepage.',
     fields: [
       { name: 'heading', title: 'Section Heading', type: 'string' },
       { name: 'card_1_title', title: 'Card 1 – Title', type: 'string' },
@@ -95,12 +93,11 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Events – Page Settings',
     type: 'document',
     icon: () => '⚙️',
-    description: 'Page heading and intro text shown at the top of the /events page. Individual events are managed separately.',
     fields: [
-      { name: 'heading', title: 'Page Heading', type: 'string', description: 'e.g. "Events"' },
+      { name: 'heading', title: 'Page Heading', type: 'string' },
       { name: 'intro', title: 'Intro Text', type: 'text', rows: 3 },
-      { name: 'footer_note', title: 'Footer Note', type: 'text', rows: 2, description: 'Optional note shown at the bottom of the events page.' },
-      { name: 'view_all_label', title: 'View All Button Label', type: 'string', description: 'Text on the homepage "View All Events" link. Defaults to "View All Events →".' },
+      { name: 'footer_note', title: 'Footer Note', type: 'text', rows: 2 },
+      { name: 'view_all_label', title: 'View All Button Label', type: 'string' },
     ],
   },
   {
@@ -108,7 +105,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Ways to Help',
     type: 'document',
     icon: () => '💛',
-    description: 'The "Ways to Give & Help" section — bullet points and donation card.',
     fields: [
       { name: 'heading', title: 'Section Heading', type: 'string' },
       { name: 'intro', title: 'Intro Text', type: 'text', rows: 3 },
@@ -127,23 +123,12 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Contact',
     type: 'document',
     icon: () => '📧',
-    description: 'Everything contact-related in one place — section heading, intro text, email, social links, and mailing address.',
+    description: 'Everything contact-related in one place — section heading, intro, email, social links, and mailing address.',
     fields: [
-      {
-        name: 'heading',
-        title: 'Section Heading',
-        type: 'string',
-        description: 'Heading shown above the contact cards on the homepage, e.g. "Get in Touch".',
-      },
-      {
-        name: 'intro',
-        title: 'Intro Text',
-        type: 'text',
-        rows: 3,
-        description: 'A welcoming sentence or two inviting visitors to reach out.',
-      },
+      { name: 'heading', title: 'Section Heading', type: 'string' },
+      { name: 'intro', title: 'Intro Text', type: 'text', rows: 3 },
       { name: 'email', title: 'Email Address', type: 'string' },
-      { name: 'phone', title: 'Phone Number', type: 'string', description: 'Leave blank if not publicly listed.' },
+      { name: 'phone', title: 'Phone Number', type: 'string' },
       { name: 'facebook', title: 'Facebook URL', type: 'string' },
       { name: 'instagram', title: 'Instagram URL', type: 'string' },
       { name: 'linkedin', title: 'LinkedIn URL', type: 'string' },
@@ -157,10 +142,63 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Donation Button',
     type: 'document',
     icon: () => '💰',
-    description: 'Controls the Donate button that appears sitewide.',
     fields: [
-      { name: 'url', title: 'Donation URL', type: 'string', description: 'Usually GoFundMe or Donorbox.', validation: (R: any) => R.required() },
-      { name: 'label', title: 'Button Label', type: 'string', description: 'e.g. "Donate Now"', validation: (R: any) => R.required() },
+      { name: 'url', title: 'Donation URL', type: 'string', validation: (R: any) => R.required() },
+      { name: 'label', title: 'Button Label', type: 'string', validation: (R: any) => R.required() },
+    ],
+  },
+  {
+    name: 'gallery_settings',
+    title: 'Gallery – Page Settings',
+    type: 'document',
+    icon: () => '🖼️',
+    description: 'Page heading, intro, and section labels for the Gallery page.',
+    fields: [
+      { name: 'title', title: 'Page Title', type: 'string', description: 'e.g. "Gallery & Family Spotlight"' },
+      { name: 'intro', title: 'Intro Text', type: 'text', rows: 3 },
+      { name: 'highlights_heading', title: 'Highlights Section Heading', type: 'string', description: 'e.g. "Event Highlights"' },
+      { name: 'highlights_intro', title: 'Highlights Intro Text', type: 'text', rows: 2 },
+      { name: 'spotlight_heading', title: 'Spotlight Section Heading', type: 'string', description: 'e.g. "Family Spotlight"' },
+      { name: 'spotlight_intro', title: 'Spotlight Intro Text', type: 'text', rows: 2 },
+    ],
+  },
+  {
+    name: 'gallery_image',
+    title: 'Gallery Image',
+    type: 'document',
+    icon: () => '📸',
+    description: 'An individual photo shown in the Event Highlights grid. Set order to control position.',
+    fields: [
+      { name: 'title', title: 'Title', type: 'string', description: 'Short label shown under the photo.', validation: (R: any) => R.required() },
+      { name: 'caption', title: 'Caption', type: 'string', description: 'Optional short description shown under the title.' },
+      { name: 'image', title: 'Image', type: 'image', options: { hotspot: true }, description: 'The photo to display.' },
+      { name: 'image_alt', title: 'Image Alt Text', type: 'string' },
+      { name: 'order', title: 'Sort Order', type: 'number', description: 'Lower numbers appear first. e.g. 1, 2, 3...', initialValue: 99 },
+      { name: 'published', title: 'Published', type: 'boolean', description: 'Show in the gallery. Toggle off to hide without deleting.', initialValue: true },
+    ],
+    preview: {
+      select: { title: 'title', subtitle: 'caption', media: 'image', order: 'order', published: 'published' },
+      prepare({ title, subtitle, media, order, published }: any) {
+        return { title: `${order ?? 99}. ${title}`, subtitle: published ? subtitle : '🚫 Hidden', media }
+      },
+    },
+  },
+  {
+    name: 'spotlight',
+    title: 'Gallery – Family Spotlight',
+    type: 'document',
+    icon: () => '❤️',
+    description: 'The featured family story shown at the bottom of the Gallery page. One spotlight at a time.',
+    fields: [
+      { name: 'title', title: 'Family / Story Title', type: 'string', validation: (R: any) => R.required() },
+      { name: 'image', title: 'Photo', type: 'image', options: { hotspot: true } },
+      { name: 'image_alt', title: 'Image Alt Text', type: 'string' },
+      { name: 'body_1', title: 'Paragraph 1', type: 'text', rows: 4 },
+      { name: 'body_2', title: 'Paragraph 2', type: 'text', rows: 4 },
+      { name: 'body_3', title: 'Paragraph 3 (before link)', type: 'text', rows: 4 },
+      { name: 'gofundme_url', title: 'GoFundMe / Donation URL', type: 'string' },
+      { name: 'gofundme_label', title: 'Donation Link Label', type: 'string', description: 'e.g. "Donate to Chelsea\'s Journey to Health"' },
+      { name: 'body_4', title: 'Paragraph 4 (optional closing)', type: 'text', rows: 3 },
     ],
   },
   {
@@ -168,7 +206,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Team – Board Members',
     type: 'document',
     icon: () => '👥',
-    description: 'Board members shown on the site. Add, remove, or drag to reorder.',
     fields: [
       {
         name: 'members', title: 'Board Members', type: 'array',
@@ -189,7 +226,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     title: 'Team – Staff & Partners',
     type: 'document',
     icon: () => '🌟',
-    description: 'Staff and partners shown on the site. Add, remove, or drag to reorder.',
     fields: [
       {
         name: 'members', title: 'Staff & Partners', type: 'array',

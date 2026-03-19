@@ -1,81 +1,142 @@
 ---
 import Base from '../layouts/Base.astro';
-import { readFileSync } from 'fs';
-import { load } from 'js-yaml';
-import { join } from 'path';
+import { createClient } from '@sanity/client';
 
-function loadYaml(rel) {
-  try {
-    return load(readFileSync(join(process.cwd(), '_data', rel), 'utf8')) || {};
-  } catch { return {}; }
+const client = createClient({
+  projectId: '7o31gm3n',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  useCdn: false,
+});
+
+function sanityImage(img: any) {
+  if (!img?.asset?._ref) return '';
+  const ref = img.asset._ref;
+  const parts = ref.split('-');
+  const ext = parts[parts.length - 1];
+  const dimensions = parts[parts.length - 2];
+  const id = parts.slice(1, parts.length - 2).join('-');
+  return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
 }
 
-const page      = loadYaml('gallery/page.yml');
-const spotlight = loadYaml('gallery/spotlight.yml');
-const tilesData = loadYaml('gallery/tiles.yml');
-const tiles     = tilesData.tiles || [];
+const [page, photos, spotlight] = await Promise.all([
+  client.fetch(`*[_type == "gallery_settings"][0]`),
+  client.fetch(`*[_type == "gallery_image" && published != false] | order(order asc, _createdAt asc)`),
+  client.fetch(`*[_type == "spotlight"][0]`),
+]);
 ---
-<Base title="Abbie's Angels – Gallery">
+<Base title="Gallery – Abbie's Angels">
 <style>
-  main { max-width: 1100px; margin: 28px auto 40px; padding: 0 16px 16px; }
-  h1 { font-size: 1.8rem; margin-bottom: 6px; color: var(--blue); }
-  p { color: var(--text-muted); font-size: 0.98rem; margin-bottom: 12px; }
-  h2 { font-size: 1.4rem; margin: 26px 0 10px; border-left: 4px solid var(--gold); padding-left: 10px; color: var(--blue); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; margin-top: 10px; }
-  .tile { border-radius: 14px; border: 1px solid var(--border-soft); overflow: hidden; background: #fff; box-shadow: 0 6px 18px rgba(15,23,42,0.04); }
-  .tile img { width: 100%; height: 220px; display: block; object-fit: cover; }
+  .page-hero {
+    background: radial-gradient(circle at top left, #ffffff, var(--bg-light));
+    padding: 40px 16px 32px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; }
+  .page-hero h1 { font-size: 2rem; color: var(--blue); margin-bottom: 8px; }
+  .page-hero p { font-size: 1rem; color: var(--text-muted); max-width: 680px; }
+  main { max-width: 1100px; margin: 36px auto 56px; padding: 0 16px; }
+  h2 {
+    font-size: 1.4rem; margin-bottom: 8px;
+    border-left: 4px solid var(--gold); padding-left: 10px; color: var(--blue);
+  }
+  .section-intro { font-size: 0.97rem; color: var(--text-muted); margin-bottom: 16px; }
+  /* Photo grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 10px;
+  }
+  .tile {
+    border-radius: 14px; border: 1px solid var(--border-soft);
+    overflow: hidden; background: #fff;
+    box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+  }
+  .tile img { width: 100%; height: 220px; display: block; object-fit: cover; object-position: center; }
   .tile-body { padding: 10px 12px 12px; }
   .tile-body h3 { font-size: 1rem; margin-bottom: 4px; color: var(--blue); }
-  .tile-body p { font-size: 0.9rem; margin-bottom: 0; }
+  .tile-body p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+  /* Spotlight */
   .spotlight {
     border-radius: 16px; border: 1px solid var(--border-soft);
-    padding: 16px 18px; background: #fff;
-    box-shadow: 0 8px 22px rgba(15,23,42,0.05); margin-top: 10px;
-    display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1.2fr);
-    gap: 18px; align-items: start;
+    padding: 24px; background: #fff;
+    box-shadow: 0 8px 22px rgba(15,23,42,0.05); margin-top: 16px;
+    display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr);
+    gap: 24px; align-items: start;
   }
-  .spotlight img { width: 100%; max-height: 420px; border-radius: 12px; display: block; object-fit: contain; }
-  .spotlight h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--blue); }
-  .spotlight p { font-size: 0.94rem; }
-  @media (max-width: 768px) { .spotlight { grid-template-columns: 1fr; } }
+  .spotlight img {
+    width: 100%; max-height: 440px; border-radius: 12px;
+    display: block; object-fit: contain;
+  }
+  .spotlight h3 { font-size: 1.15rem; margin-bottom: 10px; color: var(--blue); }
+  .spotlight p { font-size: 0.94rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.65; }
+  .no-content {
+    text-align: center; padding: 48px 16px;
+    color: var(--text-muted); font-size: 1rem;
+  }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .spotlight { grid-template-columns: 1fr; }
+  }
 </style>
 
-<main>
-  <h1>{page.title}</h1>
-  <p>{page.intro}</p>
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <h1>{page?.title || 'Gallery & Family Spotlight'}</h1>
+    {page?.intro && <p>{page.intro}</p>}
+  </div>
+</div>
 
-  <h2>{page.highlights_heading}</h2>
-  <p>{page.highlights_intro}</p>
-  <div class="grid">
-    {tiles.map(t => (
-      <div class="tile">
-        <img src={`/${t.image}`} alt={t.alt}>
-        <div class="tile-body">
-          <h3>{t.title}</h3>
-          <p>{t.caption}</p>
+<main>
+  <section>
+    <h2>{page?.highlights_heading || 'Event Highlights'}</h2>
+    {page?.highlights_intro && <p class="section-intro">{page.highlights_intro}</p>}
+    {photos.length > 0 ? (
+      <div class="grid">
+        {photos.map((p: any) => (
+          <div class="tile">
+            {sanityImage(p.image) && (
+              <img src={sanityImage(p.image)} alt={p.image_alt || p.title} />
+            )}
+            <div class="tile-body">
+              <h3>{p.title}</h3>
+              {p.caption && <p>{p.caption}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="no-content"><p>No gallery photos yet. Add some in the Studio under Gallery → Photos.</p></div>
+    )}
+  </section>
+
+  {spotlight && (
+    <section style="margin-top: 48px;">
+      <h2>{page?.spotlight_heading || 'Family Spotlight'}</h2>
+      {page?.spotlight_intro && <p class="section-intro">{page.spotlight_intro}</p>}
+      <div class="spotlight">
+        {sanityImage(spotlight.image) && (
+          <img src={sanityImage(spotlight.image)} alt={spotlight.image_alt || spotlight.title} />
+        )}
+        <div>
+          <h3>{spotlight.title}</h3>
+          {spotlight.body_1 && <p>{spotlight.body_1}</p>}
+          {spotlight.body_2 && <p>{spotlight.body_2}</p>}
+          {spotlight.body_3 && (
+            <p>
+              {spotlight.body_3}
+              {spotlight.gofundme_url && (
+                <> <a href={spotlight.gofundme_url} target="_blank" rel="noopener">{spotlight.gofundme_label}</a>.
+                </>
+              )}
+            </p>
+          )}
+          {spotlight.body_4 && <p>{spotlight.body_4}</p>}
         </div>
       </div>
-    ))}
-  </div>
-
-  <h2>{page.spotlight_heading}</h2>
-  <p>{page.spotlight_intro}</p>
-  <div class="spotlight">
-    <img src={`/${spotlight.image}`} alt={spotlight.image_alt}>
-    <div>
-      <h3>{spotlight.title}</h3>
-      <p>{spotlight.body_1}</p>
-      <p>{spotlight.body_2}</p>
-      <p>
-        {spotlight.body_3}
-        {spotlight.gofundme_url && (
-          <a href={spotlight.gofundme_url} target="_blank" rel="noopener">
-            {spotlight.gofundme_label}
-          </a>
-        )}.
-      </p>
-      {spotlight.body_4 && <p>{spotlight.body_4}</p>}
-    </div>
-  </div>
+    </section>
+  )}
 </main>
 </Base>

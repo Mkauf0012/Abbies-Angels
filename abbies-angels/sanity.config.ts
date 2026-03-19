@@ -14,7 +14,6 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
-            // --- Homepage ---
             S.listItem().title('Homepage').icon(() => '🏠').child(
               S.list().title('Homepage').items([
                 S.documentListItem().schemaType('hero').id('hero').title('Hero Banner'),
@@ -23,7 +22,6 @@ export default defineConfig({
               ])
             ),
             S.divider(),
-            // --- Events ---
             S.listItem().title('Events').icon(() => '🎟️').child(
               S.list().title('Events').items([
                 S.documentListItem().schemaType('events').id('events').title('⚙️ Page Settings'),
@@ -34,16 +32,23 @@ export default defineConfig({
               ])
             ),
             S.divider(),
-            // --- Ways to Help ---
+            S.listItem().title('Gallery').icon(() => '🖼️').child(
+              S.list().title('Gallery').items([
+                S.documentListItem().schemaType('gallery_settings').id('gallery_settings').title('⚙️ Page Settings'),
+                S.listItem()
+                  .title('📸 Photos')
+                  .schemaType('gallery_image')
+                  .child(S.documentTypeList('gallery_image').title('Gallery Photos').defaultOrdering([{field: 'order', direction: 'asc'}])),
+                S.documentListItem().schemaType('spotlight').id('spotlight').title('❤️ Family Spotlight'),
+              ])
+            ),
+            S.divider(),
             S.documentListItem().schemaType('support').id('support').title('Ways to Help').icon(() => '💛'),
             S.divider(),
-            // --- Contact ---
             S.documentListItem().schemaType('contact').id('contact').title('Contact').icon(() => '📧'),
             S.divider(),
-            // --- Donation ---
             S.documentListItem().schemaType('donation').id('donation').title('Donation Button').icon(() => '💰'),
             S.divider(),
-            // --- Team ---
             S.listItem().title('Team').icon(() => '👥').child(
               S.list().title('Team').items([
                 S.documentListItem().schemaType('board').id('board').title('Board Members'),
@@ -51,7 +56,6 @@ export default defineConfig({
               ])
             ),
             S.divider(),
-            // --- Advanced ---
             S.listItem().title('Advanced').icon(() => '⚙️').child(
               S.list().title('Advanced').items([
                 S.documentListItem().schemaType('hero_card').id('hero_card').title('Hero Card (Manual Override)'),
