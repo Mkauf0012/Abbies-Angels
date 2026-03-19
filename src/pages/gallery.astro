@@ -9,16 +9,6 @@ const client = createClient({
   useCdn: false,
 });
 
-function sanityImage(img: any) {
-  if (!img?.asset?._ref) return '';
-  const ref = img.asset._ref;
-  const parts = ref.split('-');
-  const ext = parts[parts.length - 1];
-  const dimensions = parts[parts.length - 2];
-  const id = parts.slice(1, parts.length - 2).join('-');
-  return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
-}
-
 const [page, photos, spotlight] = await Promise.all([
   client.fetch(`*[_type == "gallery_settings"][0]`),
   client.fetch(`*[_type == "gallery_image" && published != false] | order(order asc, _createdAt asc)`),
@@ -41,12 +31,10 @@ const [page, photos, spotlight] = await Promise.all([
     border-left: 4px solid var(--gold); padding-left: 10px; color: var(--blue);
   }
   .section-intro { font-size: 0.97rem; color: var(--text-muted); margin-bottom: 16px; }
-  /* Photo grid */
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 10px;
+    gap: 16px; margin-top: 10px;
   }
   .tile {
     border-radius: 14px; border: 1px solid var(--border-soft);
@@ -57,7 +45,6 @@ const [page, photos, spotlight] = await Promise.all([
   .tile-body { padding: 10px 12px 12px; }
   .tile-body h3 { font-size: 1rem; margin-bottom: 4px; color: var(--blue); }
   .tile-body p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
-  /* Spotlight */
   .spotlight {
     border-radius: 16px; border: 1px solid var(--border-soft);
     padding: 24px; background: #fff;
@@ -71,10 +58,7 @@ const [page, photos, spotlight] = await Promise.all([
   }
   .spotlight h3 { font-size: 1.15rem; margin-bottom: 10px; color: var(--blue); }
   .spotlight p { font-size: 0.94rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.65; }
-  .no-content {
-    text-align: center; padding: 48px 16px;
-    color: var(--text-muted); font-size: 1rem;
-  }
+  .no-content { text-align: center; padding: 48px 16px; color: var(--text-muted); font-size: 1rem; }
   @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px) {
     .grid { grid-template-columns: 1fr; }
@@ -97,9 +81,7 @@ const [page, photos, spotlight] = await Promise.all([
       <div class="grid">
         {photos.map((p: any) => (
           <div class="tile">
-            {sanityImage(p.image) && (
-              <img src={sanityImage(p.image)} alt={p.image_alt || p.title} />
-            )}
+            {p.image && <img src={p.image.startsWith('http') ? p.image : `/${p.image.replace(/^\//, '')}`} alt={p.image_alt || p.title} />}
             <div class="tile-body">
               <h3>{p.title}</h3>
               {p.caption && <p>{p.caption}</p>}
@@ -108,7 +90,7 @@ const [page, photos, spotlight] = await Promise.all([
         ))}
       </div>
     ) : (
-      <div class="no-content"><p>No gallery photos yet. Add some in the Studio under Gallery → Photos.</p></div>
+      <div class="no-content"><p>No gallery photos yet.</p></div>
     )}
   </section>
 
@@ -117,8 +99,11 @@ const [page, photos, spotlight] = await Promise.all([
       <h2>{page?.spotlight_heading || 'Family Spotlight'}</h2>
       {page?.spotlight_intro && <p class="section-intro">{page.spotlight_intro}</p>}
       <div class="spotlight">
-        {sanityImage(spotlight.image) && (
-          <img src={sanityImage(spotlight.image)} alt={spotlight.image_alt || spotlight.title} />
+        {spotlight.image && (
+          <img
+            src={spotlight.image.startsWith('http') ? spotlight.image : `/${spotlight.image.replace(/^\//, '')}`}
+            alt={spotlight.image_alt || spotlight.title}
+          />
         )}
         <div>
           <h3>{spotlight.title}</h3>
@@ -126,11 +111,10 @@ const [page, photos, spotlight] = await Promise.all([
           {spotlight.body_2 && <p>{spotlight.body_2}</p>}
           {spotlight.body_3 && (
             <p>
-              {spotlight.body_3}
+              {spotlight.body_3}{' '}
               {spotlight.gofundme_url && (
-                <> <a href={spotlight.gofundme_url} target="_blank" rel="noopener">{spotlight.gofundme_label}</a>.
-                </>
-              )}
+                <a href={spotlight.gofundme_url} target="_blank" rel="noopener">{spotlight.gofundme_label}</a>
+              )}.
             </p>
           )}
           {spotlight.body_4 && <p>{spotlight.body_4}</p>}
