@@ -107,7 +107,16 @@ const displayCard = heroCard || null;
   }
   .card h3 { font-size: 1.05rem; margin-bottom: 6px; color: var(--blue); }
   .card p { font-size: 0.9rem; color: var(--text-muted); }
-  .card img { width: 100%; height: 220px; border-radius: 10px; margin-bottom: 8px; display: block; object-fit: cover; }
+  /* Default card images */
+  .card img {
+    width: 100%; height: 220px; border-radius: 10px; margin-bottom: 8px;
+    display: block; object-fit: cover; object-position: center;
+  }
+  /* Team member photos - anchor to top so heads never crop */
+  .card-team img {
+    height: 260px;
+    object-position: top;
+  }
   .card-photo-events img { height: auto; object-fit: contain; }
   .two-col {
     display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
@@ -130,7 +139,8 @@ const displayCard = heroCard || null;
     .hero h1 { font-size: 1.7rem; }
   }
   @media (max-width: 600px) {
-    .card img { height: auto; max-height: 260px; object-fit: contain; }
+    .card img { height: auto; max-height: 280px; object-fit: contain; }
+    .card-team img { height: auto; max-height: 320px; object-fit: contain; }
     .card-photo-events img { max-height: 260px; }
   }
 </style>
@@ -274,7 +284,7 @@ const displayCard = heroCard || null;
     <p>Abbie's Angels is led by a volunteer board, dedicated partners, and friends who pour their time and talents into supporting caregivers and families.</p>
     <div class="cards">
       {board.members && board.members.map((m: any) => (
-        <div class="card">
+        <div class="card card-team">
           {m.image && <img src={m.image} alt={m.name}>}
           <h3>{m.name}</h3>
           <p>{m.title}</p>
@@ -285,7 +295,7 @@ const displayCard = heroCard || null;
     <p>These leaders and volunteers help shape events, storytelling, and day-to-day support for Abbie's Angels families.</p>
     <div class="cards">
       {staff.members && staff.members.map((m: any) => (
-        <div class="card">
+        <div class="card card-team">
           {m.image && <img src={m.image} alt={m.name}>}
           <h3>{m.name}</h3>
           <p>{m.title}</p>
