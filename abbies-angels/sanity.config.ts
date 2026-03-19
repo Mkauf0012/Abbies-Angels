@@ -14,41 +14,47 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
-            S.listItem().title('Homepage').child(
+            // --- Homepage ---
+            S.listItem().title('Homepage').icon(() => '🏠').child(
               S.list().title('Homepage').items([
                 S.documentListItem().schemaType('hero').id('hero').title('Hero Banner'),
-                S.documentListItem().schemaType('hero_card').id('hero_card').title('Hero Card (Manual Override)'),
                 S.documentListItem().schemaType('mission').id('mission').title('Mission'),
                 S.documentListItem().schemaType('what_we_do').id('what_we_do').title('What We Do'),
               ])
             ),
             S.divider(),
-            S.listItem().title('Events').child(
+            // --- Events ---
+            S.listItem().title('Events').icon(() => '🎟️').child(
               S.list().title('Events').items([
-                S.documentListItem().schemaType('events').id('events').title('Events Page – Intro Text'),
+                S.documentListItem().schemaType('events').id('events').title('⚙️ Page Settings'),
                 S.listItem()
-                  .title('All Events')
+                  .title('📅 All Events')
                   .schemaType('event')
                   .child(S.documentTypeList('event').title('All Events')),
               ])
             ),
             S.divider(),
-            S.listItem().title('Sections').child(
-              S.list().title('Sections').items([
-                S.documentListItem().schemaType('support').id('support').title('Ways to Help'),
-                S.documentListItem().schemaType('contact_intro').id('contact_intro').title('Contact Intro'),
-              ])
-            ),
-            S.listItem().title('Settings').child(
-              S.list().title('Settings').items([
-                S.documentListItem().schemaType('contact').id('contact').title('Contact Info'),
-                S.documentListItem().schemaType('donation').id('donation').title('Donation Button'),
-              ])
-            ),
-            S.listItem().title('Team').child(
+            // --- Ways to Help ---
+            S.documentListItem().schemaType('support').id('support').title('Ways to Help').icon(() => '💛'),
+            S.divider(),
+            // --- Contact ---
+            S.documentListItem().schemaType('contact').id('contact').title('Contact').icon(() => '📧'),
+            S.divider(),
+            // --- Donation ---
+            S.documentListItem().schemaType('donation').id('donation').title('Donation Button').icon(() => '💰'),
+            S.divider(),
+            // --- Team ---
+            S.listItem().title('Team').icon(() => '👥').child(
               S.list().title('Team').items([
                 S.documentListItem().schemaType('board').id('board').title('Board Members'),
                 S.documentListItem().schemaType('staff').id('staff').title('Staff & Partners'),
+              ])
+            ),
+            S.divider(),
+            // --- Advanced ---
+            S.listItem().title('Advanced').icon(() => '⚙️').child(
+              S.list().title('Advanced').items([
+                S.documentListItem().schemaType('hero_card').id('hero_card').title('Hero Card (Manual Override)'),
               ])
             ),
           ]),

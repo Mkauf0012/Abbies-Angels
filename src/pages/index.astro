@@ -19,22 +19,20 @@ function sanityImage(img: any) {
   return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
 }
 
-const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support, contactI, contact, board, staff] =
+const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support, contact, board, staff] =
   await Promise.all([
     client.fetch(`*[_type == "hero"][0]`),
     client.fetch(`*[_type == "hero_card"][0]`),
     client.fetch(`*[_type == "mission"][0]`),
     client.fetch(`*[_type == "what_we_do"][0]`),
     client.fetch(`*[_type == "events"][0]`),
-    client.fetch(`*[_type == "event" && featured == true && published == true][0]`),
+    client.fetch(`*[_type == "event" && featured == true && published != false][0]`),
     client.fetch(`*[_type == "support"][0]`),
-    client.fetch(`*[_type == "contact_intro"][0]`),
     client.fetch(`*[_type == "contact"][0]`),
     client.fetch(`*[_type == "board"][0]`),
     client.fetch(`*[_type == "staff"][0]`),
   ]);
 
-// Fall back to hero_card data if no featured event is set yet
 const displayEvent = featuredEvent || null;
 const displayCard = heroCard || null;
 ---
@@ -154,8 +152,6 @@ const displayCard = heroCard || null;
         </div>
         <p class="hero-meta">{hero.hero_meta}</p>
       </div>
-
-      {/* Hero card: prefer featured event, fall back to hero_card */}
       <aside class="hero-card">
         {displayEvent ? (
           <>
@@ -299,21 +295,21 @@ const displayCard = heroCard || null;
   </section>
 
   <section id="contact">
-    <h2>{contactI.heading}</h2>
-    <p>{contactI.intro}</p>
+    <h2>{contact?.heading || 'Get in Touch'}</h2>
+    <p>{contact?.intro}</p>
     <div class="cards">
       <div class="card">
         <h3>General Inquiries</h3>
         <p>Message us directly on social media and a member of our volunteer team will respond as soon as possible.</p>
         <div class="social-row">
           <span>Connect:</span>
-          {contact.facebook && (
+          {contact?.facebook && (
             <span class="social-icon">&#127760; <a href={contact.facebook} target="_blank" rel="noopener">Facebook</a></span>
           )}
-          {contact.instagram && (
+          {contact?.instagram && (
             <span class="social-icon">&#128248; <a href={contact.instagram} target="_blank" rel="noopener">Instagram</a></span>
           )}
-          {contact.linkedin && (
+          {contact?.linkedin && (
             <span class="social-icon">&#128188; <a href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a></span>
           )}
         </div>
@@ -321,8 +317,8 @@ const displayCard = heroCard || null;
       <div class="card">
         <h3>Mailing / Email</h3>
         <p>Use our mailing address for letters, checks, and sponsorship forms.</p>
-        <p>{contact.mailing_name}<br/>{contact.mailing_street}<br/>{contact.mailing_city}</p>
-        <p>Email: <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+        <p>{contact?.mailing_name}<br/>{contact?.mailing_street}<br/>{contact?.mailing_city}</p>
+        <p>Email: <a href={`mailto:${contact?.email}`}>{contact?.email}</a></p>
       </div>
     </div>
   </section>
