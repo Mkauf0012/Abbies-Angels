@@ -26,7 +26,7 @@ const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support,
     client.fetch(`*[_type == "mission"][0]`),
     client.fetch(`*[_type == "what_we_do"][0]`),
     client.fetch(`*[_type == "events"][0]`),
-    client.fetch(`*[_type == "event" && featured == true && published != false][0]`),
+    client.fetch(`*[_type == "event" && featured == true && published != false && past != true][0]`),
     client.fetch(`*[_type == "support"][0]`),
     client.fetch(`*[_type == "contact"][0]`),
     client.fetch(`*[_type == "board"][0]`),
@@ -79,16 +79,21 @@ const displayCard = heroCard || null;
   }
   .hero-card h2 { font-size: 1.05rem; margin-bottom: 8px; color: var(--blue); }
   .hero-card p { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 8px; }
-  .hero-card img {
-    width: 100%; border-radius: 12px; margin-bottom: 10px; display: block;
-    object-fit: cover; height: 220px; object-position: top;
-    transition: transform 0.12s ease;
-  }
+  .hero-card a { text-decoration: none; }
   .hero-card a:hover img { transform: scale(1.01); }
+  .hero-card img {
+    width: 100%; height: auto; border-radius: 12px; margin-bottom: 10px; display: block;
+    transition: transform 0.12s ease; object-fit: contain;
+  }
   .badge {
     display: inline-block; font-size: 0.8rem; text-transform: uppercase;
     letter-spacing: 0.08em; padding: 4px 10px; border-radius: 999px;
     background: var(--yellow); color: #000; margin-bottom: 8px;
+  }
+  .event-badge {
+    display: inline-block; font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 3px 10px; border-radius: 999px;
+    background: var(--accent-red); color: #ffffff; margin-bottom: 10px; font-weight: 700;
   }
   main { max-width: 1100px; margin: 32px auto 48px; padding: 0 16px; }
   section { margin-bottom: 40px; }
@@ -107,16 +112,11 @@ const displayCard = heroCard || null;
   }
   .card h3 { font-size: 1.05rem; margin-bottom: 6px; color: var(--blue); }
   .card p { font-size: 0.9rem; color: var(--text-muted); }
-  /* Default card images */
   .card img {
     width: 100%; height: 220px; border-radius: 10px; margin-bottom: 8px;
     display: block; object-fit: cover; object-position: center;
   }
-  /* Team member photos - anchor to top so heads never crop */
-  .card-team img {
-    height: 260px;
-    object-position: top;
-  }
+  .card-team img { height: 260px; object-position: top; }
   .card-photo-events img { height: auto; object-fit: contain; }
   .two-col {
     display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
@@ -127,8 +127,7 @@ const displayCard = heroCard || null;
   .event-meta { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px; }
   .view-all-link {
     display: inline-block; margin-top: 14px;
-    font-size: 0.95rem; font-weight: 600; color: var(--blue);
-    text-decoration: none;
+    font-size: 0.95rem; font-weight: 600; color: var(--blue); text-decoration: none;
   }
   .view-all-link:hover { text-decoration: underline; }
   .social-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; }
@@ -165,36 +164,59 @@ const displayCard = heroCard || null;
       <aside class="hero-card">
         {displayEvent ? (
           <>
+            <span class="event-badge">
+              Upcoming Event{displayEvent.date_label ? ` — ${displayEvent.date_label}` : ''}
+            </span>
             {sanityImage(displayEvent.image) && (
-              <a href="/events">
-                <img src={sanityImage(displayEvent.image)} alt={displayEvent.image_alt || displayEvent.title} />
+              <a href={displayEvent.ticket_url || '/events'} target={displayEvent.ticket_url ? '_blank' : '_self'} rel="noopener">
+                <img
+                  src={sanityImage(displayEvent.image)}
+                  alt={displayEvent.image_alt || `${displayEvent.title} flyer – click for tickets`}
+                  loading="lazy"
+                />
               </a>
             )}
             <h2>{displayEvent.title}</h2>
             {(displayEvent.date_label || displayEvent.date) && (
               <p><strong>Date:</strong> {displayEvent.date_label || displayEvent.date}</p>
             )}
-            {displayEvent.time_label && <p><strong>Time:</strong> {displayEvent.time_label}</p>}
+            {displayEvent.time_label && <p><strong>Doors Open:</strong> {displayEvent.time_label}</p>}
             {displayEvent.location && <p><strong>Location:</strong> {displayEvent.location}</p>}
             {displayEvent.description && <p>{displayEvent.description}</p>}
             {displayEvent.ticket_url && (
-              <a class="btn btn-primary btn-sm" href={displayEvent.ticket_url} target="_blank" rel="noopener">
-                {displayEvent.ticket_label || 'Get Tickets'}
-              </a>
+              <p>
+                Tap the image above or{' '}
+                <a href={displayEvent.ticket_url} target="_blank" rel="noopener">
+                  click here to get tickets
+                </a>.
+              </p>
             )}
           </>
         ) : displayCard ? (
           <>
+            <span class="event-badge">Upcoming Event</span>
             {sanityImage(displayCard.image) && (
-              <a href={displayCard.ticket_url} target="_blank" rel="noopener">
-                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt} />
+              <a href={displayCard.ticket_url || '#'} target="_blank" rel="noopener">
+                <img
+                  src={sanityImage(displayCard.image)}
+                  alt={displayCard.image_alt || displayCard.title}
+                  loading="lazy"
+                />
               </a>
             )}
             <h2>{displayCard.title}</h2>
-            <p><strong>Date:</strong> {displayCard.date_label}</p>
-            <p><strong>Time:</strong> {displayCard.time_label}</p>
-            <p><strong>Location:</strong> {displayCard.location_label}</p>
-            <p>{displayCard.description}</p>
+            {displayCard.date_label && <p><strong>Date:</strong> {displayCard.date_label}</p>}
+            {displayCard.time_label && <p><strong>Doors Open:</strong> {displayCard.time_label}</p>}
+            {displayCard.location_label && <p><strong>Location:</strong> {displayCard.location_label}</p>}
+            {displayCard.description && <p>{displayCard.description}</p>}
+            {displayCard.ticket_url && (
+              <p>
+                Tap the image above or{' '}
+                <a href={displayCard.ticket_url} target="_blank" rel="noopener">
+                  click here to get tickets
+                </a>.
+              </p>
+            )}
           </>
         ) : null}
       </aside>
