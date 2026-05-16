@@ -1,3 +1,4 @@
+---
 import Base from '../layouts/Base.astro';
 import { createClient } from '@sanity/client';
 
@@ -27,16 +28,14 @@ function formatDate(dateStr: string) {
   });
 }
 
-const today = new Date().toISOString().split('T')[0];
-
 const [eventsSection, allEvents] = await Promise.all([
   client.fetch(`*[_type == "events"][0]`),
-  client.fetch(`*[_type == "event" && published != false] | order(date desc)`),
+  client.fetch(`*[_type == "event" && published != false] | order(date asc)`),
 ]);
 
-const featured = allEvents.find((e: any) => e.featured);
-const upcoming = allEvents.filter((e: any) => !e.featured && e.date >= today);
-const past = allEvents.filter((e: any) => !e.featured && e.date < today);
+const featured  = allEvents.find((e: any) => e.featured && !e.past);
+const upcoming  = allEvents.filter((e: any) => !e.featured && !e.past);
+const past      = allEvents.filter((e: any) => e.past == true).sort((a: any, b: any) => b.date.localeCompare(a.date));
 ---
 <Base title="Events – Abbie's Angels">
 <style>
@@ -111,10 +110,7 @@ const past = allEvents.filter((e: any) => !e.featured && e.date < today);
     box-shadow: 0 6px 18px rgba(15,23,42,0.04);
     overflow: hidden; display: flex; flex-direction: column;
   }
-  /* Past event cards slightly muted */
-  .event-card.past {
-    opacity: 0.82;
-  }
+  .event-card.past { opacity: 0.82; }
   .event-card img { width: 100%; height: 200px; object-fit: cover; display: block; flex-shrink: 0; }
   .event-card-body {
     padding: 16px 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 8px;
@@ -202,7 +198,7 @@ const past = allEvents.filter((e: any) => !e.featured && e.date < today);
     </section>
   )}
 
-  {!featured && upcoming.length === 0 && (
+  {!featured && upcoming.length === 0 && past.length === 0 && (
     <div class="no-events">
       <p>No upcoming events at this time. Check back soon or follow us on social media for updates!</p>
     </div>

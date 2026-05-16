@@ -51,11 +51,21 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       { name: 'ticket_label', title: 'Ticket Button Label', type: 'string' },
       { name: 'published', title: 'Published', type: 'boolean', initialValue: false },
       { name: 'featured', title: 'Featured on Homepage', type: 'boolean', initialValue: false },
+      {
+        name: 'past',
+        title: 'Past Event',
+        type: 'boolean',
+        initialValue: false,
+        description: 'Check this to move the event to the Past Events section on the events page.',
+      },
     ],
     preview: {
-      select: { title: 'title', subtitle: 'date', published: 'published', featured: 'featured' },
-      prepare({ title, subtitle, published, featured }: any) {
-        const flags = [published ? '✅ Published' : '🚫 Hidden', featured ? '⭐ Featured' : ''].filter(Boolean).join(' · ')
+      select: { title: 'title', subtitle: 'date', published: 'published', featured: 'featured', past: 'past' },
+      prepare({ title, subtitle, published, featured, past }: any) {
+        const flags = [
+          past ? '🕐 Past' : (published ? '✅ Published' : '🚫 Hidden'),
+          featured ? '⭐ Featured' : '',
+        ].filter(Boolean).join(' · ')
         return { title, subtitle: `${subtitle || ''} — ${flags}` }
       },
     },
