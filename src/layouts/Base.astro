@@ -1,5 +1,6 @@
 ---
-const { title = "Abbie's Angels" } = Astro.props;
+const { title = "Abbie's Angels", description = "Supporting caregivers and families navigating Alzheimer's disease in Western New York.", ogImage = "/images/abbies-angels-logo.jpg" } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -7,6 +8,19 @@ const { title = "Abbie's Angels" } = Astro.props;
   <meta charset="UTF-8">
   <title>{title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content={description}>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={`https://abbies-angels.pages.dev${ogImage}`}>
+  <meta property="og:url" content={`https://abbies-angels.pages.dev${currentPath}`}>
+  <meta property="og:site_name" content="Abbie's Angels">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={`https://abbies-angels.pages.dev${ogImage}`}>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -68,6 +82,7 @@ const { title = "Abbie's Angels" } = Astro.props;
       transition: color 0.15s, background 0.15s;
     }
     .nav-links a:hover { color: var(--blue); background: #f0f4fb; text-decoration: none; }
+    .nav-links a.active { color: var(--blue); background: #e8f0fb; }
 
     /* ── Dropdown ── */
     .nav-dropdown { position: relative; }
@@ -81,6 +96,7 @@ const { title = "Abbie's Angels" } = Astro.props;
     .nav-dropdown > button:hover { color: var(--blue); background: #f0f4fb; }
     .nav-dropdown > button svg { transition: transform 0.2s; }
     .nav-dropdown.open > button svg { transform: rotate(180deg); }
+    .nav-dropdown > button.active { color: var(--blue); background: #e8f0fb; }
     .dropdown-menu {
       display: none;
       position: absolute; top: calc(100% + 6px); right: 0;
@@ -97,6 +113,7 @@ const { title = "Abbie's Angels" } = Astro.props;
       color: var(--text-main); transition: background 0.12s, color 0.12s;
     }
     .dropdown-menu a:hover { background: #f0f4fb; color: var(--blue); text-decoration: none; }
+    .dropdown-menu a.active { background: #e8f0fb; color: var(--blue); }
     .dropdown-menu .divider { height: 1px; background: var(--border-soft); margin: 4px 0; }
 
     /* ── Donate CTA pill ── */
@@ -113,7 +130,7 @@ const { title = "Abbie's Angels" } = Astro.props;
     }
     .btn-nav-donate:hover { background: #9e0b23; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,16,46,0.3); text-decoration: none; }
 
-    /* ── Hamburger (mobile) ── */
+    /* ── Mobile hamburger ── */
     .nav-hamburger {
       display: none; flex-direction: column; gap: 5px;
       background: none; border: none; cursor: pointer; padding: 6px;
@@ -131,8 +148,31 @@ const { title = "Abbie's Angels" } = Astro.props;
       font-family: var(--font-display); color: var(--text-main);
     }
     .mobile-menu a:hover { background: #f0f4fb; color: var(--blue); text-decoration: none; }
+    .mobile-menu a.active { background: #e8f0fb; color: var(--blue); }
     .mobile-section-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); padding-top: 14px; }
     .mobile-menu .btn-nav-donate { margin: 10px 12px 0; justify-content: center; }
+
+    /* ── Mobile sticky donate bar ── */
+    .mobile-sticky-donate {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 10px 16px;
+      padding-bottom: max(10px, env(safe-area-inset-bottom));
+      background: rgba(255,255,255,0.96);
+      border-top: 1px solid var(--border-soft);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+      backdrop-filter: blur(8px);
+    }
+    .mobile-sticky-donate a {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 13px; border-radius: 999px;
+      background: var(--accent-red); color: #fff;
+      font-weight: 800; font-size: 1rem; font-family: var(--font-display);
+      text-decoration: none; box-shadow: 0 4px 14px rgba(200,16,46,0.3);
+      transition: background 0.15s;
+    }
+    .mobile-sticky-donate a:hover { background: #9e0b23; text-decoration: none; }
 
     /* ── Footer ── */
     footer {
@@ -141,6 +181,8 @@ const { title = "Abbie's Angels" } = Astro.props;
       background: #f9fafb;
       font-size: 0.88rem;
       color: var(--text-muted);
+      /* account for mobile sticky bar */
+      padding-bottom: max(24px, calc(env(safe-area-inset-bottom) + 24px));
     }
     .footer-top {
       max-width: 1100px;
@@ -150,7 +192,6 @@ const { title = "Abbie's Angels" } = Astro.props;
       gap: 32px;
       align-items: start;
     }
-    .footer-brand { }
     .footer-brand img { width: 140px; height: auto; margin-bottom: 10px; }
     .footer-brand p { font-size: 0.83rem; line-height: 1.6; max-width: 240px; }
     .footer-col h4 { font-family: var(--font-display); font-weight: 800; font-size: 0.88rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
@@ -190,6 +231,8 @@ const { title = "Abbie's Angels" } = Astro.props;
       .nav-hamburger { display: flex; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 20px; }
       .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+      .mobile-sticky-donate { display: block; }
+      footer { padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 72px)); }
     }
     @media (max-width: 480px) {
       .footer-top { grid-template-columns: 1fr; }
@@ -206,23 +249,28 @@ const { title = "Abbie's Angels" } = Astro.props;
     </a>
     <div class="nav-right">
       <nav class="nav-links">
-        <a href="/#mission">Mission</a>
-        <a href="/events">Events</a>
-        <a href="/gallery">Gallery</a>
-        <a href="/#team">Team</a>
+        <a href="/#mission" class={currentPath === '/' ? 'active' : ''}>Mission</a>
+        <a href="/events" class={currentPath.startsWith('/events') ? 'active' : ''}>Events</a>
+        <a href="/gallery" class={currentPath.startsWith('/gallery') ? 'active' : ''}>Gallery</a>
+        <a href="/#team" class={currentPath === '/' ? '' : ''}>Team</a>
       </nav>
       <!-- Get Involved dropdown -->
       <div class="nav-dropdown" id="nav-get-involved">
-        <button aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-get-involved">
+        <button
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="dropdown-get-involved"
+          class={['/volunteer','/sponsor','/donate','/contact'].some(p => currentPath.startsWith(p)) ? 'active' : ''}
+        >
           Get Involved
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="dropdown-menu" id="dropdown-get-involved" role="menu">
-          <a href="/volunteer" role="menuitem">🙋 Volunteer</a>
-          <a href="/sponsor" role="menuitem">🤝 Sponsor</a>
-          <a href="/donate" role="menuitem">❤️ Donate</a>
+          <a href="/volunteer" class={currentPath.startsWith('/volunteer') ? 'active' : ''} role="menuitem">🙋 Volunteer</a>
+          <a href="/sponsor" class={currentPath.startsWith('/sponsor') ? 'active' : ''} role="menuitem">🤝 Sponsor</a>
+          <a href="/donate" class={currentPath.startsWith('/donate') ? 'active' : ''} role="menuitem">❤️ Donate</a>
           <div class="divider"></div>
-          <a href="/contact" role="menuitem">✉️ Contact Us</a>
+          <a href="/contact" class={currentPath.startsWith('/contact') ? 'active' : ''} role="menuitem">✉️ Contact Us</a>
         </div>
       </div>
       <a class="btn-nav-donate" href="/donate">Donate</a>
@@ -234,19 +282,24 @@ const { title = "Abbie's Angels" } = Astro.props;
   </div>
   <!-- Mobile menu -->
   <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-    <a href="/#mission">Mission</a>
-    <a href="/events">Events</a>
-    <a href="/gallery">Gallery</a>
+    <a href="/#mission" class={currentPath === '/' ? 'active' : ''}>Mission</a>
+    <a href="/events" class={currentPath.startsWith('/events') ? 'active' : ''}>Events</a>
+    <a href="/gallery" class={currentPath.startsWith('/gallery') ? 'active' : ''}>Gallery</a>
     <a href="/#team">Team</a>
     <div class="mobile-section-label">Get Involved</div>
-    <a href="/volunteer">🙋 Volunteer</a>
-    <a href="/sponsor">🤝 Sponsor</a>
-    <a href="/contact">✉️ Contact Us</a>
+    <a href="/volunteer" class={currentPath.startsWith('/volunteer') ? 'active' : ''}>🙋 Volunteer</a>
+    <a href="/sponsor" class={currentPath.startsWith('/sponsor') ? 'active' : ''}>🤝 Sponsor</a>
+    <a href="/contact" class={currentPath.startsWith('/contact') ? 'active' : ''}>✉️ Contact Us</a>
     <a class="btn-nav-donate" href="/donate">❤️ Donate Now</a>
   </nav>
 </header>
 
 <slot />
+
+<!-- Mobile sticky donate bar -->
+<div class="mobile-sticky-donate" aria-hidden="true">
+  <a href="/donate">❤️ Donate to Abbie's Angels</a>
+</div>
 
 <footer>
   <div class="footer-top">
@@ -321,6 +374,10 @@ const { title = "Abbie's Angels" } = Astro.props;
     const open = mobileMenu.classList.toggle('open');
     hamburger.setAttribute('aria-expanded', open);
   });
+  // Hide mobile sticky donate bar on donate page
+  if (window.location.pathname.startsWith('/donate')) {
+    document.querySelector('.mobile-sticky-donate')?.remove();
+  }
 </script>
 </body>
 </html>
