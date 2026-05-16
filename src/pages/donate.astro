@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import { createClient } from '@sanity/client';
+
+const client = createClient({
+  projectId: '7o31gm3n',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  useCdn: true,
+});
+
+const support = await client.fetch(`*[_type == "support"][0]`);
+---
+<Base title="Donate — Abbie's Angels">
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #fff8e7 0%, #ffffff 50%, #eaf1fb 100%);
+    padding: 48px 16px 36px;
+    border-bottom: 1px solid var(--border-soft);
+    text-align: center;
+  }
+  .page-hero h1 { font-size: 2rem; color: var(--blue); font-weight: 800; margin-bottom: 10px; }
+  .page-hero p { color: var(--text-muted); font-size: 1rem; max-width: 580px; margin: 0 auto; }
+  main { max-width: 900px; margin: 44px auto 64px; padding: 0 16px; }
+  .card {
+    background: #fff; border-radius: 16px; padding: 28px 28px;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 4px 16px rgba(15,23,42,0.05);
+    margin-bottom: 24px;
+  }
+  .card h2 { font-size: 1.2rem; margin-bottom: 10px; color: var(--blue); font-weight: 800;
+    border-left: 4px solid var(--gold); padding-left: 10px; }
+  .card p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.7; }
+  .donate-options {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 16px 0;
+  }
+  .donate-option {
+    border: 2px solid var(--border-soft); border-radius: 12px; padding: 16px;
+    text-align: center; cursor: pointer; transition: border-color 0.15s, transform 0.15s;
+    background: #fafafa;
+  }
+  .donate-option:hover { border-color: var(--blue); transform: translateY(-2px); }
+  .donate-option .amount { font-size: 1.5rem; font-weight: 800; color: var(--blue); font-family: var(--font-display); }
+  .donate-option .label { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 13px 32px; border-radius: 999px; font-size: 1rem; font-weight: 700;
+    font-family: var(--font-display); border: 2px solid transparent; cursor: pointer;
+    text-decoration: none; transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .btn-donate { background: var(--accent-red); color: #fff; border-color: var(--accent-red);
+    box-shadow: 0 4px 14px rgba(200,16,46,0.25); font-size: 1.05rem; }
+  .btn-donate:hover { background: #9e0b23; border-color: #9e0b23; transform: translateY(-2px); text-decoration: none; }
+  .btn-outline { background: #fff; color: var(--blue); border-color: var(--blue); }
+  .btn-outline:hover { background: var(--blue); color: #fff; text-decoration: none; }
+  .impact-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
+  .impact-item { flex: 1; min-width: 160px; text-align: center; padding: 16px;
+    background: #f7fafc; border-radius: 12px; border: 1px solid var(--border-soft); }
+  .impact-item .stat { font-size: 1.8rem; font-weight: 800; color: var(--blue); font-family: var(--font-display); }
+  .impact-item .desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+  @media (max-width: 640px) { .page-hero h1 { font-size: 1.6rem; } }
+</style>
+
+<div class="page-hero">
+  <h1>Make a Difference Today</h1>
+  <p>Every dollar supports caregivers and families navigating Alzheimer's disease in Western New York.</p>
+</div>
+
+<main>
+  <!-- Primary CTA: Auctria -->
+  <div class="card" style="text-align:center; border-top: 4px solid var(--accent-red);">
+    <h2>Donate Online</h2>
+    <p>All donations are processed securely through our Auctria giving page. Abbie's Angels is a registered 501(c)(3) — your gift is tax-deductible.</p>
+    <a class="btn btn-donate" href={support?.card_link_url || 'https://www.32auctions.com/abbiesangels'} target="_blank" rel="noopener">
+      ❤️ Give Now on Auctria
+    </a>
+    <p style="margin-top:14px; font-size:0.85rem;">EIN: 33-2629458 &bull; 501(c)(3) Nonprofit &bull; Lockport, NY</p>
+  </div>
+
+  <!-- Impact stats -->
+  <div class="card">
+    <h2>Your Impact</h2>
+    <div class="impact-row">
+      <div class="impact-item"><div class="stat">100%</div><div class="desc">of net proceeds support local families</div></div>
+      <div class="impact-item"><div class="stat">501(c)(3)</div><div class="desc">fully tax-deductible donations</div></div>
+      <div class="impact-item"><div class="stat">WNY</div><div class="desc">focused on Western New York caregivers</div></div>
+    </div>
+  </div>
+
+  <!-- Mail a check -->
+  <div class="card">
+    <h2>Donate by Mail</h2>
+    <p>Make checks payable to <strong>Abbie's Angels</strong> and mail to:</p>
+    <p style="font-style:italic; margin-left:16px;">
+      Abbie's Angels<br/>
+      PO Box 123 &bull; Lockport, NY 14094
+    </p>
+    <p style="font-size:0.88rem;">Please include your name and mailing address so we can send a thank-you and donation receipt.</p>
+  </div>
+
+  <!-- Sponsorship CTA -->
+  <div class="card">
+    <h2>Corporate & Event Sponsorship</h2>
+    <p>Sponsoring an Abbie's Angels event is a meaningful way for your business to give back while gaining visibility in the community. We offer tiered sponsorship packages for all of our annual events.</p>
+    <a class="btn btn-outline" href="/sponsor">View Sponsorship Opportunities →</a>
+  </div>
+
+  <!-- HubSpot donation interest form placeholder -->
+  <div class="card">
+    <h2>Stay in the Loop</h2>
+    <p>Leave your email and we'll keep you updated on events, campaigns, and impact stories.</p>
+    <!-- Replace with HubSpot form: hbspt.forms.create({ portalId: "YOUR_ID", formId: "newsletter-form-id" }) -->
+    <div id="hs-newsletter-form" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+      <input type="email" placeholder="your@email.com" style="flex:1; min-width:220px; padding:10px 14px; border-radius:8px; border:1px solid var(--border-soft); font-size:0.95rem;">
+      <a href="/thank-you" class="btn btn-donate" style="padding:10px 22px; font-size:0.93rem;">Subscribe</a>
+    </div>
+  </div>
+</main>
+</Base>

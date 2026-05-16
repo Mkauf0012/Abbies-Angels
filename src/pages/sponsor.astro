@@ -1,0 +1,157 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Sponsor — Abbie's Angels">
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #fff8e7 0%, #ffffff 50%, #eaf1fb 100%);
+    padding: 48px 16px 36px;
+    border-bottom: 1px solid var(--border-soft);
+    text-align: center;
+  }
+  .page-hero h1 { font-size: 2rem; color: var(--blue); font-weight: 800; margin-bottom: 10px; }
+  .page-hero p { color: var(--text-muted); font-size: 1rem; max-width: 580px; margin: 0 auto; }
+  main { max-width: 1000px; margin: 44px auto 64px; padding: 0 16px; }
+  .card {
+    background: #fff; border-radius: 16px; padding: 24px 28px;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 4px 16px rgba(15,23,42,0.05);
+    margin-bottom: 24px;
+  }
+  .card h2 { font-size: 1.15rem; margin-bottom: 10px; color: var(--blue); font-weight: 800;
+    border-left: 4px solid var(--gold); padding-left: 10px; }
+  .card p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.7; }
+  .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 14px; }
+  .tier {
+    border-radius: 14px; padding: 20px; text-align: center;
+    border: 2px solid var(--border-soft);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .tier:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(15,23,42,0.09); }
+  .tier.gold { border-color: var(--gold); background: #fffbef; }
+  .tier.silver { border-color: #b0bec5; background: #f9fafb; }
+  .tier.bronze { border-color: #bf8a5e; background: #fdf8f4; }
+  .tier.friend { border-color: var(--border-soft); background: #f7fafc; }
+  .tier-name { font-size: 1rem; font-weight: 800; font-family: var(--font-display); margin-bottom: 4px; }
+  .tier-amount { font-size: 1.7rem; font-weight: 800; color: var(--blue); font-family: var(--font-display); margin-bottom: 10px; }
+  .tier-perks { font-size: 0.83rem; color: var(--text-muted); text-align: left; padding-left: 14px; }
+  .tier-perks li { margin-bottom: 5px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 10px 14px; border-radius: 8px;
+    border: 1px solid var(--border-soft); font-size: 0.95rem;
+    font-family: var(--font-body); background: #fafafa;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,85,164,0.12);
+  }
+  .form-group textarea { min-height: 90px; resize: vertical; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 11px 26px; border-radius: 999px; font-size: 0.95rem; font-weight: 700;
+    font-family: var(--font-display); border: 2px solid transparent; cursor: pointer;
+    text-decoration: none; transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 4px 14px rgba(0,85,164,0.2); }
+  .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-2px); text-decoration: none; }
+  @media (max-width: 640px) { .page-hero h1 { font-size: 1.6rem; } }
+</style>
+
+<div class="page-hero">
+  <h1>Become a Sponsor</h1>
+  <p>Partner with Abbie's Angels to support caregivers in Western New York while connecting your brand to a cause that matters.</p>
+</div>
+
+<main>
+  <div class="card">
+    <h2>Sponsorship Tiers</h2>
+    <p>All sponsors receive recognition at our events and on our website. Higher tiers include additional visibility and benefits.</p>
+    <div class="tier-grid">
+      <div class="tier gold">
+        <div class="tier-name">🥇 Gold Sponsor</div>
+        <div class="tier-amount">$2,500+</div>
+        <ul class="tier-perks">
+          <li>Premier logo on all event materials</li>
+          <li>Table of 8 at annual gala</li>
+          <li>Featured on website & social</li>
+          <li>Banner at event venue</li>
+          <li>Named recognition from stage</li>
+        </ul>
+      </div>
+      <div class="tier silver">
+        <div class="tier-name">🥈 Silver Sponsor</div>
+        <div class="tier-amount">$1,000</div>
+        <ul class="tier-perks">
+          <li>Logo on event materials</li>
+          <li>4 tickets to annual gala</li>
+          <li>Website listing</li>
+          <li>Social media recognition</li>
+        </ul>
+      </div>
+      <div class="tier bronze">
+        <div class="tier-name">🥉 Bronze Sponsor</div>
+        <div class="tier-amount">$500</div>
+        <ul class="tier-perks">
+          <li>Name on event program</li>
+          <li>2 tickets to annual gala</li>
+          <li>Website listing</li>
+        </ul>
+      </div>
+      <div class="tier friend">
+        <div class="tier-name">💛 Friend</div>
+        <div class="tier-amount">$250</div>
+        <ul class="tier-perks">
+          <li>Name in event program</li>
+          <li>Website recognition</li>
+          <li>Warm thanks from our team</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sponsorship Inquiry</h2>
+    <p>Interested in sponsoring? Fill out the form below and we'll reach out within 2 business days with a full sponsorship packet.</p>
+    <!-- HubSpot embed target: replace with hbspt.forms.create({ portalId: "YOUR_ID", formId: "sponsor-form-id" }) -->
+    <div id="hs-sponsor-form">
+      <form action="/thank-you" method="GET" novalidate>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="form-group">
+            <label for="sp_first">First Name</label>
+            <input type="text" id="sp_first" name="firstname" placeholder="Jane" required>
+          </div>
+          <div class="form-group">
+            <label for="sp_last">Last Name</label>
+            <input type="text" id="sp_last" name="lastname" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="sp_company">Company / Organization</label>
+          <input type="text" id="sp_company" name="company" placeholder="Acme Corp">
+        </div>
+        <div class="form-group">
+          <label for="sp_email">Email Address</label>
+          <input type="email" id="sp_email" name="email" placeholder="jane@acme.com" required>
+        </div>
+        <div class="form-group">
+          <label for="sp_tier">Sponsorship Level</label>
+          <select id="sp_tier" name="tier">
+            <option value="gold">Gold — $2,500+</option>
+            <option value="silver">Silver — $1,000</option>
+            <option value="bronze" selected>Bronze — $500</option>
+            <option value="friend">Friend — $250</option>
+            <option value="custom">Custom / Let's Talk</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sp_note">Additional Notes</label>
+          <textarea id="sp_note" name="message" placeholder="Event preferences, in-kind donations, questions…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Request Sponsorship Packet</button>
+      </form>
+    </div>
+  </div>
+</main>
+</Base>
