@@ -14,6 +14,8 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
+
+            // ── HOMEPAGE ──────────────────────────────
             S.listItem().title('Homepage').icon(() => '🏠').child(
               S.list().title('Homepage').items([
                 S.documentListItem().schemaType('hero').id('hero').title('Hero Banner'),
@@ -22,6 +24,8 @@ export default defineConfig({
               ])
             ),
             S.divider(),
+
+            // ── EVENTS ────────────────────────────────
             S.listItem().title('Events').icon(() => '🎟️').child(
               S.list().title('Events').items([
                 S.documentListItem().schemaType('events').id('events').title('⚙️ Page Settings'),
@@ -32,6 +36,8 @@ export default defineConfig({
               ])
             ),
             S.divider(),
+
+            // ── GALLERY ───────────────────────────────
             S.listItem().title('Gallery').icon(() => '🖼️').child(
               S.list().title('Gallery').items([
                 S.documentListItem().schemaType('gallery_settings').id('gallery_settings').title('⚙️ Page Settings'),
@@ -43,12 +49,32 @@ export default defineConfig({
               ])
             ),
             S.divider(),
+
+            // ── DONATE ────────────────────────────────
+            S.documentListItem().schemaType('donate').id('donate').title('Donate Page').icon(() => '❤️'),
+            S.divider(),
+
+            // ── VOLUNTEER ─────────────────────────────
+            S.documentListItem().schemaType('volunteer').id('volunteer').title('Volunteer Page').icon(() => '🙋'),
+            S.divider(),
+
+            // ── SPONSOR ───────────────────────────────
+            S.documentListItem().schemaType('sponsor').id('sponsor').title('Sponsor Page').icon(() => '🤝'),
+            S.divider(),
+
+            // ── THANK YOU ─────────────────────────────
+            S.documentListItem().schemaType('thank_you').id('thank_you').title('Thank You Page').icon(() => '🎉'),
+            S.divider(),
+
+            // ── WAYS TO HELP ──────────────────────────
             S.documentListItem().schemaType('support').id('support').title('Ways to Help').icon(() => '💛'),
             S.divider(),
+
+            // ── CONTACT ───────────────────────────────
             S.documentListItem().schemaType('contact').id('contact').title('Contact').icon(() => '📧'),
             S.divider(),
-            S.documentListItem().schemaType('donation').id('donation').title('Donation Button').icon(() => '💰'),
-            S.divider(),
+
+            // ── TEAM ──────────────────────────────────
             S.listItem().title('Team').icon(() => '👥').child(
               S.list().title('Team').items([
                 S.documentListItem().schemaType('board').id('board').title('Board Members'),
@@ -56,11 +82,15 @@ export default defineConfig({
               ])
             ),
             S.divider(),
-            S.listItem().title('Advanced').icon(() => '⚙️').child(
-              S.list().title('Advanced').items([
-                S.documentListItem().schemaType('hero_card').id('hero_card').title('Hero Card (Manual Override)'),
+
+            // ── GLOBAL / ADVANCED ─────────────────────
+            S.listItem().title('Global Settings').icon(() => '⚙️').child(
+              S.list().title('Global Settings').items([
+                S.documentListItem().schemaType('donation').id('donation').title('💰 Donation Button (Auctria URL)'),
+                S.documentListItem().schemaType('hero_card').id('hero_card').title('📌 Hero Card (Manual Override)'),
               ])
             ),
+
           ]),
     }),
     visionTool(),
