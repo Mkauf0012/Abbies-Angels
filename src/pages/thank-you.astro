@@ -1,5 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import { createClient } from '@sanity/client';
+
+const client = createClient({
+  projectId: '7o31gm3n',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  useCdn: true,
+});
+
+const ty = await client.fetch(`*[_type == "thank_you"][0]`);
 ---
 <Base title="Thank You — Abbie's Angels">
 <!-- HubSpot conversion tracking fires here. Add pixel/event below when portal connected. -->
@@ -49,10 +59,10 @@ import Base from '../layouts/Base.astro';
 
 <div class="ty-wrap">
   <div class="ty-icon">❤️</div>
-  <h1>Thank You!</h1>
-  <p>We've received your message and truly appreciate you connecting with Abbie's Angels. A member of our volunteer team will follow up with you shortly.</p>
+  <h1>{ty?.heading || 'Thank You!'}</h1>
+  <p>{ty?.body || "We've received your message and truly appreciate you connecting with Abbie's Angels. A member of our volunteer team will follow up with you shortly."}</p>
   <div class="next-steps">
-    <a class="btn btn-primary" href="/">Back to Home</a>
+    <a class="btn btn-primary" href={ty?.back_url || '/'}>{ty?.back_label || '← Back to Home'}</a>
     <a class="btn btn-gold" href="/events">View Upcoming Events</a>
     <a class="btn btn-outline" href="/donate">Make a Donation</a>
   </div>

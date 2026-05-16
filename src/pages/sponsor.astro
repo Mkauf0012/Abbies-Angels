@@ -1,5 +1,55 @@
 ---
 import Base from '../layouts/Base.astro';
+import { createClient } from '@sanity/client';
+
+const client = createClient({
+  projectId: '7o31gm3n',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  useCdn: true,
+});
+
+const sp = await client.fetch(`*[_type == "sponsor"][0]`);
+
+const defaultTiers = [
+  {
+    name: '🥇 Gold Sponsor', amount: '$2,500+', style: 'gold',
+    perks: [
+      'Premier logo on all event materials',
+      'Table of 8 at annual gala',
+      'Featured on website & social',
+      'Banner at event venue',
+      'Named recognition from stage',
+    ],
+  },
+  {
+    name: '🥈 Silver Sponsor', amount: '$1,000', style: 'silver',
+    perks: [
+      'Logo on event materials',
+      '4 tickets to annual gala',
+      'Website listing',
+      'Social media recognition',
+    ],
+  },
+  {
+    name: '🥉 Bronze Sponsor', amount: '$500', style: 'bronze',
+    perks: [
+      'Name on event program',
+      '2 tickets to annual gala',
+      'Website listing',
+    ],
+  },
+  {
+    name: '💛 Friend', amount: '$250', style: 'friend',
+    perks: [
+      'Name in event program',
+      'Website recognition',
+      'Warm thanks from our team',
+    ],
+  },
+];
+
+const tiers = sp?.tiers_section?.tiers?.length ? sp.tiers_section.tiers : defaultTiers;
 ---
 <Base title="Sponsor — Abbie's Angels">
 <style>
@@ -60,60 +110,34 @@ import Base from '../layouts/Base.astro';
 </style>
 
 <div class="page-hero">
-  <h1>Become a Sponsor</h1>
-  <p>Partner with Abbie's Angels to support caregivers in Western New York while connecting your brand to a cause that matters.</p>
+  <h1>{sp?.hero_heading || 'Become a Sponsor'}</h1>
+  <p>{sp?.hero_subheading || "Partner with Abbie's Angels to support caregivers in Western New York while connecting your brand to a cause that matters."}</p>
 </div>
 
 <main>
   <div class="card">
-    <h2>Sponsorship Tiers</h2>
-    <p>All sponsors receive recognition at our events and on our website. Higher tiers include additional visibility and benefits.</p>
+    <h2>{sp?.tiers_section?.heading || 'Sponsorship Tiers'}</h2>
+    <p>{sp?.tiers_section?.intro || 'All sponsors receive recognition at our events and on our website. Higher tiers include additional visibility and benefits.'}</p>
     <div class="tier-grid">
-      <div class="tier gold">
-        <div class="tier-name">🥇 Gold Sponsor</div>
-        <div class="tier-amount">$2,500+</div>
-        <ul class="tier-perks">
-          <li>Premier logo on all event materials</li>
-          <li>Table of 8 at annual gala</li>
-          <li>Featured on website & social</li>
-          <li>Banner at event venue</li>
-          <li>Named recognition from stage</li>
-        </ul>
-      </div>
-      <div class="tier silver">
-        <div class="tier-name">🥈 Silver Sponsor</div>
-        <div class="tier-amount">$1,000</div>
-        <ul class="tier-perks">
-          <li>Logo on event materials</li>
-          <li>4 tickets to annual gala</li>
-          <li>Website listing</li>
-          <li>Social media recognition</li>
-        </ul>
-      </div>
-      <div class="tier bronze">
-        <div class="tier-name">🥉 Bronze Sponsor</div>
-        <div class="tier-amount">$500</div>
-        <ul class="tier-perks">
-          <li>Name on event program</li>
-          <li>2 tickets to annual gala</li>
-          <li>Website listing</li>
-        </ul>
-      </div>
-      <div class="tier friend">
-        <div class="tier-name">💛 Friend</div>
-        <div class="tier-amount">$250</div>
-        <ul class="tier-perks">
-          <li>Name in event program</li>
-          <li>Website recognition</li>
-          <li>Warm thanks from our team</li>
-        </ul>
-      </div>
+      {tiers.map((tier: any) => (
+        <div class={`tier ${tier.style || 'friend'}`}>
+          <div class="tier-name">{tier.name}</div>
+          <div class="tier-amount">{tier.amount}</div>
+          {tier.perks?.length && (
+            <ul class="tier-perks">
+              {tier.perks.map((perk: string) => (
+                <li>{perk}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
     </div>
   </div>
 
   <div class="card">
-    <h2>Sponsorship Inquiry</h2>
-    <p>Interested in sponsoring? Fill out the form below and we'll reach out within 2 business days with a full sponsorship packet.</p>
+    <h2>{sp?.inquiry_section?.heading || 'Sponsorship Inquiry'}</h2>
+    <p>{sp?.inquiry_section?.intro || "Interested in sponsoring? Fill out the form below and we'll reach out within 2 business days with a full sponsorship packet."}</p>
     <!-- HubSpot embed target: replace with hbspt.forms.create({ portalId: "YOUR_ID", formId: "sponsor-form-id" }) -->
     <div id="hs-sponsor-form">
       <form action="/thank-you" method="GET" novalidate>
@@ -138,10 +162,9 @@ import Base from '../layouts/Base.astro';
         <div class="form-group">
           <label for="sp_tier">Sponsorship Level</label>
           <select id="sp_tier" name="tier">
-            <option value="gold">Gold — $2,500+</option>
-            <option value="silver">Silver — $1,000</option>
-            <option value="bronze" selected>Bronze — $500</option>
-            <option value="friend">Friend — $250</option>
+            {tiers.map((tier: any) => (
+              <option value={tier.style || tier.name}>{tier.name} — {tier.amount}</option>
+            ))}
             <option value="custom">Custom / Let's Talk</option>
           </select>
         </div>
@@ -149,7 +172,7 @@ import Base from '../layouts/Base.astro';
           <label for="sp_note">Additional Notes</label>
           <textarea id="sp_note" name="message" placeholder="Event preferences, in-kind donations, questions…"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Request Sponsorship Packet</button>
+        <button type="submit" class="btn btn-primary">{sp?.inquiry_section?.submit_label || 'Request Sponsorship Packet'}</button>
       </form>
     </div>
   </div>

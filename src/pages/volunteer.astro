@@ -1,5 +1,28 @@
 ---
 import Base from '../layouts/Base.astro';
+import { createClient } from '@sanity/client';
+
+const client = createClient({
+  projectId: '7o31gm3n',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  useCdn: true,
+});
+
+const vol = await client.fetch(`*[_type == "volunteer"][0]`);
+
+const defaultRoles = [
+  '🎪 Event Setup & Teardown',
+  '🎟 Ticket & Check-In',
+  '📸 Photography',
+  '📱 Social Media',
+  '🍽 Food & Beverage',
+  '📦 Auction Support',
+  '🧾 Admin & Office',
+  '💬 Community Outreach',
+];
+
+const roles: string[] = vol?.roles_section?.roles?.length ? vol.roles_section.roles : defaultRoles;
 ---
 <Base title="Volunteer — Abbie's Angels">
 <style>
@@ -51,28 +74,23 @@ import Base from '../layouts/Base.astro';
 </style>
 
 <div class="page-hero">
-  <h1>Volunteer With Us</h1>
-  <p>Abbie's Angels runs entirely on volunteer power. Whether you can help at an event or behind the scenes, there's a place for you.</p>
+  <h1>{vol?.hero_heading || 'Volunteer With Us'}</h1>
+  <p>{vol?.hero_subheading || "Abbie's Angels runs entirely on volunteer power. Whether you can help at an event or behind the scenes, there's a place for you."}</p>
 </div>
 
 <main>
   <div class="card">
-    <h2>Ways to Volunteer</h2>
+    <h2>{vol?.roles_section?.heading || 'Ways to Volunteer'}</h2>
     <div class="role-grid">
-      <div class="role-chip">🎪 Event Setup & Teardown</div>
-      <div class="role-chip">🎟 Ticket & Check-In</div>
-      <div class="role-chip">📸 Photography</div>
-      <div class="role-chip">📱 Social Media</div>
-      <div class="role-chip">🍽 Food & Beverage</div>
-      <div class="role-chip">📦 Auction Support</div>
-      <div class="role-chip">🧾 Admin & Office</div>
-      <div class="role-chip">💬 Community Outreach</div>
+      {roles.map((role: string) => (
+        <div class="role-chip">{role}</div>
+      ))}
     </div>
   </div>
 
   <div class="card">
-    <h2>Volunteer Interest Form</h2>
-    <p>Tell us a little about yourself and we'll reach out when opportunities match your interests.</p>
+    <h2>{vol?.form_section?.heading || 'Volunteer Interest Form'}</h2>
+    <p>{vol?.form_section?.intro || "Tell us a little about yourself and we'll reach out when opportunities match your interests."}</p>
     <!-- HubSpot embed target: replace form with hbspt.forms.create({ portalId: "YOUR_ID", formId: "volunteer-form-id" }) -->
     <div id="hs-volunteer-form">
       <form action="/thank-you" method="GET" novalidate>
@@ -109,7 +127,7 @@ import Base from '../layouts/Base.astro';
           <label for="vol_note">Anything else we should know?</label>
           <textarea id="vol_note" name="message" placeholder="Skills, availability, etc."></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit Interest Form</button>
+        <button type="submit" class="btn btn-primary">{vol?.form_section?.submit_label || 'Submit Interest Form'}</button>
       </form>
     </div>
   </div>
