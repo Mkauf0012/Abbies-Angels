@@ -7,6 +7,9 @@ const { title = "Abbie's Angels" } = Astro.props;
   <meta charset="UTF-8">
   <title>{title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --gold: #f4b321;
@@ -14,17 +17,20 @@ const { title = "Abbie's Angels" } = Astro.props;
       --blue: #0055a4;
       --accent-red: #c8102e;
       --bg-light: #f7fafc;
-      --text-main: #222222;
-      --text-muted: #666666;
+      --text-main: #1a202c;
+      --text-muted: #5a6475;
       --border-soft: #e2e8f0;
+      --font-display: 'Nunito', system-ui, sans-serif;
+      --font-body: 'Lato', system-ui, sans-serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: var(--font-body);
       color: var(--text-main);
       background: #ffffff;
-      line-height: 1.6;
+      line-height: 1.65;
     }
+    h1, h2, h3, h4 { font-family: var(--font-display); }
     a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
     header {
@@ -34,6 +40,7 @@ const { title = "Abbie's Angels" } = Astro.props;
       position: sticky;
       top: 0;
       z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .nav-inner {
       max-width: 1100px;
@@ -46,50 +53,82 @@ const { title = "Abbie's Angels" } = Astro.props;
     .brand {
       display: flex;
       align-items: center;
-      gap: 16px;
-      font-weight: 700;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-weight: 800;
       font-size: 1.15rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      letter-spacing: 0.03em;
       color: var(--blue);
+      text-decoration: none;
     }
-    .brand-logo { width: 190px; height: auto; flex-shrink: 0; }
+    .brand:hover { text-decoration: none; }
+    .brand-logo { width: 180px; height: auto; flex-shrink: 0; }
     .brand-logo img { width: 100%; height: auto; display: block; object-fit: contain; }
-    .nav-links { display: flex; gap: 16px; font-size: 0.95rem; }
-    .nav-links a { color: var(--text-main); font-weight: 500; }
-    .nav-links a:hover { color: var(--blue); }
+    .nav-links { display: flex; gap: 20px; font-size: 0.93rem; font-family: var(--font-display); }
+    .nav-links a { color: var(--text-main); font-weight: 600; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--blue); text-decoration: none; }
+    /* Footer */
     footer {
-      border-top: 1px solid var(--border-soft);
-      padding: 18px 16px 26px;
-      background: #ffffff;
+      border-top: 3px solid var(--gold);
+      padding: 28px 24px 24px;
+      background: #f9fafb;
       font-size: 0.85rem;
       color: var(--text-muted);
     }
     .footer-inner {
       max-width: 1100px;
       margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
+      gap: 16px;
     }
-    .visitor-count { font-size: 0.85em; color: var(--text-muted); white-space: nowrap; }
+    .footer-copy { font-size: 0.83rem; }
+    .footer-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: transform 0.15s, box-shadow 0.15s;
+      text-decoration: none;
+    }
+    .footer-social a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      text-decoration: none;
+    }
+    .footer-social img { width: 18px; height: 18px; display: block; }
+    .footer-right { text-align: right; font-size: 0.83rem; }
+    .visitor-count { font-size: 0.83em; color: var(--text-muted); white-space: nowrap; }
     .visitor-count img { height: 1.1em; vertical-align: middle; margin-left: 0.3em; }
     @media (max-width: 768px) {
-      .nav-links { font-size: 0.85rem; }
+      .nav-links { font-size: 0.83rem; gap: 12px; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; }
+      .footer-right { text-align: center; }
+      .footer-social { justify-content: center; }
     }
   </style>
 </head>
 <body>
 <header>
   <div class="nav-inner">
-    <div class="brand">
+    <a class="brand" href="/">
       <div class="brand-logo">
         <img src="/images/abbies-angels-logo.jpg" alt="Abbie's Angels logo">
       </div>
-      <span>Abbie's Angels</span>
-    </div>
+      <span>Abbie&#39;s Angels</span>
+    </a>
     <nav class="nav-links">
       <a href="/#mission">Mission</a>
       <a href="/events">Events</a>
@@ -105,12 +144,24 @@ const { title = "Abbie's Angels" } = Astro.props;
 
 <footer>
   <div class="footer-inner">
-    <span>&copy; Abbie's Angels. All rights reserved.</span>
-    <span>Abbie's Angels is a 501(c)(3) organization. EIN: 33-2629458.</span>
-    <span class="visitor-count">
-      Visitors
-      <img src="https://www.counter12.com/img-Ay85cc0B51W9W3D5-31.gif" alt="Visitor count">
-    </span>
+    <div class="footer-copy">
+      <div>&copy; {new Date().getFullYear()} Abbie&#39;s Angels. All rights reserved.</div>
+      <div style="margin-top:4px;">501(c)(3) Nonprofit &bull; EIN: 33-2629458 &bull; Lockport, NY</div>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/abbiesangels" target="_blank" rel="noopener" aria-label="Facebook">
+        <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" width="18" height="18" loading="lazy">
+      </a>
+      <a href="https://www.instagram.com/abbiesangels" target="_blank" rel="noopener" aria-label="Instagram">
+        <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" width="18" height="18" loading="lazy">
+      </a>
+      <a href="https://www.linkedin.com/company/abbies-angels" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="LinkedIn" width="18" height="18" loading="lazy">
+      </a>
+    </div>
+    <div class="footer-right">
+      <span class="visitor-count">Visitors <img src="https://www.counter12.com/img-Ay85cc0B51W9W3D5-31.gif" alt="Visitor count"></span>
+    </div>
   </div>
 </footer>
 </body>
