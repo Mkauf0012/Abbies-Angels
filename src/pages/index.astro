@@ -48,36 +48,36 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   /* ── Hero ── */
   .hero {
     background: linear-gradient(135deg, #eaf1fb 0%, #ffffff 60%, #fff8e7 100%);
-    padding: 20px 24px 60px;
+    padding: 14px 24px 36px;
     border-bottom: 1px solid var(--border-soft);
   }
   .hero-overlay {
     background: #ffffff;
-    border-radius: 24px;
+    border-radius: 20px;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 20px 32px 36px;
+    padding: 16px 28px 24px;
     box-shadow: 0 16px 48px rgba(15,23,42,0.09);
     border: 1px solid var(--border-soft);
   }
   .hero-inner {
     display: grid;
     grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
-    gap: 40px;
+    gap: 28px;
     align-items: center;
   }
   .hero h1 {
     font-size: 2.35rem;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     color: var(--blue);
     line-height: 1.2;
     font-weight: 800;
   }
-  .hero-tagline { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 28px; line-height: 1.75; }
-  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .hero-tagline { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.65; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
   .btn {
     display: inline-flex; align-items: center; justify-content: center;
-    padding: 11px 24px; border-radius: 999px; font-size: 0.95rem; font-weight: 700;
+    padding: 10px 22px; border-radius: 999px; font-size: 0.95rem; font-weight: 700;
     font-family: var(--font-display);
     border: 2px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap;
     transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
@@ -89,42 +89,41 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,85,164,0.3); text-decoration: none; }
   .btn-outline { background: #fff; color: var(--blue); border-color: var(--blue); }
   .btn-outline:hover { background: var(--blue); color: #fff; text-decoration: none; transform: translateY(-1px); }
-  .btn-sm { padding: 8px 18px; font-size: 0.88rem; }
+  .btn-sm { padding: 7px 16px; font-size: 0.88rem; }
   .hero-meta { font-size: 0.88rem; color: var(--text-muted); }
 
   /* ── Hero Card ── */
   .hero-card {
-    background: #fff; border-radius: 18px; padding: 20px 20px 18px;
+    background: #fff; border-radius: 16px; padding: 16px 16px 14px;
     box-shadow: 0 12px 36px rgba(15,23,42,0.09); border: 1px solid var(--border-soft);
   }
-  .hero-card h2 { font-size: 1.08rem; margin-bottom: 8px; color: var(--blue); font-weight: 700; }
-  .hero-card p { font-size: 0.91rem; color: var(--text-muted); margin-bottom: 8px; }
+  .hero-card h2 { font-size: 1.05rem; margin-bottom: 6px; color: var(--blue); font-weight: 700; }
+  .hero-card p { font-size: 0.91rem; color: var(--text-muted); margin-bottom: 6px; }
   .hero-card a { text-decoration: none; }
   .hero-card a:hover img { transform: scale(1.015); }
   .hero-card img {
-    width: 100%; height: auto; border-radius: 12px; margin-bottom: 12px; display: block;
+    width: 100%; height: auto; border-radius: 10px; margin-bottom: 10px; display: block;
     transition: transform 0.15s ease; object-fit: contain;
     box-shadow: 0 4px 12px rgba(0,0,0,0.07);
   }
   .badge {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 0.78rem; text-transform: uppercase; font-family: var(--font-display);
-    letter-spacing: 0.08em; padding: 5px 12px; border-radius: 999px;
-    background: var(--yellow); color: #000; margin-bottom: 12px; font-weight: 700;
+    letter-spacing: 0.08em; padding: 4px 10px; border-radius: 999px;
+    background: var(--yellow); color: #000; margin-bottom: 10px; font-weight: 700;
   }
   .event-badge {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 0.78rem; text-transform: uppercase; font-family: var(--font-display);
-    letter-spacing: 0.08em; padding: 4px 12px; border-radius: 999px;
-    background: var(--accent-red); color: #ffffff; margin-bottom: 12px; font-weight: 700;
+    letter-spacing: 0.08em; padding: 3px 10px; border-radius: 999px;
+    background: var(--accent-red); color: #ffffff; margin-bottom: 10px; font-weight: 700;
   }
 
   /* ── Main & Sections ── */
   main { max-width: 1100px; margin: 0 auto; padding: 0; }
 
-  /* Alternating section backgrounds for visual rhythm */
   .section-wrap {
-    padding: 64px 24px;
+    padding: 40px 24px;
   }
   .section-wrap:nth-child(even) {
     background: var(--bg-light);
@@ -137,46 +136,46 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     margin: 0 auto;
   }
   .section-inner h2 {
-    font-size: 1.6rem; margin-bottom: 8px; font-weight: 800;
+    font-size: 1.6rem; margin-bottom: 6px; font-weight: 800;
     border-left: 4px solid var(--gold); padding-left: 14px; color: var(--blue);
   }
   .section-inner .section-lead {
-    font-size: 1rem; color: var(--text-muted); margin-bottom: 28px;
-    padding-left: 18px; line-height: 1.7;
+    font-size: 1rem; color: var(--text-muted); margin-bottom: 16px;
+    padding-left: 18px; line-height: 1.65;
   }
-  .section-inner p { margin-bottom: 14px; color: var(--text-muted); font-size: 0.98rem; }
+  .section-inner p { margin-bottom: 10px; color: var(--text-muted); font-size: 0.98rem; }
 
   /* ── Cards ── */
   .cards {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-    gap: 24px;
+    gap: 16px;
   }
   .card {
-    background: #fff; border-radius: 16px; padding: 22px 22px;
+    background: #fff; border-radius: 14px; padding: 16px;
     border: 1px solid var(--border-soft);
     box-shadow: 0 4px 16px rgba(15,23,42,0.05);
     transition: box-shadow 0.2s, transform 0.2s;
   }
   .card:hover { box-shadow: 0 10px 32px rgba(15,23,42,0.1); transform: translateY(-3px); }
-  .card h3 { font-size: 1.05rem; margin-bottom: 10px; color: var(--blue); font-weight: 700; }
+  .card h3 { font-size: 1.02rem; margin-bottom: 6px; color: var(--blue); font-weight: 700; }
   .card p { font-size: 0.9rem; color: var(--text-muted); }
   .card img {
-    width: 100%; height: 220px; border-radius: 10px; margin-bottom: 14px;
+    width: 100%; height: 200px; border-radius: 8px; margin-bottom: 10px;
     display: block; object-fit: cover; object-position: center;
   }
-  .card-team img { height: 260px; object-position: top; }
+  .card-team img { height: 240px; object-position: top; }
   .card-photo-events img { height: auto; object-fit: contain; }
 
   /* ── Two col ── */
   .two-col {
     display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
-    gap: 32px; align-items: flex-start;
+    gap: 20px; align-items: flex-start;
   }
-  .list { padding-left: 20px; font-size: 0.96rem; color: var(--text-muted); }
-  .list li { margin-bottom: 10px; }
-  .event-meta { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 10px; }
+  .list { padding-left: 18px; font-size: 0.96rem; color: var(--text-muted); }
+  .list li { margin-bottom: 6px; }
+  .event-meta { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px; }
   .view-all-link {
-    display: inline-flex; align-items: center; gap: 6px; margin-top: 20px;
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
     font-size: 0.95rem; font-weight: 700; color: var(--blue); text-decoration: none;
     font-family: var(--font-display);
   }
@@ -189,10 +188,10 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   }
 
   /* ── Social in Contact ── */
-  .social-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; }
+  .social-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
   .social-pill {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 7px 14px 7px 10px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px 6px 9px; border-radius: 999px;
     background: #f4f6fb; border: 1px solid var(--border-soft);
     font-size: 0.88rem; font-weight: 600; color: var(--text-main);
     text-decoration: none; transition: background 0.15s, transform 0.15s;
@@ -202,20 +201,20 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
 
   /* ── Team second heading ── */
   .staff-heading {
-    font-size: 1.3rem; margin-top: 48px; margin-bottom: 8px; font-weight: 800;
+    font-size: 1.3rem; margin-top: 28px; margin-bottom: 6px; font-weight: 800;
     border-left: 4px solid var(--gold); padding-left: 14px; color: var(--blue);
   }
   .staff-lead {
-    font-size: 0.98rem; color: var(--text-muted); margin-bottom: 24px;
+    font-size: 0.98rem; color: var(--text-muted); margin-bottom: 16px;
     padding-left: 18px;
   }
 
   @media (max-width: 768px) {
     .hero-inner, .two-col { grid-template-columns: 1fr; }
-    .hero { padding: 12px 16px 40px; }
-    .hero-overlay { padding: 16px 20px 28px; }
+    .hero { padding: 10px 16px 28px; }
+    .hero-overlay { padding: 14px 18px 20px; }
     .hero h1 { font-size: 1.85rem; }
-    .section-wrap { padding: 48px 16px; }
+    .section-wrap { padding: 32px 16px; }
   }
   @media (max-width: 600px) {
     .card img { height: auto; max-height: 280px; object-fit: contain; }
@@ -350,7 +349,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
             {displayEvent.location && <p>&#128205; {displayEvent.location}</p>}
             {displayEvent.description && <p>{displayEvent.description}</p>}
             {displayEvent.ticket_url && (
-              <a class="btn btn-primary btn-sm" style="margin-top:12px;" href={displayEvent.ticket_url} target="_blank" rel="noopener">
+              <a class="btn btn-primary btn-sm" style="margin-top:10px;" href={displayEvent.ticket_url} target="_blank" rel="noopener">
                 {displayEvent.ticket_label || 'Get Tickets'}
               </a>
             )}
@@ -377,7 +376,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
         <div class="card">
           <h3>{support.card_title}</h3>
           <p>{support.card_body}</p>
-          <p style="margin-top:12px;"><a href={support.card_link_url} target="_blank" rel="noopener">{support.card_link_label}</a></p>
+          <p style="margin-top:10px;"><a href={support.card_link_url} target="_blank" rel="noopener">{support.card_link_label}</a></p>
         </div>
       </div>
     </div>
@@ -444,8 +443,8 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
         <div class="card">
           <h3>Mailing / Email</h3>
           <p>Use our mailing address for letters, checks, and sponsorship forms.</p>
-          <p style="margin-top:10px;">{contact?.mailing_name}<br/>{contact?.mailing_street}<br/>{contact?.mailing_city}</p>
-          <p style="margin-top:10px;">Email: <a href={`mailto:${contact?.email}`}>{contact?.email}</a></p>
+          <p style="margin-top:8px;">{contact?.mailing_name}<br/>{contact?.mailing_street}<br/>{contact?.mailing_city}</p>
+          <p style="margin-top:8px;">Email: <a href={`mailto:${contact?.email}`}>{contact?.email}</a></p>
         </div>
       </div>
     </div>
