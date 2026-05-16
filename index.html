@@ -96,7 +96,7 @@
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
       gap: 24px;
-      align-items: center;
+      align-items: start;
     }
     .hero h1 {
       font-size: 2.1rem;
@@ -176,13 +176,12 @@
     .hero-card a:hover img { transform: scale(1.01); }
     .hero-card img {
       width: 100%;
+      height: auto;
       border-radius: 12px;
       margin-bottom: 10px;
       display: block;
       transition: transform 0.12s ease;
-      object-fit: cover;
-      height: 220px;
-      object-position: top;
+      object-fit: contain;
     }
     .badge {
       display: inline-block;
@@ -194,6 +193,18 @@
       background: var(--yellow);
       color: #000000;
       margin-bottom: 8px;
+    }
+    .event-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-red);
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-weight: 700;
     }
 
     main {
@@ -326,7 +337,7 @@
 	  }
 	  }
 		.visitor-count {
-	  	font-size: 0.85em;
+  	font-size: 0.85em;
   		color: var(--text-muted);
   		white-space: nowrap;
 	  }
@@ -364,14 +375,14 @@
   <div class="hero-overlay">
     <div class="hero-inner">
       <div>
-        <div class="badge">501(c)(3) Nonprofit • Lockport, NY</div>
+        <div class="badge">501(c)(3) Nonprofit &bull; Lockport, NY</div>
         <h1>Community-powered support for caregivers of differently-abled children during times of medical emergencies.</h1>
         <p class="hero-tagline">
           Abbie's Angels walks alongside caregivers during medical crisis and beyond,
           offering encouragement, practical resources, and a community that understands.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#support">Ways to Give & Help</a>
+          <a class="btn btn-primary" href="#support">Ways to Give &amp; Help</a>
           <a class="btn btn-outline" href="https://www.facebook.com/p/Abbies-Angels-61565888087840/" target="_blank" rel="noopener">
             Follow on Facebook
           </a>
@@ -382,17 +393,20 @@
         </p>
       </div>
       <aside class="hero-card">
-        <a href="https://auctria.events/abbiesangels2025" target="_blank" rel="noopener">
-          <img src="images/abbies-angels-gala-callout.jpg"
-               alt="Abbie's Angels Winter Gala promo – click for tickets">
+        <span class="event-badge">Upcoming Event &mdash; May 22nd</span>
+        <a href="https://abbiesangelsmeatraffle2026.auctria.events" target="_blank" rel="noopener">
+          <img src="images/1000023228.jpeg"
+               alt="Elevated Meat Raffle Fundraiser flyer &ndash; click for tickets"
+               loading="lazy">
         </a>
-        <h2>Abbie's Angels Winter Gala</h2>
-        <p><strong>Date:</strong> Friday, December 12, 2025</p>
-        <p><strong>Time:</strong> 7:00 – 11:00 PM</p>
-        <p><strong>Location:</strong> Salvatore's Hospitality, 6461 Transit Road</p>
+        <h2>Elevated Meat Raffle Fundraiser</h2>
+        <p><strong>Date:</strong> Friday, May 22, 2026</p>
+        <p><strong>Doors Open:</strong> 6:00 PM &nbsp;|&nbsp; <strong>First Spin:</strong> 7:00 PM</p>
+        <p><strong>Location:</strong> Wurlitzer Events Center, North Tonawanda</p>
         <p>
-          Tap the image above to purchase tickets and join a powerful night of hope and
-          encouragement for caregivers across Western New York.
+          Tap the image above or
+          <a href="https://abbiesangelsmeatraffle2026.auctria.events" target="_blank" rel="noopener">click here to get tickets</a>.
+          $10 per person &bull; $100 reserved tables of 10.
         </p>
       </aside>
     </div>
@@ -425,9 +439,9 @@
       </div>
       <div class="card card-photo-events">
         <img src="images/abbies-angels-hero.jpg" alt="Abbie at the gala holding an Abbie's Angels bear">
-        <h3>Events & Gatherings</h3>
+        <h3>Events &amp; Gatherings</h3>
         <p>
-          Host annual events like our Winter Gala to celebrate families, raise awareness, and
+          Host annual events like our Meat Raffle Fundraiser and Winter Gala to celebrate families, raise awareness, and
           sustain support programs throughout the year.
         </p>
       </div>
@@ -450,40 +464,39 @@
           raise funds to sustain our mission all year.
         </p>
         <ul class="list">
+          <li>Elevated Meat Raffle Fundraiser &mdash; Friday, May 22, 2026 at Wurlitzer Events Center, North Tonawanda.</li>
           <li>Annual Winter Gala with dinner, auctions, and inspiring stories.</li>
           <li>Community fundraisers and awareness nights with local partners.</li>
-          <li>Future events highlighting families and caregivers in our community.</li>
         </ul>
         <p>
-          For the most up‑to‑date event schedule, visit our social media and click "Follow."
+          For the most up&ndash;to&ndash;date event schedule, visit our social media and click "Follow."
         </p>
       </div>
       <div class="card">
-        <h3>Get Gala Tickets</h3>
+        <span class="event-badge">May 22, 2026</span>
+        <h3>Elevated Meat Raffle Fundraiser</h3>
         <p>
-          Join us at Salvatore's Hospitality for a night of generosity, stories, and hope.
+          Join us at the <strong>Wurlitzer Events Center in North Tonawanda</strong> for an exciting
+          night of over 36 meat raffle spins plus a grand finale for freezer-ready meat!
         </p>
         <p>
-          This year's Gala will help support Chelsea Campbell, an 8‑year‑old twin and little
-          sister who was diagnosed with Acute Myeloid Leukemia in June 2025 and is preparing
-          for a bone marrow transplant on December 22. Please keep Chelsea and her parents,
-          Twan Campbell and JoAnnah Piedmonte, in your thoughts.
+          A portion of proceeds will support <strong>baby Isaiah from WNY</strong>, who is battling
+          a critical heart defect.
         </p>
+        <ul class="list" style="margin-bottom: 10px;">
+          <li>Doors open 6:00 PM &bull; First spin 7:00 PM</li>
+          <li>Tickets: $10 per person &bull; $100 reserved table of 10</li>
+          <li>BYOF (Bring your own food/snacks) &bull; Cash bar</li>
+          <li>Basket raffles &amp; door prizes</li>
+          <li>Bring plenty of $1 bills!</li>
+        </ul>
         <p>
-          One of our board members, Laura Wexler, had the joy of teaching both Chelsea and
-          Abbie when they were babies, making this year's sponsorship especially close to
-          our hearts.
-        </p>
-        <p>
-          You can also support Chelsea directly through her GoFundMe:
-          <a href="https://www.gofundme.com/f/donate-to-chelseas-journey-to-health" target="_blank" rel="noopener">
-            Donate to Chelsea's Journey to Health
-          </a>.
-        </p>
-        <p>
-          <a href="https://auctria.events/abbiesangels2025" target="_blank" rel="noopener">
-            Click here to purchase Winter Gala tickets or become a sponsor on Auctria.
+          <a href="https://abbiesangelsmeatraffle2026.auctria.events" target="_blank" rel="noopener">
+            Click here to purchase tickets on Auctria
           </a>
+          &nbsp;or call/email:
+          <a href="tel:7169098910">716-909-8910</a> &bull;
+          <a href="mailto:abbiesangels@abbiesangels.org">abbiesangels@abbiesangels.org</a>
         </p>
       </div>
     </div>
@@ -498,22 +511,29 @@
           honor of Abbie and all of our community's warriors.
         </p>
         <ul class="list">
-          <li>Make a one‑time or recurring donation to support caregiver programs and events.</li>
+          <li>Make a one&ndash;time or recurring donation to support caregiver programs and events.</li>
           <li>Sponsor an event, family, or specific initiative as an individual or business.</li>
-          <li>Volunteer at events, help with set‑up/tear‑down, or serve on a planning committee.</li>
+          <li>Volunteer at events, help with set&ndash;up/tear&ndash;down, or serve on a planning committee.</li>
           <li>Share our posts and invite others to follow along on Facebook, Instagram, and LinkedIn.</li>
         </ul>
       </div>
       <div class="card">
         <h3>Give Today</h3>
         <p>
-          Online giving, checks, and in‑kind donations all make a tangible difference. To
-          arrange a donation or sponsorship, you can give through our Auctria page, mail a
-          gift, or reach out to our team to talk about the best way to help.
+          Online giving, checks, and in&ndash;kind donations all make a tangible difference. To
+          arrange a donation or sponsorship, give through our Auctria page, mail a gift,
+          or reach out to our team to talk about the best way to help.
         </p>
         <p>
-          <a href="https://auctria.events/abbiesangels2025" target="_blank" rel="noopener">
-            Visit our Auctria page to donate or sponsor.
+          <strong>Upcoming:</strong> Get tickets to the
+          <a href="https://abbiesangelsmeatraffle2026.auctria.events" target="_blank" rel="noopener">
+            Elevated Meat Raffle Fundraiser on May 22nd
+          </a>
+          &mdash; $10/person or $100 for a reserved table of 10.
+        </p>
+        <p>
+          <a href="https://abbiesangelsmeatraffle2026.auctria.events" target="_blank" rel="noopener">
+            Visit our Auctria page to get tickets, donate, or sponsor.
           </a>
         </p>
       </div>
@@ -528,19 +548,17 @@
     </p>
 
     <div class="cards">
-
       <div class="card">
         <img src="images/Lou-and-Stacie-mcnett-board-members.jpg" alt="Lou and Stacie McNett">
-        <h3>Lou & Stacie McNett</h3>
+        <h3>Lou &amp; Stacie McNett</h3>
         <p>Board Members</p>
       </div>
 
 	<div class="card">
 	  <img src="images/Board-members-Laura-and-Scott-Wexler.jpg" alt="Laura and Scott Wexler">
-	  <h3>Laura & Scott Wexler</h3>
+	  <h3>Laura &amp; Scott Wexler</h3>
 	  <p>Board Members</p>
 	</div>
-
 
       <div class="card">
         <img src="images/Ken-Houseknecht-board-member.jpg" alt="Ken Houseknecht">
@@ -555,9 +573,9 @@
       </div>
     </div>
 
-   <h2 style="margin-top:28px;">Staff & Key Partners</h2>
+   <h2 style="margin-top:28px;">Staff &amp; Key Partners</h2>
    <p>
-     These leaders and volunteers help shape events, storytelling, and day‑to‑day support
+     These leaders and volunteers help shape events, storytelling, and day&ndash;to&ndash;day support
      for Abbie's Angels families.
    </p>
 
@@ -575,7 +593,7 @@
      </div>
 
 	<div class="card">
-       <img src="images/Rachael-Hahn-volunteer.jpg" alt="Heather Geary">
+       <img src="images/Rachael-Hahn-volunteer.jpg" alt="Rachael Hahn">
        <h3>Rachael Hahn</h3>
        <p>Volunteer</p>
      </div>
@@ -589,7 +607,7 @@
      <div class="card">
        <img src="images/Annabelle-Guercio-volunteer.jpg" alt="Annabelle Guercio">
        <h3>Annabelle Guercio</h3>
-       <p>Volunteer</p>
+       <p>Annabelle Guercio</p>
      </div>
 
      <div class="card">
@@ -659,7 +677,6 @@
      </div>
    </div>
 
-
 			  <section id="contact">
 			    <h2>Contact</h2>
 			    <p>
@@ -676,38 +693,28 @@
 			        <div class="social-row">
 			          <span>Connect:</span>
 			          <span class="social-icon">
-			            🌐
-			            <a href="https://www.facebook.com/p/Abbies-Angels-61565888087840/" target="_blank" rel="noopener">
-			              Facebook
-			            </a>
+			            &#127760;
+			            <a href="https://www.facebook.com/p/Abbies-Angels-61565888087840/" target="_blank" rel="noopener">Facebook</a>
 			          </span>
 			          <span class="social-icon">
-			            📸
-			            <a href="https://www.instagram.com/abbiesangelsfoundation" target="_blank" rel="noopener">
-			              Instagram
-			            </a>
+			            &#128247;
+			            <a href="https://www.instagram.com/abbiesangelsfoundation" target="_blank" rel="noopener">Instagram</a>
 			          </span>
 			          <span class="social-icon">
-			            💼
-			            <a href="https://www.linkedin.com/company/abbie-s-angels-foundation/" target="_blank" rel="noopener">
-			              LinkedIn
-			            </a>
+			            &#128188;
+			            <a href="https://www.linkedin.com/company/abbie-s-angels-foundation/" target="_blank" rel="noopener">LinkedIn</a>
 			          </span>
 			        </div>
 			      </div>
 			      <div class="card">
 			        <h3>Mailing / Email</h3>
-			        <p>
-			          Use our mailing address for letters, checks, and sponsorship forms.
-			        </p>
+			        <p>Use our mailing address for letters, checks, and sponsorship forms.</p>
 			        <p>
 			          Abbie's Angels<br>
 			          36 Gaffney Rd.<br>
 			          Lockport, NY 14094
 			        </p>
-			        <p>
-			          Email: <a href="mailto:abbiesangels17@gmail.com">abbiesangels17@gmail.com</a>
-			        </p>
+			        <p>Email: <a href="mailto:abbiesangels17@gmail.com">abbiesangels17@gmail.com</a></p>
 			      </div>
 			    </div>
 			  </section>
@@ -715,7 +722,7 @@
 
 			<footer>
 			  <div class="footer-inner">
-			    <span>© Abbie's Angels. All rights reserved.</span>
+			    <span>&copy; Abbie's Angels. All rights reserved.</span>
 			    <span>Abbie's Angels is a 501(c)(3) organization. EIN: 33-2629458.</span>
 			    <span class="visitor-count">
 			      Visitors
