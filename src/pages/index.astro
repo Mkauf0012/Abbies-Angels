@@ -3,10 +3,10 @@ import Base from '../layouts/Base.astro';
 import { createClient } from '@sanity/client';
 
 const client = createClient({
-  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID || 'placeholder',
-  dataset: import.meta.env.PUBLIC_SANITY_DATASET || 'production',
-  useCdn: true,
+  projectId: '7o31gm3n',
+  dataset: 'production',
   apiVersion: '2024-01-01',
+  useCdn: true,
 });
 
 let homepage = null;
@@ -31,10 +31,10 @@ const team = homepage?.team;
 const trustBar = homepage?.trustBar;
 const ctaBlock = homepage?.cta;
 
-const ogDescription = hero?.subheadline || "Surrounding caregivers and families with practical help, encouragement, and connection as they navigate complex medical needs with their differently abled children.";
+const ogDescription = hero?.subheadline || "Supporting caregivers and families navigating Alzheimer's disease in Western New York.";
 ---
 <Base
-  title="Abbie's Angels — Supporting Families of Differently Abled Children, Lockport NY"
+  title="Abbie's Angels — Alzheimer's Caregiver Support, Lockport NY"
   description={ogDescription}
 >
 <main>
