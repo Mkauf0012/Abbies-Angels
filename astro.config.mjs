@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://abbiesangels.org',
@@ -7,5 +6,4 @@ export default defineConfig({
   build: {
     assets: 'assets'
   },
-  integrations: [sitemap()],
 });
