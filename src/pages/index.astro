@@ -37,3 +37,429 @@ const ogDescription = hero?.subheadline || "Surrounding caregivers and families 
   title="Abbie's Angels — Supporting Families of Differently Abled Children, Lockport NY"
   description={ogDescription}
 >
+<main>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="badge">&#10084; 501(c)(3) Nonprofit &bull; Lockport, NY</div>
+        <h1>{hero?.headline || "We Walk Beside Families Who Can't Do It Alone"}</h1>
+        <p class="hero-sub">{hero?.subheadline || "Surrounding caregivers and families with practical help, encouragement, and connection as they navigate complex medical needs with their differently abled children."}</p>
+        <div class="hero-actions">
+          <a href="/donate" class="btn-primary">{hero?.cta_primary || 'Donate Now'}</a>
+          <a href="/volunteer" class="btn-ghost">{hero?.cta_secondary || 'Get Involved'}</a>
+        </div>
+      </div>
+      <div class="hero-flyer">
+        <div class="flyer-card">
+          <img
+            src="/images/event-flyer.jpg"
+            alt="Upcoming event flyer"
+            width="420"
+            height="560"
+            loading="eager"
+            style="width:100%;height:auto;display:block;object-fit:contain;"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRUST BAR ═══ -->
+  <section class="trust-bar">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <span class="trust-num">{trustBar?.families_helped || '200+'}  </span>
+        <span class="trust-label">Families Helped</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-num">{trustBar?.years_serving || '5+'}</span>
+        <span class="trust-label">Years Serving WNY</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-num">{trustBar?.volunteers || '80+'}</span>
+        <span class="trust-label">Volunteers</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-num">{trustBar?.events_per_year || '10+'}</span>
+        <span class="trust-label">Events Per Year</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MISSION ═══ -->
+  <section class="mission" id="mission">
+    <div class="section-inner">
+      <div class="mission-text">
+        <span class="section-tag">Our Mission</span>
+        <h2>{mission?.headline || "No Family Should Navigate This Alone"}</h2>
+        <p>{mission?.body || "Abbie's Angels exists to surround caregivers and families of differently abled children with the practical help, genuine encouragement, and meaningful connection they need to keep going — one day at a time."}</p>
+        <a href="/donate" class="btn-primary" style="margin-top:1.5rem;display:inline-flex;">Support Our Mission</a>
+      </div>
+      <div class="mission-image">
+        <img src="/images/mission-photo.jpg" alt="Abbie's Angels mission" width="520" height="380" loading="lazy" style="width:100%;height:auto;border-radius:16px;object-fit:cover;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT WE DO ═══ -->
+  <section class="what-we-do" id="what-we-do">
+    <div class="section-inner centered">
+      <span class="section-tag">What We Do</span>
+      <h2>{whatWeDo?.headline || "How We Show Up for Families"}</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🎉</div>
+        <h3>Community Events</h3>
+        <p>Fun, inclusive events that bring families together and give caregivers a chance to breathe and connect.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤝</div>
+        <h3>Caregiver Support</h3>
+        <p>Practical help, resources, and a community that truly understands the challenges caregivers face every day.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <h3>Scholarships & Grants</h3>
+        <p>Financial assistance to help families access therapies, equipment, and opportunities for their children.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💛</div>
+        <h3>Volunteer Network</h3>
+        <p>A dedicated group of volunteers who give their time and hearts to make a real difference in families' lives.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TEAM ═══ -->
+  <section class="team" id="team">
+    <div class="section-inner centered">
+      <span class="section-tag">Our Team</span>
+      <h2>{team?.headline || "The Hearts Behind Abbie's Angels"}</h2>
+      <p class="section-sub">{team?.subheadline || "A passionate group of volunteers and advocates dedicated to supporting families in Western New York."}</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="/images/team-abbie.jpg" alt="Abbie" width="160" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />
+        </div>
+        <h3>Abbie</h3>
+        <p>Founder &amp; Inspiration</p>
+      </div>
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="/images/team-placeholder.jpg" alt="Team member" width="160" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />
+        </div>
+        <h3>Board Members</h3>
+        <p>Dedicated Volunteers</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2>{ctaBlock?.headline || "Ready to Make a Difference?"}</h2>
+      <p>{ctaBlock?.subheadline || "Whether you donate, volunteer, or spread the word — every action helps a family in need."}</p>
+      <div class="cta-actions">
+        <a href="/donate" class="btn-primary btn-large">Donate Now</a>
+        <a href="/volunteer" class="btn-ghost btn-large">Volunteer</a>
+        <a href="/events" class="btn-ghost btn-large">See Events</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+</Base>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #f0f5ff 0%, #fff8e7 100%);
+    padding: clamp(3rem, 6vw, 5rem) 24px;
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    background: #fff3cd;
+    border: 1px solid #f4b321;
+    color: #7a5100;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #0d1f3c;
+    margin-bottom: 1rem;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: #4a5568;
+    max-width: 520px;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .hero-flyer {
+    display: flex;
+    justify-content: center;
+  }
+  .flyer-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    overflow: hidden;
+    max-width: 380px;
+    width: 100%;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 28px;
+    border-radius: 999px;
+    background: #c8102e;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(200,16,46,0.25);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #9e0b23; transform: translateY(-1px); text-decoration: none; }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 28px;
+    border-radius: 999px;
+    background: transparent;
+    color: #0055a4;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 2px solid #0055a4;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-ghost:hover { background: #0055a4; color: #fff; text-decoration: none; }
+  .btn-large { padding: 14px 36px; font-size: 1rem; }
+
+  /* ── Trust Bar ── */
+  .trust-bar {
+    background: #0055a4;
+    padding: 1.5rem 24px;
+  }
+  .trust-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 2.5rem;
+  }
+  .trust-num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #f4b321;
+    font-family: 'Nunito', sans-serif;
+    line-height: 1;
+  }
+  .trust-label {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+  .trust-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* ── Sections ── */
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .section-inner.centered { text-align: center; }
+  .section-tag {
+    display: inline-block;
+    background: #fff3cd;
+    color: #7a5100;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+  .section-inner h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #0d1f3c;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: #5a6475;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* ── Mission ── */
+  .mission {
+    padding: clamp(3rem, 6vw, 5rem) 24px;
+    background: #fff;
+  }
+  .mission .section-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .mission-text p {
+    color: #4a5568;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    max-width: 520px;
+  }
+
+  /* ── What We Do ── */
+  .what-we-do {
+    padding: clamp(3rem, 6vw, 5rem) 24px;
+    background: #f7fafc;
+  }
+  .cards-grid {
+    max-width: 1100px;
+    margin: 2rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    padding: 0 24px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .card h3 { font-size: 1.05rem; font-weight: 800; color: #0d1f3c; margin-bottom: 0.5rem; }
+  .card p { font-size: 0.92rem; color: #5a6475; line-height: 1.65; }
+
+  /* ── Team ── */
+  .team {
+    padding: clamp(3rem, 6vw, 5rem) 24px;
+    background: #fff;
+  }
+  .team-grid {
+    max-width: 700px;
+    margin: 2rem auto 0;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 24px;
+  }
+  .team-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .team-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #f4b321;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  .team-card h3 { font-size: 1rem; font-weight: 800; color: #0d1f3c; }
+  .team-card p { font-size: 0.85rem; color: #5a6475; }
+
+  /* ── CTA Section ── */
+  .cta-section {
+    background: linear-gradient(135deg, #0055a4 0%, #003d7a 100%);
+    padding: clamp(3rem, 6vw, 5rem) 24px;
+    text-align: center;
+  }
+  .cta-inner { max-width: 700px; margin: 0 auto; }
+  .cta-inner h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .cta-inner p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cta-section .btn-ghost {
+    color: #fff;
+    border-color: rgba(255,255,255,0.6);
+  }
+  .cta-section .btn-ghost:hover {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-flyer { order: -1; }
+    .flyer-card { max-width: 300px; }
+    .mission .section-inner { grid-template-columns: 1fr; }
+    .trust-item { padding: 0.5rem 1.5rem; }
+    .trust-divider { display: none; }
+  }
+</style>
