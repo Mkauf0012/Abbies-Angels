@@ -114,12 +114,16 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   .hero-card h2 { font-size: 1.05rem; margin-bottom: 6px; color: var(--blue); font-weight: 700; }
   .hero-card p { font-size: 0.91rem; color: var(--text-muted); margin-bottom: 6px; }
   .hero-card a { text-decoration: none; }
-  .hero-card a:hover img { transform: scale(1.015); }
+  .hero-card a:hover img { opacity: 0.92; }
   .hero-card img {
-    width: 100%; height: auto; max-height: 340px; object-fit: cover;
-    border-radius: 10px; margin-bottom: 10px; display: block;
-    transition: transform 0.15s ease;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: block;
     box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    transition: opacity 0.15s ease;
   }
   .badge {
     display: inline-flex; align-items: center; gap: 6px;
@@ -257,7 +261,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
                   src={sanityImage(displayEvent.image)}
                   alt={displayEvent.image_alt || `${displayEvent.title} flyer – click for tickets`}
                   loading="lazy"
-                  width="480" height="340"
+                  width="480" height="480"
                 />
               </a>
             )}
@@ -279,7 +283,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
             <span class="event-badge">&#128197; Upcoming Event</span>
             {sanityImage(displayCard.image) && (
               <a href={displayCard.ticket_url || '#'} target="_blank" rel="noopener">
-                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt || displayCard.title} loading="lazy" width="480" height="340" />
+                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt || displayCard.title} loading="lazy" width="480" height="480" />
               </a>
             )}
             <h2>{displayCard.title}</h2>
