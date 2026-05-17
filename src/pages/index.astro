@@ -1,4 +1,3 @@
----
 import Base from '../layouts/Base.astro';
 import { createClient } from '@sanity/client';
 
@@ -116,7 +115,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   .hero-card a { text-decoration: none; }
   .hero-card a:hover img { transform: scale(1.015); }
   .hero-card img {
-    width: 100%; height: auto; max-height: 340px; object-fit: cover;
+    width: 100%; height: auto; object-fit: contain;
     border-radius: 10px; margin-bottom: 10px; display: block;
     transition: transform 0.15s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.07);
@@ -257,7 +256,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
                   src={sanityImage(displayEvent.image)}
                   alt={displayEvent.image_alt || `${displayEvent.title} flyer – click for tickets`}
                   loading="lazy"
-                  width="480" height="340"
+                  width="480" height="640"
                 />
               </a>
             )}
@@ -279,7 +278,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
             <span class="event-badge">&#128197; Upcoming Event</span>
             {sanityImage(displayCard.image) && (
               <a href={displayCard.ticket_url || '#'} target="_blank" rel="noopener">
-                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt || displayCard.title} loading="lazy" width="480" height="340" />
+                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt || displayCard.title} loading="lazy" width="480" height="640" />
               </a>
             )}
             <h2>{displayCard.title}</h2>
