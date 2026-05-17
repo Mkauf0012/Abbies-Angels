@@ -37,7 +37,7 @@ const displayEvent = featuredEvent || null;
 const displayCard = heroCard || null;
 
 const ogDescription = hero?.subheadline || "Supporting caregivers and families navigating Alzheimer's disease in Western New York.";
-const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(displayEvent.image) : '/images/abbies-angels-logo.jpg';
+const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(displayEvent.image) : '/images/abbies-angels-og.jpg';
 ---
 <Base
   title="Abbie's Angels — Alzheimer's Caregiver Support, Lockport NY"
@@ -45,7 +45,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   ogImage={ogImage}
 >
 <style>
-  /* ── Hero ── */
+  /* —— Hero —— */
   .hero {
     background: #ffffff;
     padding: 0 24px 36px;
@@ -75,7 +75,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     font-weight: 800;
   }
   .hero-tagline { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.65; }
-  .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
   .btn {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 10px 22px; border-radius: 999px; font-size: 0.95rem; font-weight: 700;
@@ -93,7 +93,20 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   .btn-sm { padding: 7px 16px; font-size: 0.88rem; }
   .hero-meta { font-size: 0.88rem; color: var(--text-muted); }
 
-  /* ── Hero Card ── */
+  /* Trust bar */
+  .trust-bar {
+    display: flex; flex-wrap: wrap; gap: 6px 14px;
+    margin-bottom: 12px;
+    font-size: 0.82rem; color: var(--text-muted);
+  }
+  .trust-bar span {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--bg-light); border: 1px solid var(--border-soft);
+    padding: 3px 10px; border-radius: 999px; font-weight: 600;
+  }
+  .trust-bar .check { color: #1a7f4b; font-size: 0.85rem; }
+
+  /* —— Hero Card —— */
   .hero-card {
     background: #fff; border-radius: 16px; padding: 16px 16px 14px;
     box-shadow: 0 12px 36px rgba(15,23,42,0.09); border: 1px solid var(--border-soft);
@@ -103,8 +116,9 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   .hero-card a { text-decoration: none; }
   .hero-card a:hover img { transform: scale(1.015); }
   .hero-card img {
-    width: 100%; height: auto; border-radius: 10px; margin-bottom: 10px; display: block;
-    transition: transform 0.15s ease; object-fit: contain;
+    width: 100%; height: auto; max-height: 340px; object-fit: cover;
+    border-radius: 10px; margin-bottom: 10px; display: block;
+    transition: transform 0.15s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.07);
   }
   .badge {
@@ -120,22 +134,13 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     background: var(--accent-red); color: #ffffff; margin-bottom: 10px; font-weight: 700;
   }
 
-  /* ── Main & Sections ── */
+  /* —— Main & Sections —— */
   main { max-width: 1100px; margin: 0 auto; padding: 0; }
 
-  .section-wrap {
-    padding: 40px 24px;
-  }
-  .section-wrap:nth-child(even) {
-    background: var(--bg-light);
-  }
-  .section-wrap:nth-child(odd) {
-    background: #ffffff;
-  }
-  .section-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  .section-wrap { padding: 40px 24px; }
+  .section-wrap:nth-child(even) { background: var(--bg-light); }
+  .section-wrap:nth-child(odd) { background: #ffffff; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
   .section-inner h2 {
     font-size: 1.6rem; margin-bottom: 6px; font-weight: 800;
     border-left: 4px solid var(--gold); padding-left: 14px; color: var(--blue);
@@ -146,7 +151,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   }
   .section-inner p { margin-bottom: 10px; color: var(--text-muted); font-size: 0.98rem; }
 
-  /* ── Cards ── */
+  /* —— Cards —— */
   .cards {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
     gap: 16px;
@@ -167,7 +172,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   .card-team img { height: 240px; object-position: top; }
   .card-photo-events img { height: auto; object-fit: contain; }
 
-  /* ── Two col ── */
+  /* —— Two col —— */
   .two-col {
     display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
     gap: 20px; align-items: flex-start;
@@ -182,13 +187,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   }
   .view-all-link:hover { text-decoration: underline; }
 
-  /* ── Section divider ── */
-  .section-divider {
-    border: none; border-top: 1px solid var(--border-soft);
-    margin: 0;
-  }
-
-  /* ── Social in Contact ── */
+  /* —— Social in Contact —— */
   .social-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
   .social-pill {
     display: inline-flex; align-items: center; gap: 6px;
@@ -200,7 +199,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   .social-pill:hover { background: #e8edf8; transform: translateY(-1px); text-decoration: none; }
   .social-pill svg { width: 18px; height: 18px; display: block; flex-shrink: 0; }
 
-  /* ── Team second heading ── */
+  /* —— Team second heading —— */
   .staff-heading {
     font-size: 1.3rem; margin-top: 28px; margin-bottom: 6px; font-weight: 800;
     border-left: 4px solid var(--gold); padding-left: 14px; color: var(--blue);
@@ -239,6 +238,11 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
             </a>
           )}
         </div>
+        <div class="trust-bar">
+          <span><span class="check">✓</span> 501(c)(3) Verified</span>
+          <span><span class="check">✓</span> 100% Volunteer Run</span>
+          <span><span class="check">✓</span> Western New York</span>
+        </div>
         <p class="hero-meta">{hero.hero_meta}</p>
       </div>
       <aside class="hero-card">
@@ -253,7 +257,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
                   src={sanityImage(displayEvent.image)}
                   alt={displayEvent.image_alt || `${displayEvent.title} flyer – click for tickets`}
                   loading="lazy"
-                  width="480" height="480"
+                  width="480" height="340"
                 />
               </a>
             )}
@@ -275,7 +279,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
             <span class="event-badge">&#128197; Upcoming Event</span>
             {sanityImage(displayCard.image) && (
               <a href={displayCard.ticket_url || '#'} target="_blank" rel="noopener">
-                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt || displayCard.title} loading="lazy" width="480" height="480" />
+                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt || displayCard.title} loading="lazy" width="480" height="340" />
               </a>
             )}
             <h2>{displayCard.title}</h2>
@@ -345,7 +349,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
               {(displayEvent.date_label || displayEvent.date) && (
                 <span>&#128197; {displayEvent.date_label || displayEvent.date}</span>
               )}
-              {displayEvent.time_label && <span> &nbsp;&bull;&nbsp; &#128336; {displayEvent.time_label}</span>}
+              {displayEvent.time_label && <span> &nbsp;·&nbsp; &#128336; {displayEvent.time_label}</span>}
             </div>
             {displayEvent.location && <p>&#128205; {displayEvent.location}</p>}
             {displayEvent.description && <p>{displayEvent.description}</p>}
