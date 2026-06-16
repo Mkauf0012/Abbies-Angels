@@ -9,16 +9,6 @@ const client = createClient({
   useCdn: false,
 });
 
-function sanityImage(img: any) {
-  if (!img?.asset?._ref) return '';
-  const ref = img.asset._ref;
-  const parts = ref.split('-');
-  const ext = parts[parts.length - 1];
-  const dimensions = parts[parts.length - 2];
-  const id = parts.slice(1, parts.length - 2).join('-');
-  return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
-}
-
 const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support, contact, board, staff] =
   await Promise.all([
     client.fetch(`*[_type == "hero"][0]`),
@@ -32,6 +22,16 @@ const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support,
     client.fetch(`*[_type == "board"][0]`),
     client.fetch(`*[_type == "staff"][0]`),
   ]);
+
+function sanityImage(img: any) {
+  if (!img?.asset?._ref) return '';
+  const ref = img.asset._ref;
+  const parts = ref.split('-');
+  const ext = parts[parts.length - 1];
+  const dimensions = parts[parts.length - 2];
+  const id = parts.slice(1, parts.length - 2).join('-');
+  return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
+}
 
 const displayEvent = featuredEvent || null;
 const displayCard = heroCard || null;
@@ -485,14 +485,21 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   </div>
 </div>
 
-<!-- Redirect to subscribe-success when HubSpot embedded form submits successfully -->
+<!-- Redirect to /subscribe-success when HubSpot newsletter form submits -->
 <script>
   window.addEventListener('message', function (event) {
     if (
       event.data &&
       typeof event.data === 'object' &&
       event.data.type === 'hsFormCallback' &&
-      event.data.eventName === 'onFormSubmitted'
+      (
+        event.data.eventName === 'onFormSubmitted' ||
+        event.data.eventName === 'onFormSubmit'
+      ) &&
+      (
+        !event.data.id ||
+        event.data.id === '0fc362ef-4f8a-488f-8b83-c232341af6c8'
+      )
     ) {
       window.location.href = '/subscribe-success';
     }
