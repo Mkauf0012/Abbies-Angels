@@ -484,4 +484,18 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     <div class="hs-form-frame" data-region="na2" data-form-id="0fc362ef-4f8a-488f-8b83-c232341af6c8" data-portal-id="244584127"></div>
   </div>
 </div>
+
+<!-- Redirect to subscribe-success when HubSpot embedded form submits successfully -->
+<script>
+  window.addEventListener('message', function (event) {
+    if (
+      event.data &&
+      typeof event.data === 'object' &&
+      event.data.type === 'hsFormCallback' &&
+      event.data.eventName === 'onFormSubmitted'
+    ) {
+      window.location.href = '/subscribe-success';
+    }
+  });
+</script>
 </Base>
