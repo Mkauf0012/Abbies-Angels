@@ -36,18 +36,6 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
   .card h2 { font-size: 1.15rem; margin-bottom: 10px; color: var(--blue); font-weight: 800;
     border-left: 4px solid var(--gold); padding-left: 10px; }
   .card p { font-size: 0.93rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.65; }
-  /* HubSpot form placeholder */
-  .hs-form-placeholder {
-    border: 2px dashed var(--border-soft);
-    border-radius: 12px;
-    padding: 32px 24px;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.92rem;
-    margin-top: 8px;
-  }
-  .hs-form-placeholder strong { display: block; margin-bottom: 6px; color: var(--text-main); font-size: 1rem; }
-  /* Interim contact form */
   .form-group { margin-bottom: 16px; }
   .form-group label { display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
   .form-group input, .form-group textarea, .form-group select {
@@ -68,6 +56,10 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
   }
   .btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 4px 14px rgba(0,85,164,0.2); }
   .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-2px); text-decoration: none; }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .form-status { margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 0.92rem; font-weight: 600; display: none; }
+  .form-status.success { display: block; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+  .form-status.error   { display: block; background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
   .social-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
   .social-pill {
     display: inline-flex; align-items: center; gap: 7px;
@@ -86,18 +78,17 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
 
 <div class="page-hero">
   <h1>Get in Touch</h1>
-  <p>{contact?.intro || "We\'d love to hear from you. Reach out with questions, volunteer inquiries, or sponsorship interest."}</p>
+  <p>{contact?.intro || "We'd love to hear from you. Reach out with questions, volunteer inquiries, or sponsorship interest."}</p>
 </div>
 
 <main>
   <div class="contact-grid">
-    <!-- Left: Contact Form (HubSpot-ready) -->
+    <!-- Left: Contact Form (HubSpot-wired) -->
     <div class="card">
       <h2>Send Us a Message</h2>
       <p>Fill out the form below and a member of our team will get back to you soon.</p>
-      <!-- HubSpot embed target: replace form below with hbspt.forms.create({...}) when ready -->
       <div id="hs-contact-form">
-        <form action="/thank-you" method="GET" novalidate>
+        <form id="contact-form" novalidate>
           <div class="form-group">
             <label for="firstname">First Name</label>
             <input type="text" id="firstname" name="firstname" placeholder="Jane" required>
@@ -124,7 +115,8 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
             <label for="message">Message</label>
             <textarea id="message" name="message" placeholder="How can we help?"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Send Message</button>
+          <button type="submit" class="btn btn-primary" id="contact-submit">Send Message</button>
+          <div class="form-status" id="contact-status"></div>
         </form>
       </div>
     </div>
@@ -176,4 +168,67 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
     </div>
   </div>
 </main>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+  const statusEl = document.getElementById('contact-status') as HTMLDivElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form || !submitBtn || !statusEl) return;
+
+    // Basic client-side validation
+    const email = (form.elements.namedItem('email') as HTMLInputElement)?.value?.trim();
+    const firstname = (form.elements.namedItem('firstname') as HTMLInputElement)?.value?.trim();
+    if (!email || !firstname) {
+      showStatus('error', 'Please fill in your first name and email address.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    statusEl.className = 'form-status';
+
+    try {
+      const payload = {
+        formType: 'contact',
+        firstname,
+        lastname:  (form.elements.namedItem('lastname')  as HTMLInputElement)?.value?.trim(),
+        email,
+        interest:  (form.elements.namedItem('interest')  as HTMLSelectElement)?.value,
+        message:   (form.elements.namedItem('message')   as HTMLTextAreaElement)?.value?.trim(),
+      };
+
+      const res = await fetch('/api/hubspot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json() as { ok: boolean; error?: string };
+
+      if (data.ok) {
+        form.reset();
+        showStatus('success', '✅ Message sent! We\'ll be in touch soon.');
+        // Redirect to thank-you after brief pause
+        setTimeout(() => { window.location.href = '/thank-you'; }, 1800);
+      } else {
+        showStatus('error', data.error ?? 'Something went wrong. Please try again.');
+      }
+    } catch {
+      showStatus('error', 'Network error — please check your connection and try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message';
+    }
+  });
+
+  function showStatus(type: 'success' | 'error', message: string) {
+    if (!statusEl) return;
+    statusEl.className = `form-status ${type}`;
+    statusEl.textContent = message;
+    statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
 </Base>
