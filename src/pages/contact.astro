@@ -29,37 +29,13 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
     margin-top: 8px;
   }
   .card {
-    background: #fff; border-radius: 16px; padding: 24px 24px;
+    background: #fff; border-radius: 16px; padding: 24px;
     border: 1px solid var(--border-soft);
     box-shadow: 0 4px 16px rgba(15,23,42,0.05);
   }
   .card h2 { font-size: 1.15rem; margin-bottom: 10px; color: var(--blue); font-weight: 800;
     border-left: 4px solid var(--gold); padding-left: 10px; }
   .card p { font-size: 0.93rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.65; }
-  .form-group { margin-bottom: 16px; }
-  .form-group label { display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
-  .form-group input, .form-group textarea, .form-group select {
-    width: 100%; padding: 10px 14px; border-radius: 8px;
-    border: 1px solid var(--border-soft); font-size: 0.95rem;
-    font-family: var(--font-body); background: #fafafa;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-    outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,85,164,0.12);
-  }
-  .form-group textarea { min-height: 110px; resize: vertical; }
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: 11px 26px; border-radius: 999px; font-size: 0.95rem; font-weight: 700;
-    font-family: var(--font-display); border: 2px solid transparent; cursor: pointer;
-    text-decoration: none; transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-  }
-  .btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 4px 14px rgba(0,85,164,0.2); }
-  .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-2px); text-decoration: none; }
-  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-  .form-status { margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 0.92rem; font-weight: 600; display: none; }
-  .form-status.success { display: block; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-  .form-status.error   { display: block; background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
   .social-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
   .social-pill {
     display: inline-flex; align-items: center; gap: 7px;
@@ -70,6 +46,16 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
   }
   .social-pill:hover { background: #e8edf8; transform: translateY(-1px); text-decoration: none; }
   .social-pill svg { width: 18px; height: 18px; display: block; flex-shrink: 0; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 8px 18px; border-radius: 999px; font-size: 0.88rem; font-weight: 700;
+    font-family: var(--font-display); border: 2px solid transparent; cursor: pointer;
+    text-decoration: none; transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 4px 14px rgba(0,85,164,0.2); }
+  .btn-primary:hover { background: #00346b; border-color: #00346b; transform: translateY(-2px); text-decoration: none; }
+  /* HubSpot form frame */
+  .hs-form-frame { width: 100%; }
   @media (max-width: 768px) {
     .contact-grid { grid-template-columns: 1fr; }
     .page-hero h1 { font-size: 1.6rem; }
@@ -83,42 +69,12 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
 
 <main>
   <div class="contact-grid">
-    <!-- Left: Contact Form (HubSpot-wired) -->
+    <!-- Left: HubSpot Contact Form -->
     <div class="card">
       <h2>Send Us a Message</h2>
       <p>Fill out the form below and a member of our team will get back to you soon.</p>
-      <div id="hs-contact-form">
-        <form id="contact-form" novalidate>
-          <div class="form-group">
-            <label for="firstname">First Name</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Jane" required>
-          </div>
-          <div class="form-group">
-            <label for="lastname">Last Name</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Smith" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="jane@example.com" required>
-          </div>
-          <div class="form-group">
-            <label for="interest">I'm interested in…</label>
-            <select id="interest" name="interest">
-              <option value="general">General Question</option>
-              <option value="volunteer">Volunteering</option>
-              <option value="donate">Donating / Sponsorship</option>
-              <option value="event">Event Information</option>
-              <option value="media">Media / Press</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="How can we help?"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" id="contact-submit">Send Message</button>
-          <div class="form-status" id="contact-status"></div>
-        </form>
-      </div>
+      <script src="https://js-na2.hsforms.net/forms/embed/244584127.js" defer></script>
+      <div class="hs-form-frame" data-region="na2" data-form-id="54d03e10-74b8-4a55-bd2a-655816cfaefa" data-portal-id="244584127"></div>
     </div>
 
     <!-- Right: Info cards -->
@@ -160,75 +116,12 @@ const contact = await client.fetch(`*[_type == "contact"][0]`);
         <h2>Other Ways to Help</h2>
         <p>Interested in volunteering, sponsoring an event, or making a donation?</p>
         <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
-          <a class="btn btn-primary" href="/volunteer" style="font-size:0.88rem; padding:8px 18px;">Volunteer</a>
-          <a class="btn btn-primary" href="/sponsor" style="font-size:0.88rem; padding:8px 18px; background:var(--gold); border-color:var(--gold); color:#000;">Sponsor</a>
-          <a class="btn btn-primary" href="/donate" style="font-size:0.88rem; padding:8px 18px; background:var(--accent-red); border-color:var(--accent-red);">Donate</a>
+          <a class="btn btn-primary" href="/volunteer">Volunteer</a>
+          <a class="btn btn-primary" href="/sponsor" style="background:var(--gold); border-color:var(--gold); color:#000;">Sponsor</a>
+          <a class="btn btn-primary" href="/donate" style="background:var(--accent-red); border-color:var(--accent-red);">Donate</a>
         </div>
       </div>
     </div>
   </div>
 </main>
-
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
-  const statusEl = document.getElementById('contact-status') as HTMLDivElement | null;
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!form || !submitBtn || !statusEl) return;
-
-    // Basic client-side validation
-    const email = (form.elements.namedItem('email') as HTMLInputElement)?.value?.trim();
-    const firstname = (form.elements.namedItem('firstname') as HTMLInputElement)?.value?.trim();
-    if (!email || !firstname) {
-      showStatus('error', 'Please fill in your first name and email address.');
-      return;
-    }
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending…';
-    statusEl.className = 'form-status';
-
-    try {
-      const payload = {
-        formType: 'contact',
-        firstname,
-        lastname:  (form.elements.namedItem('lastname')  as HTMLInputElement)?.value?.trim(),
-        email,
-        interest:  (form.elements.namedItem('interest')  as HTMLSelectElement)?.value,
-        message:   (form.elements.namedItem('message')   as HTMLTextAreaElement)?.value?.trim(),
-      };
-
-      const res = await fetch('/api/hubspot', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json() as { ok: boolean; error?: string };
-
-      if (data.ok) {
-        form.reset();
-        showStatus('success', '✅ Message sent! We\'ll be in touch soon.');
-        // Redirect to thank-you after brief pause
-        setTimeout(() => { window.location.href = '/thank-you'; }, 1800);
-      } else {
-        showStatus('error', data.error ?? 'Something went wrong. Please try again.');
-      }
-    } catch {
-      showStatus('error', 'Network error — please check your connection and try again.');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Send Message';
-    }
-  });
-
-  function showStatus(type: 'success' | 'error', message: string) {
-    if (!statusEl) return;
-    statusEl.className = `form-status ${type}`;
-    statusEl.textContent = message;
-    statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-</script>
 </Base>

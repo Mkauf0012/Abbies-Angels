@@ -187,6 +187,25 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   }
   .view-all-link:hover { text-decoration: underline; }
 
+  /* —— Newsletter section —— */
+  .newsletter-wrap {
+    background: var(--blue);
+    padding: 40px 24px;
+  }
+  .newsletter-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .newsletter-inner h2 {
+    font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 8px;
+  }
+  .newsletter-inner p {
+    color: rgba(255,255,255,0.82); font-size: 0.98rem; margin-bottom: 20px;
+  }
+  /* HubSpot embed container */
+  .hs-form-frame { width: 100%; }
+
   /* —— Social in Contact —— */
   .social-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
   .social-pill {
@@ -455,4 +474,14 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     </div>
   </div>
 </main>
+
+<!-- Newsletter Subscribe -->
+<div class="newsletter-wrap">
+  <div class="newsletter-inner">
+    <h2>Stay in the Loop</h2>
+    <p>Get event updates, volunteer opportunities, and family resources delivered to your inbox.</p>
+    <script src="https://js-na2.hsforms.net/forms/embed/244584127.js" defer></script>
+    <div class="hs-form-frame" data-region="na2" data-form-id="0fc362ef-4f8a-488f-8b83-c232341af6c8" data-portal-id="244584127"></div>
+  </div>
+</div>
 </Base>
