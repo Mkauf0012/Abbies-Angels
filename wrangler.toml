@@ -1,0 +1,13 @@
+name = "abbies-angels"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# ── Variable bindings ──────────────────────────────────────────────────────────
+# Placeholder values only — set real secrets in the Cloudflare Dashboard under
+# Workers & Pages → Your Project → Settings → Environment Variables (encrypted).
+[vars]
+HUBSPOT_TOKEN = ""
+HUBSPOT_PORTAL_ID = ""
+SANITY_PROJECT_ID = ""
+SANITY_DATASET = "production"
+SANITY_API_TOKEN = ""
