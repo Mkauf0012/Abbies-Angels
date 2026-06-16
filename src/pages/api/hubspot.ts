@@ -26,6 +26,9 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
+// HubSpot Marketing Information subscription type ID
+const NEWSLETTER_SUBSCRIPTION_ID = 1749943430;
+
 export const OPTIONS: APIRoute = () =>
   new Response(null, { status: 204, headers: CORS_HEADERS });
 
@@ -85,7 +88,6 @@ export const POST: APIRoute = async ({ request }) => {
         });
         if (!contactResult.ok) return json({ ok: false, error: contactResult.error }, 422);
 
-        // Create a deal to track the donation interest
         const dealResult = await createDeal(
           {
             dealname:  `Donation — ${body.firstname ?? ''} ${body.lastname ?? ''} (${body.email})`.trim(),
@@ -113,7 +115,6 @@ export const POST: APIRoute = async ({ request }) => {
         });
         if (!contactResult.ok) return json({ ok: false, error: contactResult.error }, 422);
 
-        // Create a deal for the sponsorship opportunity
         const dealResult = await createDeal(
           {
             dealname:  `Sponsorship — ${body.company ?? body.firstname ?? ''} (${body.email})`.trim(),
@@ -137,9 +138,7 @@ export const POST: APIRoute = async ({ request }) => {
         });
         if (!contactResult.ok) return json({ ok: false, error: contactResult.error }, 422);
 
-        // Subscribe to communications — update subscriptionId once known from HubSpot portal
-        // const NEWSLETTER_SUBSCRIPTION_ID = 12345; // TODO: replace with real ID from HubSpot > Marketing > Subscriptions
-        // await subscribeEmail(String(body.email), NEWSLETTER_SUBSCRIPTION_ID);
+        await subscribeEmail(String(body.email), NEWSLETTER_SUBSCRIPTION_ID);
 
         return json({ ok: true, contactId: contactResult.id });
       }
