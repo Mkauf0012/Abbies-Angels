@@ -2,14 +2,28 @@
  * HubSpot API client
  * Uses the HubSpot Private App Access Token via direct fetch().
  * Cloudflare Workers compatible — no Node.js-only SDK needed.
+ *
+ * NOTE: import.meta.env only works at build time in Astro.
+ * For server-side API routes on Cloudflare Pages, use process.env.
  */
 
 const HS_BASE = 'https://api.hubapi.com';
 
 function getToken(): string {
-  const token = import.meta.env.HUBSPOT_TOKEN;
+  // Cloudflare Pages runtime exposes env vars via process.env, not import.meta.env
+  const token =
+    (typeof process !== 'undefined' && process.env?.HUBSPOT_TOKEN) ||
+    import.meta.env.HUBSPOT_TOKEN;
   if (!token) throw new Error('HUBSPOT_TOKEN is not set');
-  return token;
+  return token as string;
+}
+
+function getPortalId(): string {
+  const id =
+    (typeof process !== 'undefined' && process.env?.HUBSPOT_PORTAL_ID) ||
+    import.meta.env.HUBSPOT_PORTAL_ID;
+  if (!id) throw new Error('HUBSPOT_PORTAL_ID is not set');
+  return id as string;
 }
 
 function headers() {
@@ -170,8 +184,8 @@ export async function subscribeEmail(
   email: string,
   subscriptionId: number
 ): Promise<HubSpotResult> {
-  const portalId = import.meta.env.HUBSPOT_PORTAL_ID;
-  if (!portalId) return { ok: false, error: 'HUBSPOT_PORTAL_ID is not set' };
+  // Use getPortalId() so it throws a clear error if missing, same as getToken()
+  getPortalId();
 
   const res = await fetch(
     `${HS_BASE}/communication-preferences/v3/subscribe`,
