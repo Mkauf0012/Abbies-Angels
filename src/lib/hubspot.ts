@@ -1,39 +1,20 @@
 /**
  * HubSpot API client
- * Uses the HubSpot Private App Access Token via direct fetch().
- * Cloudflare Workers compatible — no Node.js-only SDK needed.
+ * Cloudflare Workers compatible — no Node.js SDK needed.
  *
- * NOTE: import.meta.env only works at build time in Astro.
- * For server-side API routes on Cloudflare Pages, use process.env.
+ * IMPORTANT: With @astrojs/cloudflare adapter (output: 'server'),
+ * env vars are NOT on process.env or import.meta.env at runtime.
+ * They live on context.locals.runtime.env and must be passed in.
  */
 
 const HS_BASE = 'https://api.hubapi.com';
 
-function getToken(): string {
-  // Cloudflare Pages runtime exposes env vars via process.env, not import.meta.env
-  const token =
-    (typeof process !== 'undefined' && process.env?.HUBSPOT_TOKEN) ||
-    import.meta.env.HUBSPOT_TOKEN;
-  if (!token) throw new Error('HUBSPOT_TOKEN is not set');
-  return token as string;
-}
-
-function getPortalId(): string {
-  const id =
-    (typeof process !== 'undefined' && process.env?.HUBSPOT_PORTAL_ID) ||
-    import.meta.env.HUBSPOT_PORTAL_ID;
-  if (!id) throw new Error('HUBSPOT_PORTAL_ID is not set');
-  return id as string;
-}
-
-function headers() {
-  return {
-    'Authorization': `Bearer ${getToken()}`,
-    'Content-Type': 'application/json',
-  };
-}
-
 // ─── Types ────────────────────────────────────────────────────────────────────
+
+export interface CloudflareEnv {
+  HUBSPOT_TOKEN: string;
+  HUBSPOT_PORTAL_ID?: string;
+}
 
 export interface ContactPayload {
   email: string;
@@ -41,11 +22,8 @@ export interface ContactPayload {
   lastname?: string;
   phone?: string;
   message?: string;
-  /** HubSpot lifecycle stage: 'lead' | 'subscriber' | 'opportunity' | 'customer' */
   lifecyclestage?: string;
-  /** HubSpot lead status property */
   hs_lead_status?: string;
-  /** Free-form source label e.g. 'Website Contact Form' */
   lead_source?: string;
 }
 
@@ -54,7 +32,6 @@ export interface DealPayload {
   pipeline?: string;
   dealstage?: string;
   amount?: number;
-  /** HubSpot owner ID (optional) */
   hubspot_owner_id?: string;
 }
 
@@ -65,29 +42,35 @@ export interface HubSpotResult {
   status?: number;
 }
 
+// ─── Internal helpers ─────────────────────────────────────────────────────────
+
+function makeHeaders(env: CloudflareEnv) {
+  if (!env.HUBSPOT_TOKEN) throw new Error('HUBSPOT_TOKEN is not set');
+  return {
+    'Authorization': `Bearer ${env.HUBSPOT_TOKEN}`,
+    'Content-Type': 'application/json',
+  };
+}
+
 // ─── Contact upsert ───────────────────────────────────────────────────────────
 
-/**
- * Creates or updates a HubSpot contact by email (upsert).
- * Endpoint: POST /crm/v3/objects/contacts
- * On duplicate email HubSpot returns 409 — we then PATCH the existing record.
- */
-export async function upsertContact(payload: ContactPayload): Promise<HubSpotResult> {
-  const properties: Record<string, string | number> = {
-    email: payload.email,
-  };
-  if (payload.firstname)       properties.firstname        = payload.firstname;
-  if (payload.lastname)        properties.lastname         = payload.lastname;
-  if (payload.phone)           properties.phone            = payload.phone;
-  if (payload.message)         properties.message          = payload.message;
-  if (payload.lifecyclestage)  properties.lifecyclestage   = payload.lifecyclestage;
-  if (payload.hs_lead_status)  properties.hs_lead_status   = payload.hs_lead_status;
-  if (payload.lead_source)     properties.lead_source      = payload.lead_source;
+export async function upsertContact(
+  payload: ContactPayload,
+  env: CloudflareEnv
+): Promise<HubSpotResult> {
+  const h = makeHeaders(env);
+  const properties: Record<string, string | number> = { email: payload.email };
+  if (payload.firstname)      properties.firstname       = payload.firstname;
+  if (payload.lastname)       properties.lastname        = payload.lastname;
+  if (payload.phone)          properties.phone           = payload.phone;
+  if (payload.message)        properties.message         = payload.message;
+  if (payload.lifecyclestage) properties.lifecyclestage  = payload.lifecyclestage;
+  if (payload.hs_lead_status) properties.hs_lead_status  = payload.hs_lead_status;
+  if (payload.lead_source)    properties.lead_source     = payload.lead_source;
 
-  // Try to create first
   const createRes = await fetch(`${HS_BASE}/crm/v3/objects/contacts`, {
     method: 'POST',
-    headers: headers(),
+    headers: h,
     body: JSON.stringify({ properties }),
   });
 
@@ -96,35 +79,26 @@ export async function upsertContact(payload: ContactPayload): Promise<HubSpotRes
     return { ok: true, id: data.id };
   }
 
-  // 409 = contact already exists — patch instead
   if (createRes.status === 409) {
-    const searchRes = await fetch(
-      `${HS_BASE}/crm/v3/objects/contacts/search`,
-      {
-        method: 'POST',
-        headers: headers(),
-        body: JSON.stringify({
-          filterGroups: [{
-            filters: [{ propertyName: 'email', operator: 'EQ', value: payload.email }],
-          }],
-          properties: ['id'],
-          limit: 1,
-        }),
-      }
-    );
+    const searchRes = await fetch(`${HS_BASE}/crm/v3/objects/contacts/search`, {
+      method: 'POST',
+      headers: h,
+      body: JSON.stringify({
+        filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: payload.email }] }],
+        properties: ['id'],
+        limit: 1,
+      }),
+    });
     const searchData = await searchRes.json() as { results: Array<{ id: string }> };
     const existingId = searchData?.results?.[0]?.id;
-    if (!existingId) {
-      return { ok: false, error: 'Contact exists but could not be found', status: 409 };
-    }
+    if (!existingId) return { ok: false, error: 'Contact exists but could not be found', status: 409 };
+
     const patchRes = await fetch(`${HS_BASE}/crm/v3/objects/contacts/${existingId}`, {
       method: 'PATCH',
-      headers: headers(),
+      headers: h,
       body: JSON.stringify({ properties }),
     });
-    if (patchRes.ok) {
-      return { ok: true, id: existingId };
-    }
+    if (patchRes.ok) return { ok: true, id: existingId };
     const patchErr = await patchRes.json() as { message?: string };
     return { ok: false, error: patchErr?.message ?? 'Patch failed', status: patchRes.status };
   }
@@ -135,15 +109,14 @@ export async function upsertContact(payload: ContactPayload): Promise<HubSpotRes
 
 // ─── Deal creation ────────────────────────────────────────────────────────────
 
-/**
- * Creates a deal and associates it with a contact.
- */
 export async function createDeal(
   deal: DealPayload,
-  contactId?: string
+  contactId: string | undefined,
+  env: CloudflareEnv
 ): Promise<HubSpotResult> {
+  const h = makeHeaders(env);
   const properties: Record<string, string | number> = {
-    dealname: deal.dealname,
+    dealname:  deal.dealname,
     pipeline:  deal.pipeline  ?? 'default',
     dealstage: deal.dealstage ?? 'appointmentscheduled',
   };
@@ -151,7 +124,6 @@ export async function createDeal(
   if (deal.hubspot_owner_id) properties.hubspot_owner_id = deal.hubspot_owner_id;
 
   const body: Record<string, unknown> = { properties };
-
   if (contactId) {
     body.associations = [{
       to: { id: contactId },
@@ -161,7 +133,7 @@ export async function createDeal(
 
   const res = await fetch(`${HS_BASE}/crm/v3/objects/deals`, {
     method: 'POST',
-    headers: headers(),
+    headers: h,
     body: JSON.stringify(body),
   });
 
@@ -169,37 +141,28 @@ export async function createDeal(
     const data = await res.json() as { id: string };
     return { ok: true, id: data.id };
   }
-
   const errData = await res.json() as { message?: string };
   return { ok: false, error: errData?.message ?? 'Unknown error', status: res.status };
 }
 
 // ─── Email subscription ───────────────────────────────────────────────────────
 
-/**
- * Subscribes an email address to a HubSpot marketing email subscription type.
- * subscriptionId comes from HubSpot → Marketing → Subscriptions.
- */
 export async function subscribeEmail(
   email: string,
-  subscriptionId: number
+  subscriptionId: number,
+  env: CloudflareEnv
 ): Promise<HubSpotResult> {
-  // Use getPortalId() so it throws a clear error if missing, same as getToken()
-  getPortalId();
-
-  const res = await fetch(
-    `${HS_BASE}/communication-preferences/v3/subscribe`,
-    {
-      method: 'POST',
-      headers: headers(),
-      body: JSON.stringify({
-        emailAddress: email,
-        subscriptionId,
-        legalBasis: 'CONSENT_WITH_NOTICE',
-        legalBasisExplanation: 'User submitted newsletter signup form on abbiesangels.org',
-      }),
-    }
-  );
+  const h = makeHeaders(env);
+  const res = await fetch(`${HS_BASE}/communication-preferences/v3/subscribe`, {
+    method: 'POST',
+    headers: h,
+    body: JSON.stringify({
+      emailAddress: email,
+      subscriptionId,
+      legalBasis: 'CONSENT_WITH_NOTICE',
+      legalBasisExplanation: 'User submitted newsletter signup form on abbiesangels.org',
+    }),
+  });
 
   if (res.ok || res.status === 204) return { ok: true };
   const errData = await res.json() as { message?: string };
