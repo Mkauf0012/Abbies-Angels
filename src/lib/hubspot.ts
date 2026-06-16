@@ -7,7 +7,7 @@
 const HS_BASE = 'https://api.hubapi.com';
 
 function getToken(): string {
-  const token = import.meta.env.HUBSPOT_ACCESS_TOKEN;
+  const token = process.env.HUBSPOT_ACCESS_TOKEN;
   if (!token) throw new Error('HUBSPOT_ACCESS_TOKEN is not set');
   return token;
 }
@@ -160,7 +160,7 @@ export async function createDeal(
   return { ok: false, error: errData?.message ?? 'Unknown error', status: res.status };
 }
 
-// ─── List enrollment ──────────────────────────────────────────────────────────
+// ─── Email subscription ───────────────────────────────────────────────────────
 
 /**
  * Subscribes an email address to a HubSpot marketing email subscription type.
@@ -170,7 +170,7 @@ export async function subscribeEmail(
   email: string,
   subscriptionId: number
 ): Promise<HubSpotResult> {
-  const portalId = import.meta.env.HUBSPOT_PORTAL_ID;
+  const portalId = process.env.HUBSPOT_PORTAL_ID;
   if (!portalId) return { ok: false, error: 'HUBSPOT_PORTAL_ID is not set' };
 
   const res = await fetch(
