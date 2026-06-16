@@ -64,7 +64,6 @@ export const POST: APIRoute = async (context) => {
           message:        body.message  ? String(body.message)  : undefined,
           hs_lead_status: body.interest ? String(body.interest) : undefined,
           lifecyclestage: 'lead',
-          lead_source:    'Website Contact Form',
         }, env);
         if (!result.ok) return json({ ok: false, error: result.error }, 422);
         return json({ ok: true, contactId: result.id });
@@ -80,7 +79,6 @@ export const POST: APIRoute = async (context) => {
           message:        body.message  ? String(body.message)  : undefined,
           lifecyclestage: 'lead',
           hs_lead_status: 'volunteer',
-          lead_source:    'Website Volunteer Form',
         }, env);
         if (!result.ok) return json({ ok: false, error: result.error }, 422);
         return json({ ok: true, contactId: result.id });
@@ -93,7 +91,6 @@ export const POST: APIRoute = async (context) => {
           firstname:      body.firstname ? String(body.firstname) : undefined,
           lastname:       body.lastname  ? String(body.lastname)  : undefined,
           lifecyclestage: 'lead',
-          lead_source:    'Website Donation Form',
         }, env);
         if (!contactResult.ok) return json({ ok: false, error: contactResult.error }, 422);
 
@@ -117,7 +114,6 @@ export const POST: APIRoute = async (context) => {
           message:        body.message  ? String(body.message)  : undefined,
           lifecyclestage: 'opportunity',
           hs_lead_status: 'sponsor',
-          lead_source:    'Website Sponsor Form',
         }, env);
         if (!contactResult.ok) return json({ ok: false, error: contactResult.error }, 422);
 
@@ -137,7 +133,6 @@ export const POST: APIRoute = async (context) => {
           email:          String(body.email),
           firstname:      body.firstname ? String(body.firstname) : undefined,
           lifecyclestage: 'subscriber',
-          lead_source:    'Website Newsletter Signup',
         }, env);
         if (!contactResult.ok) return json({ ok: false, error: contactResult.error }, 422);
 

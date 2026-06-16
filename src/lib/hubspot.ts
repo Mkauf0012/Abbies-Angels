@@ -24,7 +24,6 @@ export interface ContactPayload {
   message?: string;
   lifecyclestage?: string;
   hs_lead_status?: string;
-  lead_source?: string;
 }
 
 export interface DealPayload {
@@ -66,7 +65,6 @@ export async function upsertContact(
   if (payload.message)        properties.message         = payload.message;
   if (payload.lifecyclestage) properties.lifecyclestage  = payload.lifecyclestage;
   if (payload.hs_lead_status) properties.hs_lead_status  = payload.hs_lead_status;
-  if (payload.lead_source)    properties.lead_source     = payload.lead_source;
 
   const createRes = await fetch(`${HS_BASE}/crm/v3/objects/contacts`, {
     method: 'POST',
