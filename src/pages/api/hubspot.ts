@@ -136,7 +136,12 @@ export const POST: APIRoute = async (context) => {
         }, env);
         if (!contactResult.ok) return json({ ok: false, error: contactResult.error }, 422);
 
-        await subscribeEmail(String(body.email), NEWSLETTER_SUBSCRIPTION_ID, env);
+        // Non-fatal — if subscribeEmail throws, contact is already saved
+        try {
+          await subscribeEmail(String(body.email), NEWSLETTER_SUBSCRIPTION_ID, env);
+        } catch {
+          // swallow — redirect should still fire
+        }
 
         return json({ ok: true, contactId: contactResult.id });
       }
