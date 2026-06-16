@@ -7,8 +7,8 @@
 const HS_BASE = 'https://api.hubapi.com';
 
 function getToken(): string {
-  const token = process.env.HUBSPOT_ACCESS_TOKEN;
-  if (!token) throw new Error('HUBSPOT_ACCESS_TOKEN is not set');
+  const token = import.meta.env.HUBSPOT_TOKEN;
+  if (!token) throw new Error('HUBSPOT_TOKEN is not set');
   return token;
 }
 
@@ -29,7 +29,7 @@ export interface ContactPayload {
   message?: string;
   /** HubSpot lifecycle stage: 'lead' | 'subscriber' | 'opportunity' | 'customer' */
   lifecyclestage?: string;
-  /** Custom property — maps to the "interest" select on contact form */
+  /** HubSpot lead status property */
   hs_lead_status?: string;
   /** Free-form source label e.g. 'Website Contact Form' */
   lead_source?: string;
@@ -170,7 +170,7 @@ export async function subscribeEmail(
   email: string,
   subscriptionId: number
 ): Promise<HubSpotResult> {
-  const portalId = process.env.HUBSPOT_PORTAL_ID;
+  const portalId = import.meta.env.HUBSPOT_PORTAL_ID;
   if (!portalId) return { ok: false, error: 'HUBSPOT_PORTAL_ID is not set' };
 
   const res = await fetch(
