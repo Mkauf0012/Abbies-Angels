@@ -242,6 +242,12 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   }
   .subscribe-btn:hover { background: #e8f0fb; transform: translateY(-1px); }
   .subscribe-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .subscribe-success-msg {
+    color: #d4f5d4;
+    font-size: 0.92rem;
+    margin-top: 12px;
+    display: none;
+  }
   .subscribe-error {
     color: #ffd0d0;
     font-size: 0.88rem;
@@ -546,6 +552,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
       />
       <button type="submit" class="subscribe-btn" id="subscribe-btn">Subscribe</button>
     </form>
+    <p class="subscribe-success-msg" id="subscribe-success-msg" role="status"></p>
     <p class="subscribe-error" id="subscribe-error" role="alert"></p>
   </div>
 </div>
@@ -555,10 +562,12 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   const emailInput = document.getElementById('subscribe-email') as HTMLInputElement;
   const btn = document.getElementById('subscribe-btn') as HTMLButtonElement;
   const errorEl = document.getElementById('subscribe-error') as HTMLParagraphElement;
+  const successEl = document.getElementById('subscribe-success-msg') as HTMLParagraphElement;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorEl.style.display = 'none';
+    successEl.style.display = 'none';
 
     const email = emailInput.value.trim();
     if (!email) return;
@@ -574,7 +583,15 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
       });
 
       if (res.ok) {
-        window.location.href = '/subscribe-success';
+        // Open confirmation page in a new tab
+        window.open('/subscribe-success', '_blank', 'noopener,noreferrer');
+
+        // Keep current page active — show inline confirmation and reset form
+        form.reset();
+        btn.textContent = '✓ Subscribed!';
+        btn.style.background = '#e8f0fb';
+        successEl.textContent = "You're in! Check your new tab for your welcome message. 💛";
+        successEl.style.display = 'block';
       } else {
         const data = await res.json() as { error?: string };
         throw new Error(data.error || 'Something went wrong. Please try again.');
