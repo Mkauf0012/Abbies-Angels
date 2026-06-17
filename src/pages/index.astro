@@ -575,6 +575,10 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     btn.disabled = true;
     btn.textContent = 'Subscribing…';
 
+    // Open the tab NOW — synchronously inside the click handler before any await.
+    // Browsers block window.open() called after an async gap (popup blocker).
+    const successTab = window.open('', '_blank', 'noopener,noreferrer');
+
     try {
       const res = await fetch('/api/hubspot', {
         method: 'POST',
@@ -583,8 +587,10 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
       });
 
       if (res.ok) {
-        // Open confirmation page in a new tab
-        window.open('/subscribe-success', '_blank', 'noopener,noreferrer');
+        // Navigate the already-open tab to the success page
+        if (successTab) {
+          successTab.location.href = '/subscribe-success';
+        }
 
         // Keep current page active — show inline confirmation and reset form
         form.reset();
@@ -593,10 +599,14 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
         successEl.textContent = "You're in! Check your new tab for your welcome message. 💛";
         successEl.style.display = 'block';
       } else {
+        // API failed — close the blank tab so it doesn't linger
+        if (successTab) successTab.close();
         const data = await res.json() as { error?: string };
         throw new Error(data.error || 'Something went wrong. Please try again.');
       }
     } catch (err) {
+      // Close the blank tab on any error
+      if (successTab) successTab.close();
       const msg = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
       errorEl.textContent = msg;
       errorEl.style.display = 'block';
