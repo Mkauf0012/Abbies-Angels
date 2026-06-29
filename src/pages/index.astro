@@ -187,74 +187,6 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   }
   .view-all-link:hover { text-decoration: underline; }
 
-  /* —— Newsletter section —— */
-  .newsletter-wrap {
-    background: var(--blue);
-    padding: 40px 24px;
-  }
-  .newsletter-inner {
-    max-width: 560px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .newsletter-inner h2 {
-    font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 8px;
-  }
-  .newsletter-inner p {
-    color: rgba(255,255,255,0.82); font-size: 0.98rem; margin-bottom: 20px;
-  }
-  .subscribe-form {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .subscribe-form input[type="email"] {
-    flex: 1 1 220px;
-    min-width: 0;
-    height: 46px;
-    padding: 0 18px;
-    border-radius: 999px;
-    border: none;
-    font-size: 0.97rem;
-    outline: none;
-    color: #1a1a2e;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    /* Prevent iOS from auto-zooming on focus */
-    font-size: max(16px, 0.97rem);
-  }
-  .subscribe-form input[type="email"]::placeholder { color: #9aa3b0; }
-  .subscribe-form input[type="email"]:focus { box-shadow: 0 0 0 3px rgba(255,255,255,0.4); }
-  .subscribe-btn {
-    height: 46px;
-    padding: 0 24px;
-    border-radius: 999px;
-    border: none;
-    background: #fff;
-    color: var(--blue);
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.15s, transform 0.15s;
-    font-family: var(--font-display);
-  }
-  .subscribe-btn:hover { background: #e8f0fb; transform: translateY(-1px); }
-  .subscribe-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-  .subscribe-success-msg {
-    color: #d4f5d4;
-    font-size: 0.92rem;
-    margin-top: 12px;
-    display: none;
-  }
-  .subscribe-error {
-    color: #ffd0d0;
-    font-size: 0.88rem;
-    margin-top: 10px;
-    display: none;
-  }
-
   /* —— Social in Contact —— */
   .social-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
   .social-pill {
@@ -283,17 +215,6 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     .hero-overlay { padding: 16px 18px 20px; }
     .hero h1 { font-size: 1.85rem; }
     .section-wrap { padding: 32px 16px; }
-    /* Stack form vertically on mobile */
-    .subscribe-form {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 10px;
-    }
-    .subscribe-form input[type="email"],
-    .subscribe-btn {
-      width: 100%;
-      flex: none;
-    }
   }
   @media (max-width: 600px) {
     .card img { height: auto; max-height: 280px; object-fit: contain; }
@@ -534,85 +455,4 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     </div>
   </div>
 </main>
-
-<!-- Stay in the Loop — simple email subscribe -->
-<div class="newsletter-wrap">
-  <div class="newsletter-inner">
-    <h2>Stay in the Loop</h2>
-    <p>Get event updates, volunteer opportunities, and family resources delivered to your inbox.</p>
-    <form class="subscribe-form" id="subscribe-form" novalidate>
-      <input
-        type="email"
-        id="subscribe-email"
-        name="email"
-        placeholder="Your email address"
-        required
-        autocomplete="email"
-        aria-label="Email address"
-      />
-      <button type="submit" class="subscribe-btn" id="subscribe-btn">Subscribe</button>
-    </form>
-    <p class="subscribe-success-msg" id="subscribe-success-msg" role="status"></p>
-    <p class="subscribe-error" id="subscribe-error" role="alert"></p>
-  </div>
-</div>
-
-<script>
-  const form = document.getElementById('subscribe-form') as HTMLFormElement;
-  const emailInput = document.getElementById('subscribe-email') as HTMLInputElement;
-  const btn = document.getElementById('subscribe-btn') as HTMLButtonElement;
-  const errorEl = document.getElementById('subscribe-error') as HTMLParagraphElement;
-  const successEl = document.getElementById('subscribe-success-msg') as HTMLParagraphElement;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    errorEl.style.display = 'none';
-    successEl.style.display = 'none';
-
-    const email = emailInput.value.trim();
-    if (!email) return;
-
-    btn.disabled = true;
-    btn.textContent = 'Subscribing…';
-
-    // Open the tab NOW — synchronously inside the click handler before any await.
-    // Browsers block window.open() called after an async gap (popup blocker).
-    const successTab = window.open('', '_blank', 'noopener,noreferrer');
-
-    try {
-      const res = await fetch('/api/hubspot', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ formType: 'newsletter', email }),
-      });
-
-      if (res.ok) {
-        // Navigate the already-open tab to the success page
-        if (successTab) {
-          successTab.location.href = '/subscribe-success';
-        }
-
-        // Keep current page active — show inline confirmation and reset form
-        form.reset();
-        btn.textContent = '✓ Subscribed!';
-        btn.style.background = '#e8f0fb';
-        successEl.textContent = "You're in! Check your new tab for your welcome message. 💛";
-        successEl.style.display = 'block';
-      } else {
-        // API failed — close the blank tab so it doesn't linger
-        if (successTab) successTab.close();
-        const data = await res.json() as { error?: string };
-        throw new Error(data.error || 'Something went wrong. Please try again.');
-      }
-    } catch (err) {
-      // Close the blank tab on any error
-      if (successTab) successTab.close();
-      const msg = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
-      errorEl.textContent = msg;
-      errorEl.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'Subscribe';
-    }
-  });
-</script>
 </Base>

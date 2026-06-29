@@ -273,8 +273,7 @@ const currentPath = Astro.url.pathname;
       width: 100%;
       display: none;
     }
-    .footer-newsletter-msg.success { display: block; color: #a7f3d0; }
-    .footer-newsletter-msg.error   { display: block; color: #fca5a5; }
+    .footer-newsletter-msg.error { display: block; color: #fca5a5; }
 
     .footer-bottom {
       max-width: 1100px;
@@ -434,7 +433,7 @@ const currentPath = Astro.url.pathname;
           aria-label="Email address"
         >
         <button type="submit" id="footer-subscribe-btn">Subscribe</button>
-        <div class="footer-newsletter-msg" id="footer-subscribe-msg" role="status" aria-live="polite"></div>
+        <div class="footer-newsletter-msg" id="footer-subscribe-msg" role="alert" aria-live="polite"></div>
       </form>
     </div>
   </div>
@@ -485,9 +484,9 @@ const currentPath = Astro.url.pathname;
 
   // ── Footer newsletter subscribe ──────────────────────────────────────────────
   const subscribeForm = document.getElementById('footer-subscribe-form');
-  const subscribeBtn  = document.getElementById('footer-subscribe-btn');
+  const subscribeBtn  = document.getElementById('footer-subscribe-btn') as HTMLButtonElement;
   const subscribeMsg  = document.getElementById('footer-subscribe-msg');
-  const subscribeEmail = document.getElementById('footer-subscribe-email');
+  const subscribeEmail = document.getElementById('footer-subscribe-email') as HTMLInputElement;
 
   subscribeForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -496,8 +495,10 @@ const currentPath = Astro.url.pathname;
 
     subscribeBtn.disabled = true;
     subscribeBtn.textContent = 'Subscribing…';
-    subscribeMsg.className = 'footer-newsletter-msg';
-    subscribeMsg.textContent = '';
+    if (subscribeMsg) {
+      subscribeMsg.className = 'footer-newsletter-msg';
+      subscribeMsg.textContent = '';
+    }
 
     try {
       const res = await fetch('/api/hubspot', {
@@ -507,17 +508,21 @@ const currentPath = Astro.url.pathname;
       });
       const data = await res.json();
       if (data.ok) {
-        subscribeMsg.className = 'footer-newsletter-msg success';
-        subscribeMsg.textContent = '✅ You\'re subscribed! Thanks for staying connected.';
-        subscribeEmail.value = '';
+        // Redirect the current page to the success page
+        window.location.href = '/subscribe-success';
       } else {
-        subscribeMsg.className = 'footer-newsletter-msg error';
-        subscribeMsg.textContent = data.error ?? 'Something went wrong — please try again.';
+        if (subscribeMsg) {
+          subscribeMsg.className = 'footer-newsletter-msg error';
+          subscribeMsg.textContent = data.error ?? 'Something went wrong — please try again.';
+        }
+        subscribeBtn.disabled = false;
+        subscribeBtn.textContent = 'Subscribe';
       }
     } catch {
-      subscribeMsg.className = 'footer-newsletter-msg error';
-      subscribeMsg.textContent = 'Network error — please check your connection.';
-    } finally {
+      if (subscribeMsg) {
+        subscribeMsg.className = 'footer-newsletter-msg error';
+        subscribeMsg.textContent = 'Network error — please check your connection.';
+      }
       subscribeBtn.disabled = false;
       subscribeBtn.textContent = 'Subscribe';
     }
