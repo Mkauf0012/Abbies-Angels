@@ -5,10 +5,9 @@ import Base from '../layouts/Base.astro';
 <style>
   /* ── Page wrapper ── */
   .page-bg {
-    background-color: #f5f3ef;
+    background-color: var(--bg-light);
     min-height: 100vh;
     padding: 32px 16px 64px;
-    font-family: Arial, Helvetica, sans-serif;
   }
 
   /* ── Card container ── */
@@ -17,21 +16,23 @@ import Base from '../layouts/Base.astro';
     width: 100%;
     margin: 0 auto;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 32px rgba(15,23,42,0.07);
+    border: 1px solid var(--border-soft);
   }
 
   /* ── Header ── */
   .card-header {
-    background-color: #7c4a8f;
+    background: linear-gradient(135deg, var(--blue) 0%, #003d7a 100%);
     padding: 28px 40px;
     text-align: center;
+    border-bottom: 3px solid var(--gold);
   }
   .card-header .brand-name {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--font-display);
     font-size: 26px;
-    font-weight: 700;
+    font-weight: 800;
     color: #ffffff;
     letter-spacing: 0.5px;
     line-height: 1.2;
@@ -43,6 +44,7 @@ import Base from '../layouts/Base.astro';
     margin-top: 6px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
+    font-family: var(--font-body);
   }
 
   /* ── Hero greeting ── */
@@ -53,70 +55,80 @@ import Base from '../layouts/Base.astro';
   }
   .eyebrow {
     font-size: 11px;
-    color: #9b7db0;
-    font-weight: 600;
+    color: var(--blue);
+    font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin: 0 0 16px 0;
+    font-family: var(--font-display);
   }
   .hero-heading {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--font-display);
     font-size: 28px;
     line-height: 1.4;
-    color: #2d1a3e;
+    color: var(--text-main);
     margin: 0 0 20px 0;
-    font-weight: 700;
+    font-weight: 800;
   }
   .hero-body {
     font-size: 15px;
     line-height: 1.7;
-    color: #555555;
+    color: var(--text-muted);
     margin: 0 0 28px 0;
     max-width: 480px;
     margin-left: auto;
     margin-right: auto;
+    font-family: var(--font-body);
   }
   .btn-primary {
     display: inline-block;
-    background-color: #7c4a8f;
+    background-color: #008CFF;
     color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-display);
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 800;
     text-decoration: none;
     padding: 14px 32px;
-    border-radius: 50px;
-    transition: background 0.15s;
+    border-radius: 999px;
+    box-shadow: 0 4px 18px rgba(0,140,255,0.35);
+    transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
   }
-  .btn-primary:hover { background-color: #5f3570; text-decoration: none; }
+  .btn-primary:hover {
+    background-color: #0070cc;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,140,255,0.4);
+    text-decoration: none;
+  }
 
   /* ── Divider ── */
   .divider { padding: 0 40px; }
-  .divider hr { border: none; border-top: 1px solid #ede9f4; margin: 0; }
+  .divider hr { border: none; border-top: 1px solid var(--border-soft); margin: 0; }
 
   /* ── Mission block ── */
   .mission-section {
     padding: 36px 40px;
-    background-color: #faf8fd;
+    background-color: var(--bg-light);
     text-align: center;
   }
   .mission-section .eyebrow { margin-bottom: 12px; }
   .mission-quote {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--font-display);
     font-size: 18px;
     line-height: 1.7;
-    color: #2d1a3e;
+    color: var(--text-main);
     font-style: italic;
     margin: 0 0 16px 0;
+    font-weight: 600;
   }
   .mission-body {
     font-size: 14px;
     line-height: 1.7;
-    color: #666666;
+    color: var(--text-muted);
     margin: 0;
     max-width: 460px;
     margin-left: auto;
     margin-right: auto;
+    font-family: var(--font-body);
   }
 
   /* ── What's coming ── */
@@ -139,7 +151,7 @@ import Base from '../layouts/Base.astro';
     width: 42px;
     height: 42px;
     min-width: 42px;
-    background-color: #f3edf8;
+    background-color: #e8f0fb;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -150,14 +162,16 @@ import Base from '../layouts/Base.astro';
   .coming-title {
     font-size: 15px;
     font-weight: 700;
-    color: #2d1a3e;
+    color: var(--text-main);
     margin: 0 0 4px 0;
+    font-family: var(--font-display);
   }
   .coming-body {
     font-size: 13px;
     line-height: 1.6;
-    color: #777777;
+    color: var(--text-muted);
     margin: 0;
+    font-family: var(--font-body);
   }
 
   /* ── CTA buttons ── */
@@ -172,57 +186,61 @@ import Base from '../layouts/Base.astro';
     gap: 10px;
     justify-content: center;
   }
-  .btn-outline-purple {
+  .btn-outline-blue {
     display: inline-block;
-    background-color: #f3edf8;
-    color: #7c4a8f;
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: #e8f0fb;
+    color: var(--blue);
+    font-family: var(--font-display);
     font-size: 13px;
     font-weight: 700;
     text-decoration: none;
     padding: 11px 20px;
-    border-radius: 50px;
-    border: 2px solid #c5a8d8;
+    border-radius: 999px;
+    border: 2px solid #b3ccf0;
     transition: background 0.15s;
   }
-  .btn-outline-purple:hover { background-color: #e8daf4; text-decoration: none; }
-  .btn-filled-purple {
+  .btn-outline-blue:hover { background-color: #d0e3f8; text-decoration: none; }
+  .btn-filled-red {
     display: inline-block;
-    background-color: #7c4a8f;
+    background-color: var(--accent-red);
     color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-display);
     font-size: 13px;
     font-weight: 700;
     text-decoration: none;
     padding: 11px 20px;
-    border-radius: 50px;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(200,16,46,0.25);
     transition: background 0.15s;
   }
-  .btn-filled-purple:hover { background-color: #5f3570; text-decoration: none; }
+  .btn-filled-red:hover { background-color: #9e0b23; text-decoration: none; }
 
   /* ── Sign off ── */
   .signoff-section {
     padding: 32px 40px;
-    background-color: #faf8fd;
+    background-color: var(--bg-light);
     text-align: center;
+    border-top: 3px solid var(--gold);
   }
   .signoff-quote {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--font-display);
     font-size: 16px;
     line-height: 1.7;
-    color: #2d1a3e;
+    color: var(--text-main);
     font-style: italic;
     margin: 0 0 12px 0;
+    font-weight: 600;
   }
   .signoff-attr {
     font-size: 13px;
-    color: #888888;
+    color: var(--text-muted);
     margin: 0;
+    font-family: var(--font-body);
   }
 
   /* ── Footer ── */
   .card-footer {
-    background-color: #2d1a3e;
+    background-color: var(--blue);
     padding: 28px 36px;
     text-align: center;
   }
@@ -230,13 +248,15 @@ import Base from '../layouts/Base.astro';
     font-size: 12px;
     color: rgba(255,255,255,0.7);
     margin: 0 0 10px 0;
+    font-family: var(--font-body);
   }
   .footer-social-links {
     font-size: 12px;
     margin: 0 0 18px 0;
+    font-family: var(--font-body);
   }
   .footer-social-links a {
-    color: #c5a8d8;
+    color: var(--gold);
     text-decoration: none;
     font-weight: 700;
   }
@@ -246,6 +266,7 @@ import Base from '../layouts/Base.astro';
     color: rgba(255,255,255,0.5);
     line-height: 1.7;
     margin: 0 0 14px 0;
+    font-family: var(--font-body);
   }
   .footer-address a { color: rgba(255,255,255,0.5); text-decoration: none; }
   .footer-address a:hover { text-decoration: underline; }
@@ -253,9 +274,10 @@ import Base from '../layouts/Base.astro';
     font-size: 11px;
     color: rgba(255,255,255,0.4);
     margin: 0;
+    font-family: var(--font-body);
   }
   .footer-back a {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.6);
     text-decoration: underline;
   }
 
@@ -290,7 +312,7 @@ import Base from '../layouts/Base.astro';
     .card-footer { padding: 24px 20px; }
     .hero-heading { font-size: 22px; }
     .cta-row { flex-direction: column; align-items: center; }
-    .btn-outline-purple, .btn-filled-purple { width: 100%; max-width: 280px; text-align: center; }
+    .btn-outline-blue, .btn-filled-red { width: 100%; max-width: 280px; text-align: center; }
   }
 </style>
 
@@ -366,9 +388,9 @@ import Base from '../layouts/Base.astro';
     <!-- CTA BUTTONS -->
     <div class="cta-section">
       <div class="cta-row">
-        <a href="/events" class="btn-outline-purple">📅 Upcoming Events</a>
-        <a href="/volunteer" class="btn-outline-purple">🙌 Volunteer</a>
-        <a href="/donate" class="btn-filled-purple">💛 Donate</a>
+        <a href="/events" class="btn-outline-blue">📅 Upcoming Events</a>
+        <a href="/volunteer" class="btn-outline-blue">🙌 Volunteer</a>
+        <a href="/donate" class="btn-filled-red">❤️ Donate</a>
       </div>
     </div>
 
@@ -408,7 +430,7 @@ import Base from '../layouts/Base.astro';
   (function () {
     const root = document.getElementById('confetti-root');
     if (!root) return;
-    const colors = ['#7c4a8f','#c5a8d8','#f5c842','#e87070','#5bb5a2','#f3a63a'];
+    const colors = ['#0055a4','#008CFF','#f4b321','#ffd94a','#c8102e','#5bb5a2'];
     for (let i = 0; i < 28; i++) {
       const dot = document.createElement('div');
       dot.className = 'confetti-dot';
