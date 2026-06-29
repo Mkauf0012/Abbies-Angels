@@ -1,0 +1,72 @@
+---
+// src/pages/confirmation.astro
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're subscribed! — Abbie's Angels</title>
+  <!-- Match whatever fonts/CSS your main site uses -->
+  <link rel="stylesheet" href="/styles/global.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      text-align: center;
+      padding: 2rem;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body, sans-serif);
+    }
+    .card {
+      max-width: 480px;
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: var(--font-display, serif);
+      font-size: var(--text-xl);
+      margin-bottom: 0.75rem;
+    }
+    p {
+      color: var(--color-text-muted);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--color-primary);
+      color: #fff;
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      transition: background 180ms ease;
+    }
+    .btn:hover { background: var(--color-primary-hover); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🎉</div>
+    <h1>You're in!</h1>
+    <p>
+      Thank you for subscribing to Abbie's Angels. You'll be the first
+      to hear about our upcoming events, fundraisers, and ways to get involved.
+    </p>
+    <a href="/" class="btn">Back to Home</a>
+  </div>
+</body>
+</html>
