@@ -5,44 +5,14 @@ import { getSingleton } from '../lib/sanity';
 const sp = await getSingleton('sponsor');
 
 const defaultTiers = [
-  {
-    name: '🥇 Gold Sponsor', amount: '$2,500+', style: 'gold',
-    perks: [
-      'Premier logo on all event materials',
-      'Table of 8 at annual gala',
-      'Featured on website & social',
-      'Banner at event venue',
-      'Named recognition from stage',
-    ],
-  },
-  {
-    name: '🥈 Silver Sponsor', amount: '$1,000', style: 'silver',
-    perks: [
-      'Logo on event materials',
-      '4 tickets to annual gala',
-      'Website listing',
-      'Social media recognition',
-    ],
-  },
-  {
-    name: '🥉 Bronze Sponsor', amount: '$500', style: 'bronze',
-    perks: [
-      'Name on event program',
-      '2 tickets to annual gala',
-      'Website listing',
-    ],
-  },
-  {
-    name: '💛 Friend', amount: '$250', style: 'friend',
-    perks: [
-      'Name in event program',
-      'Website recognition',
-      'Warm thanks from our team',
-    ],
-  },
+  { name: 'Angel Sponsor', amount: '$5,000+', perks: 'Premier logo placement, VIP table for 10, social media features, and speaking opportunity.' },
+  { name: 'Gold Sponsor', amount: '$2,500', perks: 'Logo on all event materials, 6 event tickets, and social media recognition.' },
+  { name: 'Silver Sponsor', amount: '$1,000', perks: 'Logo on event signage, 4 event tickets, and website recognition.' },
+  { name: 'Community Sponsor', amount: '$500', perks: 'Name on event program and website recognition.' },
 ];
 
-const tiers = sp?.tiers_section?.tiers?.length ? sp.tiers_section.tiers : defaultTiers;
+const tierStyles = ['gold', 'silver', 'bronze', 'friend'];
+const tiers = sp?.tiers?.length ? sp.tiers : defaultTiers;
 ---
 <Base title="Sponsor — Abbie's Angels">
 <style>
@@ -79,33 +49,28 @@ const tiers = sp?.tiers_section?.tiers?.length ? sp.tiers_section.tiers : defaul
   .tier-amount { font-size: 1.7rem; font-weight: 800; color: var(--blue); font-family: var(--font-display); margin-bottom: 10px; }
   .tier-perks { font-size: 0.83rem; color: var(--text-muted); text-align: left; padding-left: 14px; }
   .tier-perks li { margin-bottom: 5px; }
+  .tier-perks-text { font-size: 0.85rem; color: var(--text-muted); text-align: left; line-height: 1.55; }
   /* HubSpot embed */
   .hs-form-frame { width: 100%; }
   @media (max-width: 640px) { .page-hero h1 { font-size: 1.6rem; } }
 </style>
 
 <div class="page-hero">
-  <h1>{sp?.hero_heading || 'Become a Sponsor'}</h1>
-  <p>{sp?.hero_subheading || "Partner with Abbie's Angels to support caregivers in Western New York while connecting your brand to a cause that matters."}</p>
+  <h1>{sp?.heading || 'Become a Sponsor'}</h1>
+  <p>{sp?.subheading || "Partner with Abbie's Angels to support caregivers in Western New York while connecting your brand to a cause that matters."}</p>
 </div>
 
 <main>
   <!-- Sponsorship Tiers -->
   <div class="card">
-    <h2>{sp?.tiers_section?.heading || 'Sponsorship Tiers'}</h2>
-    <p>{sp?.tiers_section?.intro || 'All sponsors receive recognition at our events and on our website. Higher tiers include additional visibility and benefits.'}</p>
+    <h2>Sponsorship Tiers</h2>
+    <p>{sp?.tiers_intro || 'All sponsors receive recognition at our events and on our website. Higher tiers include additional visibility and benefits.'}</p>
     <div class="tier-grid">
-      {tiers.map((tier: any) => (
-        <div class={`tier ${tier.style || 'friend'}`}>
+      {tiers.map((tier: any, i: number) => (
+        <div class={`tier ${tierStyles[i % tierStyles.length]}`}>
           <div class="tier-name">{tier.name}</div>
           <div class="tier-amount">{tier.amount}</div>
-          {tier.perks?.length && (
-            <ul class="tier-perks">
-              {tier.perks.map((perk: string) => (
-                <li>{perk}</li>
-              ))}
-            </ul>
-          )}
+          {tier.perks && <p class="tier-perks-text">{tier.perks}</p>}
         </div>
       ))}
     </div>
@@ -113,8 +78,8 @@ const tiers = sp?.tiers_section?.tiers?.length ? sp.tiers_section.tiers : defaul
 
   <!-- HubSpot Sponsorship Inquiry Form -->
   <div class="card">
-    <h2>{sp?.inquiry_section?.heading || 'Sponsorship Inquiry'}</h2>
-    <p>{sp?.inquiry_section?.intro || "Interested in sponsoring? Fill out the form below and we'll reach out within 2 business days with a full sponsorship packet."}</p>
+    <h2>{sp?.form_heading || 'Sponsorship Inquiry'}</h2>
+    <p>{sp?.form_intro || "Interested in sponsoring? Fill out the form below and we'll reach out within 2 business days with a full sponsorship packet."}</p>
     <script src="https://js-na2.hsforms.net/forms/embed/244584127.js" defer></script>
     <div class="hs-form-frame" data-region="na2" data-form-id="66b7d818-d7ee-4821-a1ef-a91194219e3d" data-portal-id="244584127"></div>
   </div>
