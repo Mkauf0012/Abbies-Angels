@@ -5,7 +5,9 @@ export default defineCliConfig({
     projectId: '7o31gm3n',
     dataset: 'production',
   },
+  studioHost: 'abbies-angels',
   deployment: {
+    appId: 'yk8gusnf5t9u0rmayn2hsa1t',
     autoUpdates: true,
   },
 })
