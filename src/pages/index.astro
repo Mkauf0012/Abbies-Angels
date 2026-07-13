@@ -1,19 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client, sanityImage } from '../lib/sanity';
+import { client, sanityImage, getSingleton } from '../lib/sanity';
 
 const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support, contact, board, staff] =
   await Promise.all([
-    client.fetch(`*[_type == "hero"][0]`),
-    client.fetch(`*[_type == "hero_card"][0]`),
-    client.fetch(`*[_type == "mission"][0]`),
-    client.fetch(`*[_type == "what_we_do"][0]`),
-    client.fetch(`*[_type == "events"][0]`),
+    getSingleton('hero'),
+    getSingleton('hero_card'),
+    getSingleton('mission'),
+    getSingleton('what_we_do'),
+    getSingleton('events'),
     client.fetch(`*[_type == "event" && featured == true && published != false && past != true][0]`),
-    client.fetch(`*[_type == "support"][0]`),
-    client.fetch(`*[_type == "contact"][0]`),
-    client.fetch(`*[_type == "board"][0]`),
-    client.fetch(`*[_type == "staff"][0]`),
+    getSingleton('support'),
+    getSingleton('contact'),
+    getSingleton('board'),
+    getSingleton('staff'),
   ]);
 
 const displayEvent = featuredEvent || null;

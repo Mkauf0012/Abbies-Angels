@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client } from '../lib/sanity';
+import { getSingleton } from '../lib/sanity';
 
-const d = await client.fetch(`*[_id == "donate"][0]`);
+const d = await getSingleton('donate');
 const mail = d?.mail_section;
 const sponsor = d?.sponsor_cta;
 ---

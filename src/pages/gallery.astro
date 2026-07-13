@@ -1,9 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client } from '../lib/sanity';
+import { client, getSingleton } from '../lib/sanity';
 
 const [page, photos] = await Promise.all([
-  client.fetch(`*[_type == "gallery_settings"][0]`),
+  getSingleton('gallery_settings'),
   client.fetch(`*[_type == "gallery_image" && published != false] | order(order asc, _createdAt asc)`),
 ]);
 ---

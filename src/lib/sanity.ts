@@ -10,6 +10,22 @@ export const client = createClient({
   useCdn: true,
 });
 
+/**
+ * Fetches a singleton document deterministically.
+ *
+ * The dataset contains duplicate singletons (a plain-id copy and a newer
+ * `singleton-*` copy) whose content can diverge. Prefer the `singleton-*`
+ * doc, fall back to the plain id, then to any doc of the type, so pages
+ * never show an arbitrary duplicate.
+ */
+export function getSingleton<T = any>(type: string): Promise<T> {
+  const sid = `singleton-${type.replace(/_/g, '-')}`;
+  return client.fetch(
+    `coalesce(*[_id == $sid][0], *[_id == $pid][0], *[_type == $type][0])`,
+    { sid, pid: type, type }
+  );
+}
+
 export interface SanityImage {
   asset?: { _ref?: string };
 }

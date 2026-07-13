@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client, sanityImage } from '../lib/sanity';
+import { client, sanityImage, getSingleton } from '../lib/sanity';
 
 function formatDate(dateStr: string) {
   if (!dateStr) return '';
@@ -12,7 +12,7 @@ function formatDate(dateStr: string) {
 }
 
 const [eventsSection, allEvents] = await Promise.all([
-  client.fetch(`*[_type == "events"][0]`),
+  getSingleton('events'),
   client.fetch(`*[_type == "event" && published != false] | order(date asc)`),
 ]);
 

@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client } from '../lib/sanity';
+import { getSingleton } from '../lib/sanity';
 
-const contact = await client.fetch(`*[_type == "contact"][0]`);
+const contact = await getSingleton('contact');
 ---
 <Base title="Contact Us — Abbie's Angels">
 <style>

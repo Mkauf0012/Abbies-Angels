@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client } from '../lib/sanity';
+import { getSingleton } from '../lib/sanity';
 
-const v = await client.fetch(`*[_id == "singleton-volunteer"][0]`);
+const v = await getSingleton('volunteer');
 const roles = Array.isArray(v?.roles) ? v.roles : [];
 ---
 <Base title="Volunteer — Abbie's Angels">
