@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import { client } from '../lib/sanity';
+
+const v = await client.fetch(`*[_id == "singleton-volunteer"][0]`);
+const roles = Array.isArray(v?.roles) ? v.roles : [];
 ---
 <Base title="Volunteer — Abbie's Angels">
 <style>
@@ -20,19 +24,29 @@ import Base from '../layouts/Base.astro';
   .card h2 { font-size: 1.15rem; margin-bottom: 10px; color: var(--blue); font-weight: 800;
     border-left: 4px solid var(--gold); padding-left: 10px; }
   .card p { font-size: 0.93rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.65; }
+  .roles { list-style: none; padding: 0; margin: 0 0 24px; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 8px 20px; }
+  .roles li { font-size: 0.92rem; color: var(--text-main); padding-left: 22px; position: relative; }
+  .roles li::before { content: '💛'; position: absolute; left: 0; }
   /* HubSpot form frame */
   .hs-form-frame { width: 100%; }
+  @media (max-width: 560px) { .roles { grid-template-columns: 1fr; } }
 </style>
 
 <div class="page-hero">
-  <h1>Volunteer With Us</h1>
-  <p>Abbie's Angels runs entirely on the time and talents of volunteers like you. Fill out the form below and we'll be in touch!</p>
+  <h1>{v?.heading || 'Volunteer With Us'}</h1>
+  <p>{v?.subheading || "Abbie's Angels runs entirely on the time and talents of volunteers like you. Fill out the form below and we'll be in touch!"}</p>
 </div>
 
 <main>
   <div class="card">
-    <h2>Volunteer Application</h2>
-    <p>Tell us a little about yourself and how you'd like to help. Our team will reach out to discuss opportunities.</p>
+    <h2>{v?.form_heading || 'Volunteer Application'}</h2>
+    <p>{v?.form_intro || "Tell us a little about yourself and how you'd like to help. Our team will reach out to discuss opportunities."}</p>
+    {roles.length > 0 && (
+      <ul class="roles">
+        {roles.map((r: string) => <li>{r}</li>)}
+      </ul>
+    )}
     <script src="https://js-na2.hsforms.net/forms/embed/244584127.js" defer></script>
     <div class="hs-form-frame" data-region="na2" data-form-id="19fc03ac-21cf-4c0b-b012-17dd67d84ee6" data-portal-id="244584127"></div>
   </div>
