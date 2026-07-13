@@ -11,3 +11,9 @@ HUBSPOT_PORTAL_ID = ""
 SANITY_PROJECT_ID = ""
 SANITY_DATASET = "production"
 SANITY_API_TOKEN = ""
+# Comma-separated allowlist of origins permitted to call /api/hubspot.
+# Leave blank to use the built-in production defaults (abbiesangels.org).
+ALLOWED_ORIGINS = ""
+# Cloudflare Turnstile secret. When set, the form endpoint requires a valid
+# Turnstile token. Store the real value as an encrypted secret, not here.
+TURNSTILE_SECRET = ""

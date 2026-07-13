@@ -14,6 +14,11 @@ const HS_BASE = 'https://api.hubapi.com';
 export interface CloudflareEnv {
   HUBSPOT_TOKEN: string;
   HUBSPOT_PORTAL_ID?: string;
+  // Comma-separated origin allowlist for the form endpoint (falls back to the
+  // production domains when unset).
+  ALLOWED_ORIGINS?: string;
+  // When set, Cloudflare Turnstile verification is enforced on form submissions.
+  TURNSTILE_SECRET?: string;
 }
 
 export interface ContactPayload {
