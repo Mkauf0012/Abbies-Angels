@@ -1,13 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { createClient } from '@sanity/client';
-
-const client = createClient({
-  projectId: '7o31gm3n',
-  dataset: 'production',
-  apiVersion: '2024-01-01',
-  useCdn: false,
-});
+import { client } from '../lib/sanity';
 
 const [page, photos, spotlight] = await Promise.all([
   client.fetch(`*[_type == "gallery_settings"][0]`),

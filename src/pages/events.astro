@@ -1,23 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { createClient } from '@sanity/client';
-
-const client = createClient({
-  projectId: '7o31gm3n',
-  dataset: 'production',
-  apiVersion: '2024-01-01',
-  useCdn: false,
-});
-
-function sanityImage(img: any) {
-  if (!img?.asset?._ref) return '';
-  const ref = img.asset._ref;
-  const parts = ref.split('-');
-  const ext = parts[parts.length - 1];
-  const dimensions = parts[parts.length - 2];
-  const id = parts.slice(1, parts.length - 2).join('-');
-  return `https://cdn.sanity.io/images/7o31gm3n/production/${id}-${dimensions}.${ext}`;
-}
+import { client, sanityImage } from '../lib/sanity';
 
 function formatDate(dateStr: string) {
   if (!dateStr) return '';
