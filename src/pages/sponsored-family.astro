@@ -1,11 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getSingleton } from '../lib/sanity';
+import { getSingleton, sanityImage } from '../lib/sanity';
 
 const spotlight = await getSingleton('spotlight');
-const imgSrc = spotlight?.image
-  ? (spotlight.image.startsWith('http') ? spotlight.image : `/${spotlight.image.replace(/^\//, '')}`)
-  : null;
+const imgSrc = spotlight?.photo?.asset
+  ? sanityImage(spotlight.photo)
+  : spotlight?.image
+    ? (spotlight.image.startsWith('http') ? spotlight.image : `/${spotlight.image.replace(/^\//, '')}`)
+    : null;
 ---
 <Base title="Sponsored Family — Abbie's Angels" description="Meet the family Abbie's Angels is sponsoring this year and learn how you can support them.">
 <style>

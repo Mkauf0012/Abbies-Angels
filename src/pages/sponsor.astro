@@ -13,6 +13,9 @@ const defaultTiers = [
 
 const tierStyles = ['gold', 'silver', 'bronze', 'friend'];
 const tiers = sp?.tiers?.length ? sp.tiers : defaultTiers;
+const HS_PORTAL = sp?.hubspot_portal_id || '244584127';
+const HS_REGION = sp?.hubspot_region || 'na2';
+const HS_FORM_ID = sp?.hubspot_form_id || '66b7d818-d7ee-4821-a1ef-a91194219e3d';
 ---
 <Base title="Sponsor — Abbie's Angels">
 <style>
@@ -80,8 +83,8 @@ const tiers = sp?.tiers?.length ? sp.tiers : defaultTiers;
   <div class="card">
     <h2>{sp?.form_heading || 'Sponsorship Inquiry'}</h2>
     <p>{sp?.form_intro || "Interested in sponsoring? Fill out the form below and we'll reach out within 2 business days with a full sponsorship packet."}</p>
-    <script src="https://js-na2.hsforms.net/forms/embed/244584127.js" defer></script>
-    <div class="hs-form-frame" data-region="na2" data-form-id="66b7d818-d7ee-4821-a1ef-a91194219e3d" data-portal-id="244584127"></div>
+    <script is:inline src={`https://js-${HS_REGION}.hsforms.net/forms/embed/${HS_PORTAL}.js`} defer></script>
+    <div class="hs-form-frame" data-region={HS_REGION} data-form-id={HS_FORM_ID} data-portal-id={HS_PORTAL}></div>
   </div>
 </main>
 
