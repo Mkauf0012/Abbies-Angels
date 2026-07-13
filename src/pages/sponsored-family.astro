@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client } from '../lib/sanity';
+import { getSingleton } from '../lib/sanity';
 
-const spotlight = await client.fetch(`*[_id == "spotlight"][0]`);
+const spotlight = await getSingleton('spotlight');
 const imgSrc = spotlight?.image
   ? (spotlight.image.startsWith('http') ? spotlight.image : `/${spotlight.image.replace(/^\//, '')}`)
   : null;

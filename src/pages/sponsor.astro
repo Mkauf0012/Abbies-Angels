@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client } from '../lib/sanity';
+import { getSingleton } from '../lib/sanity';
 
-const sp = await client.fetch(`*[_type == "sponsor"][0]`);
+const sp = await getSingleton('sponsor');
 
 const defaultTiers = [
   {

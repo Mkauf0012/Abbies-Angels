@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client } from '../lib/sanity';
+import { getSingleton } from '../lib/sanity';
 
-const ty = await client.fetch(`*[_type == "thank_you"][0]`);
+const ty = await getSingleton('thank_you');
 ---
 <Base title="Thank You — Abbie's Angels">
 <!-- HubSpot conversion tracking fires here. Add pixel/event below when portal connected. -->
