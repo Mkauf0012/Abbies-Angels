@@ -1,8 +1,12 @@
+# Dependencies & build output
 node_modules/
 dist/
 .astro/
-.env
 
-node_modules
+# Env & secrets
 .env
-node_modules
+.env.*
+.dev.vars
+
+# Cloudflare
+.wrangler/
