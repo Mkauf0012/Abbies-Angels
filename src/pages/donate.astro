@@ -1,5 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import { client } from '../lib/sanity';
+
+const d = await client.fetch(`*[_id == "donate"][0]`);
+const mail = d?.mail_section;
+const sponsor = d?.sponsor_cta;
 ---
 <Base title="Donate — Abbie's Angels">
 <style>
@@ -30,14 +35,22 @@ import Base from '../layouts/Base.astro';
   }
   .btn-donate:hover { background: #0070cc; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,140,255,0.4); text-decoration: none; }
   .venmo-note { margin-top: 18px; font-size: 0.85rem; color: var(--text-muted); }
-  .alt-methods { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border-soft); }
-  .alt-methods h3 { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
-  .alt-methods p { font-size: 0.88rem; color: var(--text-muted); }
+  .give-section { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border-soft); text-align: left; }
+  .give-section h3 { font-size: 1.05rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
+  .give-section p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; }
+  .give-section address { font-style: normal; font-size: 0.92rem; color: var(--text-main); margin-bottom: 8px; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
+    padding: 9px 20px; border-radius: 999px; font-size: 0.9rem; font-weight: 700;
+    font-family: var(--font-display); text-decoration: none;
+    background: var(--gold); color: #000; transition: transform 0.15s, background 0.15s;
+  }
+  .btn-secondary:hover { background: #e0a010; transform: translateY(-1px); text-decoration: none; }
 </style>
 
 <div class="page-hero">
-  <h1>Make a Donation</h1>
-  <p>Every dollar goes directly toward events, activities, and resources for families of differently abled children in Western New York.</p>
+  <h1>{d?.hero_heading || 'Make a Donation'}</h1>
+  <p>{d?.hero_subheading || 'Every dollar goes directly toward events, activities, and resources for families of differently abled children in Western New York.'}</p>
 </div>
 
 <main>
@@ -50,11 +63,34 @@ import Base from '../layouts/Base.astro';
       Donate on Venmo
     </a>
     <p class="venmo-note">Search <strong>@abbies-angels</strong> in the Venmo app if the button doesn't open automatically.</p>
-    <div class="alt-methods">
-      <h3>Other Ways to Give</h3>
-      <p>Prefer to donate by check? Make it payable to <strong>Abbie's Angels</strong> and mail to our address on the <a href="/contact">Contact page</a>.</p>
-      <p style="margin-top:8px;">Interested in corporate sponsorship? <a href="/sponsor">Learn about sponsorship opportunities →</a></p>
-    </div>
+
+    {mail && (
+      <div class="give-section">
+        <h3>{mail.heading || 'Donate by Mail'}</h3>
+        <address>
+          {mail.payable_to && <>Make checks payable to <strong>{mail.payable_to}</strong><br/></>}
+          {mail.address_line1}{mail.address_line1 && <br/>}
+          {mail.address_line2}
+        </address>
+        {mail.note && <p>{mail.note}</p>}
+      </div>
+    )}
+
+    {sponsor && (
+      <div class="give-section">
+        <h3>{sponsor.heading || 'Corporate & Event Sponsorship'}</h3>
+        {sponsor.body && <p>{sponsor.body}</p>}
+        <a class="btn-secondary" href="/sponsor">{sponsor.button_label || 'View Sponsorship Opportunities'}</a>
+      </div>
+    )}
+
+    {!mail && !sponsor && (
+      <div class="give-section">
+        <h3>Other Ways to Give</h3>
+        <p>Prefer to donate by check? Make it payable to <strong>Abbie's Angels</strong> and mail to our address on the <a href="/contact">Contact page</a>.</p>
+        <p>Interested in corporate sponsorship? <a href="/sponsor">Learn about sponsorship opportunities →</a></p>
+      </div>
+    )}
   </div>
 </main>
 </Base>
