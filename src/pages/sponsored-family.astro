@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import { client } from '../lib/sanity';
+
+const spotlight = await client.fetch(`*[_id == "spotlight"][0]`);
+const imgSrc = spotlight?.image
+  ? (spotlight.image.startsWith('http') ? spotlight.image : `/${spotlight.image.replace(/^\//, '')}`)
+  : null;
+---
+<Base title="Sponsored Family — Abbie's Angels" description="Meet the family Abbie's Angels is sponsoring this year and learn how you can support them.">
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #fff0f0 0%, #ffffff 60%, #fff8e7 100%);
+    padding: 48px 16px 36px;
+    border-bottom: 1px solid var(--border-soft);
+    text-align: center;
+  }
+  .page-hero h1 { font-size: 2rem; color: var(--blue); font-weight: 800; margin-bottom: 10px; }
+  .page-hero p { color: var(--text-muted); font-size: 1rem; max-width: 620px; margin: 0 auto; }
+  main { max-width: 1000px; margin: 40px auto 64px; padding: 0 16px; }
+  .spotlight {
+    border-radius: 16px; border: 1px solid var(--border-soft);
+    padding: 28px; background: #fff;
+    box-shadow: 0 8px 22px rgba(15,23,42,0.05);
+    display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr);
+    gap: 28px; align-items: start;
+  }
+  .spotlight img {
+    width: 100%; max-height: 480px; border-radius: 12px;
+    display: block; object-fit: contain;
+  }
+  .spotlight h2 { font-size: 1.3rem; margin-bottom: 12px; color: var(--blue); }
+  .spotlight p { font-size: 0.96rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.7; }
+  .spotlight a { font-weight: 700; }
+  .no-content { text-align: center; padding: 56px 16px; color: var(--text-muted); font-size: 1rem; }
+  @media (max-width: 700px) { .spotlight { grid-template-columns: 1fr; } }
+</style>
+
+<div class="page-hero">
+  <h1>Sponsored Family</h1>
+  <p>Each year Abbie's Angels rallies our community around a family navigating a complex medical journey. Here's who we're walking alongside.</p>
+</div>
+
+<main>
+  {spotlight ? (
+    <div class="spotlight">
+      {imgSrc && (
+        <img src={imgSrc} alt={spotlight.image_alt || spotlight.title} width="600" height="480" />
+      )}
+      <div>
+        {spotlight.title && <h2>{spotlight.title}</h2>}
+        {spotlight.body_1 && <p>{spotlight.body_1}</p>}
+        {spotlight.body_2 && <p>{spotlight.body_2}</p>}
+        {spotlight.body_3 && (
+          <p>
+            {spotlight.body_3}{' '}
+            {spotlight.gofundme_url && (
+              <a href={spotlight.gofundme_url} target="_blank" rel="noopener">{spotlight.gofundme_label}</a>
+            )}.
+          </p>
+        )}
+        {spotlight.body_4 && <p>{spotlight.body_4}</p>}
+      </div>
+    </div>
+  ) : (
+    <div class="no-content"><p>Our sponsored family for this year will be announced soon.</p></div>
+  )}
+</main>
+</Base>
