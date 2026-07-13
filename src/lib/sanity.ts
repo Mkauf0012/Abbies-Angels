@@ -7,7 +7,9 @@ export const client = createClient({
   projectId: SANITY_PROJECT_ID,
   dataset: SANITY_DATASET,
   apiVersion: '2024-01-01',
-  useCdn: true,
+  // Must stay false: this runs server-side in a Cloudflare Worker, where useCdn:true
+  // responses get cached and freshly published CMS edits lag behind. false = always fresh.
+  useCdn: false,
 });
 
 /**
