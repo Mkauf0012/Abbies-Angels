@@ -1,6 +1,20 @@
 ---
 const { title = "Abbie's Angels", description = "Supporting caregivers and families navigating complex medical needs with their differently abled children in Western New York.", ogImage = "/images/abbies-angels-logo.jpg" } = Astro.props;
 const currentPath = Astro.url.pathname;
+const siteOrigin = Astro.site ?? new URL('https://abbiesangels.org');
+const canonicalURL = new URL(currentPath, siteOrigin).href;
+const ogImageURL = new URL(ogImage, siteOrigin).href;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  name: "Abbie's Angels",
+  url: siteOrigin.href,
+  logo: new URL('/images/abbies-angels-logo.jpg', siteOrigin).href,
+  description,
+  areaServed: 'Western New York',
+  sameAs: ['https://www.linkedin.com/company/abbies-angels'],
+};
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -9,18 +23,21 @@ const currentPath = Astro.url.pathname;
   <title>{title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content={description}>
+  <link rel="canonical" href={canonicalURL}>
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
-  <meta property="og:image" content={`https://abbies-angels.pages.dev${ogImage}`}>
-  <meta property="og:url" content={`https://abbies-angels.pages.dev${currentPath}`}>
+  <meta property="og:image" content={ogImageURL}>
+  <meta property="og:url" content={canonicalURL}>
   <meta property="og:site_name" content="Abbie's Angels">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={title}>
   <meta name="twitter:description" content={description}>
-  <meta name="twitter:image" content={`https://abbies-angels.pages.dev${ogImage}`}>
+  <meta name="twitter:image" content={ogImageURL}>
+  <!-- Organization structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
