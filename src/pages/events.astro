@@ -17,7 +17,7 @@ const [eventsSection, allEvents] = await Promise.all([
 ]);
 
 const featured  = allEvents.find((e: any) => e.featured && !e.past);
-const upcoming  = allEvents.filter((e: any) => !e.featured && !e.past);
+const upcoming  = allEvents.filter((e: any) => !e.past && e._id !== featured?._id);
 const past      = allEvents.filter((e: any) => e.past == true).sort((a: any, b: any) => b.date?.localeCompare(a.date));
 ---
 <Base title="Events – Abbie's Angels">
