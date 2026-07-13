@@ -432,6 +432,15 @@ const currentPath = Astro.url.pathname;
           required
           aria-label="Email address"
         >
+        <input
+          type="text"
+          name="company_website"
+          id="footer-subscribe-hp"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+          style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
+        >
         <button type="submit" id="footer-subscribe-btn">Subscribe</button>
         <div class="footer-newsletter-msg" id="footer-subscribe-msg" role="alert" aria-live="polite"></div>
       </form>
@@ -492,6 +501,7 @@ const currentPath = Astro.url.pathname;
     e.preventDefault();
     const email = subscribeEmail?.value?.trim();
     if (!email) return;
+    const hp = (document.getElementById('footer-subscribe-hp') as HTMLInputElement)?.value ?? '';
 
     subscribeBtn.disabled = true;
     subscribeBtn.textContent = 'Subscribing…';
@@ -504,7 +514,7 @@ const currentPath = Astro.url.pathname;
       const res = await fetch('/api/hubspot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ formType: 'newsletter', email }),
+        body: JSON.stringify({ formType: 'newsletter', email, company_website: hp }),
       });
       const data = await res.json();
       if (data.ok) {
