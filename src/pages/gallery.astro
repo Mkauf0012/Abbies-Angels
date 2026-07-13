@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client, getSingleton } from '../lib/sanity';
+import { client, getSingleton, sanityImage } from '../lib/sanity';
 
 const [page, photos] = await Promise.all([
   getSingleton('gallery_settings'),
@@ -93,15 +93,20 @@ const [page, photos] = await Promise.all([
     {page?.highlights_intro && <p class="section-intro">{page.highlights_intro}</p>}
     {photos.length > 0 ? (
       <div class="grid">
-        {photos.map((p: any) => (
-          <div class="tile" data-lightbox data-src={p.image.startsWith('http') ? p.image : `/${p.image.replace(/^\//, '')}`} data-caption={p.title + (p.caption ? ' — ' + p.caption : '')}>
-            {p.image && <img src={p.image.startsWith('http') ? p.image : `/${p.image.replace(/^\//, '')}`} alt={p.image_alt || p.title} loading="lazy" width="400" height="220" />}
+        {photos.map((p: any) => {
+          const src = p.photo?.asset
+            ? sanityImage(p.photo)
+            : (p.image ? (p.image.startsWith('http') ? p.image : `/${p.image.replace(/^\//, '')}`) : '');
+          return (
+          <div class="tile" data-lightbox data-src={src} data-caption={p.title + (p.caption ? ' — ' + p.caption : '')}>
+            {src && <img src={src} alt={p.image_alt || p.title} loading="lazy" width="400" height="220" />}
             <div class="tile-body">
               <h3>{p.title}</h3>
               {p.caption && <p>{p.caption}</p>}
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
     ) : (
       <div class="no-content"><p>No gallery photos yet.</p></div>

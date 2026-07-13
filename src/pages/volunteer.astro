@@ -4,6 +4,9 @@ import { getSingleton } from '../lib/sanity';
 
 const v = await getSingleton('volunteer');
 const roles = Array.isArray(v?.roles) ? v.roles : [];
+const HS_PORTAL = v?.hubspot_portal_id || '244584127';
+const HS_REGION = v?.hubspot_region || 'na2';
+const HS_FORM_ID = v?.hubspot_form_id || '19fc03ac-21cf-4c0b-b012-17dd67d84ee6';
 ---
 <Base title="Volunteer — Abbie's Angels">
 <style>
@@ -47,8 +50,8 @@ const roles = Array.isArray(v?.roles) ? v.roles : [];
         {roles.map((r: string) => <li>{r}</li>)}
       </ul>
     )}
-    <script src="https://js-na2.hsforms.net/forms/embed/244584127.js" defer></script>
-    <div class="hs-form-frame" data-region="na2" data-form-id="19fc03ac-21cf-4c0b-b012-17dd67d84ee6" data-portal-id="244584127"></div>
+    <script is:inline src={`https://js-${HS_REGION}.hsforms.net/forms/embed/${HS_PORTAL}.js`} defer></script>
+    <div class="hs-form-frame" data-region={HS_REGION} data-form-id={HS_FORM_ID} data-portal-id={HS_PORTAL}></div>
   </div>
 </main>
 </Base>

@@ -143,15 +143,16 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     fields: [
       {name: 'title', title: 'Title', type: 'string', validation: (R: any) => R.required()},
       {name: 'caption', title: 'Caption', type: 'string'},
-      {name: 'image', title: 'Image URL', type: 'string', description: 'Path to image, e.g. /images/photo.jpg'},
+      {name: 'photo', title: 'Photo (upload)', type: 'image', options: {hotspot: true}, description: 'Upload a photo. Takes priority over the URL below.'},
+      {name: 'image', title: 'Image URL (legacy / fallback)', type: 'string', description: 'Optional. Used only if no photo is uploaded above. e.g. /images/photo.jpg'},
       {name: 'image_alt', title: 'Image Alt Text', type: 'string'},
       {name: 'order', title: 'Sort Order', type: 'number', description: 'Lower numbers appear first.', initialValue: 99},
       {name: 'published', title: 'Published', type: 'boolean', initialValue: true},
     ],
     preview: {
-      select: {title: 'title', subtitle: 'caption', order: 'order', published: 'published'},
-      prepare({title, subtitle, order, published}: any) {
-        return {title: `${order ?? 99}. ${title}`, subtitle: published ? subtitle || '' : '🚫 Hidden'}
+      select: {title: 'title', subtitle: 'caption', order: 'order', published: 'published', media: 'photo'},
+      prepare({title, subtitle, order, published, media}: any) {
+        return {title: `${order ?? 99}. ${title}`, subtitle: published ? subtitle || '' : '🚫 Hidden', media}
       },
     },
   },
@@ -162,7 +163,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     icon: () => '💛',
     fields: [
       {name: 'title', title: 'Family / Story Title', type: 'string', validation: (R: any) => R.required()},
-      {name: 'image', title: 'Photo URL', type: 'string', description: 'Path to image, e.g. /images/photo.jpg'},
+      {name: 'photo', title: 'Photo (upload)', type: 'image', options: {hotspot: true}, description: 'Upload a photo. Takes priority over the URL below.'},
+      {name: 'image', title: 'Photo URL (legacy / fallback)', type: 'string', description: 'Optional. Used only if no photo is uploaded above. e.g. /images/photo.jpg'},
       {name: 'image_alt', title: 'Image Alt Text', type: 'string'},
       {name: 'body_1', title: 'Paragraph 1', type: 'text', rows: 4},
       {name: 'body_2', title: 'Paragraph 2', type: 'text', rows: 4},
@@ -208,6 +210,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       {name: 'mailing_name', title: 'Mailing Name', type: 'string'},
       {name: 'mailing_street', title: 'Mailing Street', type: 'string'},
       {name: 'mailing_city', title: 'Mailing City / State / ZIP', type: 'string'},
+      {name: 'hubspot_form_id', title: 'HubSpot Form ID', type: 'string', description: 'The form GUID from HubSpot (Marketing → Forms → Share → Embed). Leave blank to keep the current default form.'},
+      {name: 'hubspot_portal_id', title: 'HubSpot Portal ID (advanced)', type: 'string', description: 'Only change if using a different HubSpot account. Defaults to 244584127.'},
+      {name: 'hubspot_region', title: 'HubSpot Region (advanced)', type: 'string', description: 'e.g. na2. Defaults to na2.'},
     ],
   },
 
@@ -252,6 +257,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       {name: 'form_intro', title: 'Form Intro', type: 'text', rows: 2},
       {name: 'form_button', title: 'Form Button Label', type: 'string'},
       {name: 'roles', title: 'Volunteer Roles', type: 'array', of: [{type: 'string'}]},
+      {name: 'hubspot_form_id', title: 'HubSpot Form ID', type: 'string', description: 'The form GUID from HubSpot (Marketing → Forms → Share → Embed). Leave blank to keep the current default form.'},
+      {name: 'hubspot_portal_id', title: 'HubSpot Portal ID (advanced)', type: 'string', description: 'Only change if using a different HubSpot account. Defaults to 244584127.'},
+      {name: 'hubspot_region', title: 'HubSpot Region (advanced)', type: 'string', description: 'e.g. na2. Defaults to na2.'},
     ],
   },
   {
@@ -282,6 +290,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       {name: 'form_heading', title: 'Form Heading', type: 'string'},
       {name: 'form_intro', title: 'Form Intro', type: 'text', rows: 2},
       {name: 'form_button', title: 'Form Button Label', type: 'string'},
+      {name: 'hubspot_form_id', title: 'HubSpot Form ID', type: 'string', description: 'The form GUID from HubSpot (Marketing → Forms → Share → Embed). Leave blank to keep the current default form.'},
+      {name: 'hubspot_portal_id', title: 'HubSpot Portal ID (advanced)', type: 'string', description: 'Only change if using a different HubSpot account. Defaults to 244584127.'},
+      {name: 'hubspot_region', title: 'HubSpot Region (advanced)', type: 'string', description: 'e.g. na2. Defaults to na2.'},
     ],
   },
   {
@@ -311,11 +322,12 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         of: [
           {
             type: 'object',
-            preview: {select: {title: 'name', subtitle: 'title'}},
+            preview: {select: {title: 'name', subtitle: 'title', media: 'photo'}},
             fields: [
               {name: 'name', title: 'Full Name', type: 'string', validation: (R: any) => R.required()},
               {name: 'title', title: 'Title / Role', type: 'string'},
-              {name: 'image', title: 'Photo URL', type: 'string'},
+              {name: 'photo', title: 'Photo (upload)', type: 'image', options: {hotspot: true}, description: 'Upload a photo. Takes priority over the URL below.'},
+              {name: 'image', title: 'Photo URL (legacy / fallback)', type: 'string', description: 'Optional. Used only if no photo is uploaded above.'},
             ],
           },
         ],
@@ -335,11 +347,12 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         of: [
           {
             type: 'object',
-            preview: {select: {title: 'name', subtitle: 'title'}},
+            preview: {select: {title: 'name', subtitle: 'title', media: 'photo'}},
             fields: [
               {name: 'name', title: 'Full Name', type: 'string', validation: (R: any) => R.required()},
               {name: 'title', title: 'Title / Role', type: 'string'},
-              {name: 'image', title: 'Photo URL', type: 'string'},
+              {name: 'photo', title: 'Photo (upload)', type: 'image', options: {hotspot: true}, description: 'Upload a photo. Takes priority over the URL below.'},
+              {name: 'image', title: 'Photo URL (legacy / fallback)', type: 'string', description: 'Optional. Used only if no photo is uploaded above.'},
             ],
           },
         ],

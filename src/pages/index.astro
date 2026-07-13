@@ -376,24 +376,30 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
       <h2>Our Team</h2>
       <p class="section-lead">Abbie's Angels is led by a volunteer board, dedicated partners, and friends who pour their time and talents into supporting caregivers and families.</p>
       <div class="cards">
-        {board.members && board.members.map((m: any) => (
+        {board.members && board.members.map((m: any) => {
+          const src = m.photo?.asset ? sanityImage(m.photo) : m.image;
+          return (
           <div class="card card-team">
-            {m.image && <img src={m.image} alt={m.name} loading="lazy" width="400" height="260">}
+            {src && <img src={src} alt={m.name} loading="lazy" width="400" height="260">}
             <h3>{m.name}</h3>
             <p>{m.title}</p>
           </div>
-        ))}
+          );
+        })}
       </div>
       <h2 class="staff-heading">Staff &amp; Key Partners</h2>
       <p class="staff-lead">These leaders and volunteers help shape events, storytelling, and day-to-day support for Abbie's Angels families.</p>
       <div class="cards">
-        {staff.members && staff.members.map((m: any) => (
+        {staff.members && staff.members.map((m: any) => {
+          const src = m.photo?.asset ? sanityImage(m.photo) : m.image;
+          return (
           <div class="card card-team">
-            {m.image && <img src={m.image} alt={m.name} loading="lazy" width="400" height="260">}
+            {src && <img src={src} alt={m.name} loading="lazy" width="400" height="260">}
             <h3>{m.name}</h3>
             <p>{m.title}</p>
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </div>
