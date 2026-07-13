@@ -2,10 +2,9 @@
 import Base from '../layouts/Base.astro';
 import { client } from '../lib/sanity';
 
-const [page, photos, spotlight] = await Promise.all([
+const [page, photos] = await Promise.all([
   client.fetch(`*[_type == "gallery_settings"][0]`),
   client.fetch(`*[_type == "gallery_image" && published != false] | order(order asc, _createdAt asc)`),
-  client.fetch(`*[_type == "spotlight"][0]`),
 ]);
 ---
 <Base title="Gallery – Abbie's Angels">
@@ -41,19 +40,6 @@ const [page, photos, spotlight] = await Promise.all([
   .tile-body { padding: 10px 12px 12px; }
   .tile-body h3 { font-size: 1rem; margin-bottom: 4px; color: var(--blue); }
   .tile-body p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
-  .spotlight {
-    border-radius: 16px; border: 1px solid var(--border-soft);
-    padding: 24px; background: #fff;
-    box-shadow: 0 8px 22px rgba(15,23,42,0.05); margin-top: 16px;
-    display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr);
-    gap: 24px; align-items: start;
-  }
-  .spotlight img {
-    width: 100%; max-height: 440px; border-radius: 12px;
-    display: block; object-fit: contain;
-  }
-  .spotlight h3 { font-size: 1.15rem; margin-bottom: 10px; color: var(--blue); }
-  .spotlight p { font-size: 0.94rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.65; }
   .no-content { text-align: center; padding: 48px 16px; color: var(--text-muted); font-size: 1rem; }
 
   /* Lightbox */
@@ -96,7 +82,7 @@ const [page, photos, spotlight] = await Promise.all([
 
 <div class="page-hero">
   <div class="page-hero-inner">
-    <h1>{page?.title || 'Gallery & Family Spotlight'}</h1>
+    <h1>{page?.title || 'Gallery'}</h1>
     {page?.intro && <p>{page.intro}</p>}
   </div>
 </div>
@@ -121,36 +107,6 @@ const [page, photos, spotlight] = await Promise.all([
       <div class="no-content"><p>No gallery photos yet.</p></div>
     )}
   </section>
-
-  {spotlight && (
-    <section style="margin-top: 48px;">
-      <h2>{page?.spotlight_heading || 'Family Spotlight'}</h2>
-      {page?.spotlight_intro && <p class="section-intro">{page.spotlight_intro}</p>}
-      <div class="spotlight">
-        {spotlight.image && (
-          <img
-            src={spotlight.image.startsWith('http') ? spotlight.image : `/${spotlight.image.replace(/^\//, '')}`}
-            alt={spotlight.image_alt || spotlight.title}
-            loading="lazy" width="600" height="440"
-          />
-        )}
-        <div>
-          <h3>{spotlight.title}</h3>
-          {spotlight.body_1 && <p>{spotlight.body_1}</p>}
-          {spotlight.body_2 && <p>{spotlight.body_2}</p>}
-          {spotlight.body_3 && (
-            <p>
-              {spotlight.body_3}{' '}
-              {spotlight.gofundme_url && (
-                <a href={spotlight.gofundme_url} target="_blank" rel="noopener">{spotlight.gofundme_label}</a>
-              )}.
-            </p>
-          )}
-          {spotlight.body_4 && <p>{spotlight.body_4}</p>}
-        </div>
-      </div>
-    </section>
-  )}
 </main>
 
 <!-- Lightbox dialog -->
