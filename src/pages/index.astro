@@ -2,10 +2,9 @@
 import Base from '../layouts/Base.astro';
 import { client, sanityImage, getSingleton } from '../lib/sanity';
 
-const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support, contact, board, staff] =
+const [hero, mission, whatWeDo, eventsSection, featuredEvent, support, contact, board, staff] =
   await Promise.all([
     getSingleton('hero'),
-    getSingleton('hero_card'),
     getSingleton('mission'),
     getSingleton('what_we_do'),
     getSingleton('events'),
@@ -17,7 +16,6 @@ const [hero, heroCard, mission, whatWeDo, eventsSection, featuredEvent, support,
   ]);
 
 const displayEvent = featuredEvent || null;
-const displayCard = heroCard || null;
 
 const ogDescription = hero?.subheadline || "Supporting caregivers and families of differently abled children in Western New York.";
 const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(displayEvent.image) : '/images/abbies-angels-og.jpg';
@@ -255,23 +253,6 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
               <p>Tap the image above or{' '}
                 <a href={displayEvent.ticket_url} target="_blank" rel="noopener">click here to get tickets</a>.
               </p>
-            )}
-          </>
-        ) : displayCard ? (
-          <>
-            <span class="event-badge">&#128197; Upcoming Event</span>
-            {sanityImage(displayCard.image) && (
-              <a href={displayCard.ticket_url || '#'} target="_blank" rel="noopener">
-                <img src={sanityImage(displayCard.image)} alt={displayCard.image_alt || displayCard.title} loading="lazy" width="480" height="640" />
-              </a>
-            )}
-            <h2>{displayCard.title}</h2>
-            {displayCard.date_label && <p><strong>Date:</strong> {displayCard.date_label}</p>}
-            {displayCard.time_label && <p><strong>Doors Open:</strong> {displayCard.time_label}</p>}
-            {displayCard.location_label && <p><strong>Location:</strong> {displayCard.location_label}</p>}
-            {displayCard.description && <p>{displayCard.description}</p>}
-            {displayCard.ticket_url && (
-              <p>Tap the image above or <a href={displayCard.ticket_url} target="_blank" rel="noopener">click here to get tickets</a>.</p>
             )}
           </>
         ) : null}
