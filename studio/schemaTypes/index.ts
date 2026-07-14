@@ -25,23 +25,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     ],
   },
   {
-    name: 'hero_card',
-    title: 'Homepage – Hero Card (Manual Override)',
-    type: 'document',
-    icon: () => '📌',
-    description: 'Only shown if no Event is marked "Featured on Homepage".',
-    fields: [
-      {name: 'title', title: 'Event Title', type: 'string'},
-      {name: 'date_label', title: 'Date', type: 'string'},
-      {name: 'time_label', title: 'Time', type: 'string'},
-      {name: 'location_label', title: 'Location', type: 'string'},
-      {name: 'description', title: 'Description', type: 'text', rows: 3},
-      {name: 'image', title: 'Image', type: 'image', options: {hotspot: true}},
-      {name: 'image_alt', title: 'Image Alt Text', type: 'string'},
-      {name: 'ticket_url', title: 'Ticket URL', type: 'string'},
-    ],
-  },
-  {
     name: 'mission',
     title: 'Homepage – Mission',
     type: 'document',

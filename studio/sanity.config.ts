@@ -23,7 +23,6 @@ const SINGLETONS: Record<string, string> = {
   staff: 'singleton-staff',
   gallery_settings: 'gallery_settings',
   donation: 'donation',
-  hero_card: 'hero_card',
   spotlight: 'spotlight',
 }
 
@@ -56,7 +55,6 @@ export default defineConfig({
                     singleton(S, 'mission', 'Mission'),
                     singleton(S, 'what_we_do', 'What We Do'),
                     singleton(S, 'support', 'Ways to Help'),
-                    singleton(S, 'hero_card', 'Hero Card (Manual Override)'),
                   ]),
               ),
             S.divider(),
