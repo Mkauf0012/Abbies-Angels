@@ -151,7 +151,6 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
     display: block; object-fit: cover; object-position: center;
   }
   .card-team img { height: 240px; object-position: top; }
-  .events-banner { display: block; width: 100%; height: auto; max-height: 420px; object-fit: cover; border-radius: 12px; margin-bottom: 24px; }
   .card-photo-events img { height: auto; object-fit: contain; }
 
   /* —— Two col —— */
@@ -283,7 +282,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
           <p>{whatWeDo.card_1_body}</p>
         </div>
         <div class="card card-photo-events">
-          <img src="/images/abbies-angels-hero.jpg" alt="Abbie at the gala holding an Abbie's Angels bear" loading="lazy" width="600" height="400">
+          <img src={sanityImage(whatWeDo.card_2_image) || '/images/abbies-angels-hero.jpg'} alt={whatWeDo.card_2_image_alt || "Abbie at the gala holding an Abbie's Angels bear"} loading="lazy">
           <h3>{whatWeDo.card_2_title}</h3>
           <p>{whatWeDo.card_2_body}</p>
         </div>
@@ -298,9 +297,6 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
   <!-- Events -->
   <div class="section-wrap">
     <div class="section-inner" id="events">
-      {sanityImage(eventsSection?.section_image) && (
-        <img class="events-banner" src={sanityImage(eventsSection.section_image)} alt={eventsSection.section_image_alt || ''} loading="lazy">
-      )}
       <h2>{eventsSection?.heading || 'Events'}</h2>
       <p class="section-lead">{eventsSection?.intro}</p>
       <div class="two-col">
