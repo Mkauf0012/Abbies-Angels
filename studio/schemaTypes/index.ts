@@ -44,6 +44,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       {name: 'heading', title: 'Section Heading', type: 'string'},
       {name: 'card_1_title', title: 'Card 1 – Title', type: 'string'},
       {name: 'card_1_body', title: 'Card 1 – Body', type: 'text', rows: 3},
+      {name: 'card_2_image', title: 'Card 2 – Image (above title)', type: 'image', options: {hotspot: true}, description: 'Photo shown at the top of the Community Events card. If empty, the original photo is used.'},
+      {name: 'card_2_image_alt', title: 'Card 2 – Image Alt Text', type: 'string'},
       {name: 'card_2_title', title: 'Card 2 – Title', type: 'string'},
       {name: 'card_2_body', title: 'Card 2 – Body', type: 'text', rows: 3},
       {name: 'card_3_title', title: 'Card 3 – Title', type: 'string'},
@@ -58,8 +60,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     type: 'document',
     icon: () => '⚙️',
     fields: [
-      {name: 'section_image', title: 'Homepage Image (above Events)', type: 'image', options: {hotspot: true}, description: 'Optional wide image shown on the homepage above the Events section. Leave empty to hide.'},
-      {name: 'section_image_alt', title: 'Homepage Image Alt Text', type: 'string'},
       {name: 'heading', title: 'Page Heading', type: 'string'},
       {name: 'intro', title: 'Intro Text', type: 'text', rows: 3},
       {name: 'footer_note', title: 'Footer Note', type: 'text', rows: 2},
