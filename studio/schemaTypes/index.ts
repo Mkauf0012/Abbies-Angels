@@ -210,8 +210,25 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     fields: [
       {name: 'heading', title: 'Hero Heading', type: 'string'},
       {name: 'subheading', title: 'Hero Subheading', type: 'text', rows: 3},
-      {name: 'button_text', title: 'Donate Button Text', type: 'string'},
-      {name: 'button_url', title: 'Donate Button URL', type: 'string', description: 'e.g. your Venmo link. A Venmo hint shows automatically for venmo.com URLs.'},
+      {
+        name: 'donate_options',
+        title: 'Ways to Donate (buttons)',
+        type: 'array',
+        description: 'One button per way to give. Drag to reorder. Turn off "Show" to hide a button without deleting it. If this list is empty, a default set of buttons is shown.',
+        of: [{
+          type: 'object',
+          name: 'donate_option',
+          fields: [
+            {name: 'label', title: 'Button Text', type: 'string', validation: (R: any) => R.required()},
+            {name: 'url', title: 'Link (must start with https://)', type: 'url', validation: (R: any) => R.required().uri({scheme: ['https', 'http']})},
+            {name: 'visible', title: 'Show on website', type: 'boolean', initialValue: true},
+          ],
+          preview: {
+            select: {title: 'label', subtitle: 'url', visible: 'visible'},
+            prepare: ({title, subtitle, visible}: any) => ({title: `${visible === false ? '(hidden) ' : ''}${title || ''}`, subtitle}),
+          },
+        }],
+      },
       {name: 'mail_address', title: 'Donate by Mail – Address', type: 'text', rows: 2},
       {name: 'sponsor_cta', title: 'Sponsorship Call-to-Action', type: 'text', rows: 2},
       {name: 'newsletter_heading', title: 'Newsletter – Heading', type: 'string'},

@@ -345,7 +345,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
         <div class="card">
           <h3>{support.card_title}</h3>
           <p>{support.card_body}</p>
-          <p style="margin-top:10px;"><a href={support.card_link_url} target="_blank" rel="noopener">{support.card_link_label}</a></p>
+          <p style="margin-top:10px;"><a href={support.card_link_url} target={/^https?:/.test(support.card_link_url || '') ? '_blank' : undefined} rel="noopener">{support.card_link_label}</a></p>
         </div>
       </div>
     </div>
