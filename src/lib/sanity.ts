@@ -45,3 +45,14 @@ export function sanityImage(img: SanityImage | null | undefined): string {
   const id = parts.slice(1, parts.length - 2).join('-');
   return `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${id}-${dimensions}.${ext}`;
 }
+
+/**
+ * Returns the event's ticket URL only when the ticket button should show:
+ * the "Show ticket button" switch is not off AND the value is a real http(s) link.
+ * Returns '' otherwise (e.g. free events, or notes typed into the URL field).
+ */
+export function ticketUrl(ev: { ticket_url?: string; show_ticket_button?: boolean } | null | undefined): string {
+  if (!ev || ev.show_ticket_button === false) return '';
+  const u = (ev.ticket_url || '').trim();
+  return /^https?:\/\//i.test(u) ? u : '';
+}

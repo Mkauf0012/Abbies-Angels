@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client, sanityImage, getSingleton } from '../lib/sanity';
+import { client, sanityImage, getSingleton, ticketUrl } from '../lib/sanity';
 
 const [hero, mission, whatWeDo, eventsSection, featuredEvent, support, contact, board, staff] =
   await Promise.all([
@@ -233,7 +233,7 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
               &#128197; Upcoming Event{displayEvent.date_label ? ` — ${displayEvent.date_label}` : ''}
             </span>
             {sanityImage(displayEvent.image) && (
-              <a href={displayEvent.ticket_url || '/events'} target={displayEvent.ticket_url ? '_blank' : '_self'} rel="noopener">
+              <a href={ticketUrl(displayEvent) || '/events'} target={ticketUrl(displayEvent) ? '_blank' : '_self'} rel="noopener">
                 <img
                   src={sanityImage(displayEvent.image)}
                   alt={displayEvent.image_alt || `${displayEvent.title} flyer – click for tickets`}
@@ -249,9 +249,9 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
             {displayEvent.time_label && <p><strong>Doors Open:</strong> {displayEvent.time_label}</p>}
             {displayEvent.location && <p><strong>Location:</strong> {displayEvent.location}</p>}
             {displayEvent.description && <p>{displayEvent.description}</p>}
-            {displayEvent.ticket_url && (
+            {ticketUrl(displayEvent) && (
               <p>Tap the image above or{' '}
-                <a href={displayEvent.ticket_url} target="_blank" rel="noopener">click here to get tickets</a>.
+                <a href={ticketUrl(displayEvent)} target="_blank" rel="noopener">click here to get tickets</a>.
               </p>
             )}
           </>
@@ -317,8 +317,8 @@ const ogImage = displayEvent && sanityImage(displayEvent.image) ? sanityImage(di
             </div>
             {displayEvent.location && <p>&#128205; {displayEvent.location}</p>}
             {displayEvent.description && <p>{displayEvent.description}</p>}
-            {displayEvent.ticket_url && (
-              <a class="btn btn-primary btn-sm" style="margin-top:10px;" href={displayEvent.ticket_url} target="_blank" rel="noopener">
+            {ticketUrl(displayEvent) && (
+              <a class="btn btn-primary btn-sm" style="margin-top:10px;" href={ticketUrl(displayEvent)} target="_blank" rel="noopener">
                 {displayEvent.ticket_label || 'Get Tickets'}
               </a>
             )}
