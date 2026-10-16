@@ -101,7 +101,6 @@ export default defineConfig({
                   .title('Get Involved')
                   .items([
                     singleton(S, 'donate', 'Donate Page'),
-                    singleton(S, 'donation', 'Donate Button (global)'),
                     singleton(S, 'volunteer', 'Volunteer Page'),
                     singleton(S, 'sponsor', 'Sponsor Page'),
                     singleton(S, 'thank_you', 'Thank You Page'),
