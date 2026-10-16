@@ -47,7 +47,7 @@ const past      = allEvents.filter((e: any) => e.past == true).sort((a: any, b: 
     overflow: hidden; margin-bottom: 48px;
   }
   .featured-event img {
-    width: 100%; height: 100%; max-height: 340px; object-fit: cover; display: block;
+    width: 100%; height: auto; max-height: 560px; object-fit: contain; display: block; margin: 0 auto;
   }
   .featured-event-body { padding: 28px 28px 28px 24px; display: flex; flex-direction: column; justify-content: center; }
   .featured-badge {
@@ -87,7 +87,7 @@ const past      = allEvents.filter((e: any) => e.past == true).sort((a: any, b: 
     overflow: hidden; display: flex; flex-direction: column;
   }
   .event-card.past { opacity: 0.82; }
-  .event-card img { width: 100%; height: 200px; max-height: 200px; object-fit: cover; display: block; flex-shrink: 0; }
+  .event-card img { width: 100%; height: auto; max-height: 420px; object-fit: contain; display: block; flex-shrink: 0; background: #f8fafc; }
   .event-card-body {
     padding: 16px 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 8px;
   }
@@ -115,7 +115,7 @@ const past      = allEvents.filter((e: any) => e.past == true).sort((a: any, b: 
   @media (max-width: 600px) {
     .events-grid { grid-template-columns: 1fr; }
     .featured-event { grid-template-columns: 1fr; }
-    .featured-event img { min-height: 200px; height: 200px; max-height: 200px; }
+    .featured-event img { height: auto; max-height: 480px; }
     .featured-event-body { padding: 18px; }
   }
 </style>
