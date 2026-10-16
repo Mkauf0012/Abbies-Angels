@@ -3,13 +3,8 @@ import Base from '../layouts/Base.astro';
 import { getSingleton } from '../lib/sanity';
 
 const d = await getSingleton('donate');
-const defaultOptions = [
-  { label: 'Donate by Card (Square)', url: 'https://swipesimple.com/links/lnk_63b974d652acdaebbf87cd7c06d125e0', visible: true },
-  { label: 'Donate with PayPal', url: 'https://www.paypal.com/ncp/payment/RANGVJHJ5FRQJ', visible: true },
-  { label: 'Donate with Zelle', url: 'https://enroll.zellepay.com/qr-codes?data=eyJuYW1lIjoiQUJCSUVTIEFOR0VMUyBGT1VOREFUSU9OIElOQyIsInRva2VuIjoiYWJiaWVzYW5nZWxzIn0=', visible: true },
-];
 const configured = Array.isArray(d?.donate_options) ? d.donate_options : [];
-const options = (configured.length ? configured : defaultOptions)
+const options = configured
   .filter((o: any) => o && o.visible !== false && o.url && o.label);
 ---
 <Base title="Donate — Abbie's Angels">
