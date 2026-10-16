@@ -91,6 +91,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       {name: 'description', title: 'Description', type: 'text', rows: 5},
       {name: 'image', title: 'Event Image', type: 'image', options: {hotspot: true}},
       {name: 'image_alt', title: 'Image Alt Text', type: 'string'},
+      {name: 'show_ticket_button', title: 'Show ticket button', type: 'boolean', description: 'Turn off for free events or events with no tickets.', initialValue: true},
       {name: 'ticket_url', title: 'Ticket / Registration URL', type: 'string'},
       {name: 'ticket_label', title: 'Ticket Button Label', type: 'string'},
       {name: 'published', title: 'Show on website', type: 'boolean', description: 'On = visible on the site. Remember to also click the green Publish button (bottom right) to save your changes.', initialValue: true},

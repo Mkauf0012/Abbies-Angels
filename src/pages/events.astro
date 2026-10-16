@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client, sanityImage, getSingleton } from '../lib/sanity';
+import { client, sanityImage, getSingleton, ticketUrl } from '../lib/sanity';
 
 function formatDate(dateStr: string) {
   if (!dateStr) return '';
@@ -146,8 +146,8 @@ const past      = allEvents.filter((e: any) => e.past == true).sort((a: any, b: 
             {featured.location && <span>&#128205; {featured.location}</span>}
           </div>
           {featured.description && <p>{featured.description}</p>}
-          {featured.ticket_url && (
-            <a class="btn btn-primary" href={featured.ticket_url} target="_blank" rel="noopener">
+          {ticketUrl(featured) && (
+            <a class="btn btn-primary" href={ticketUrl(featured)} target="_blank" rel="noopener">
               {featured.ticket_label || 'Get Tickets'}
             </a>
           )}
@@ -173,8 +173,8 @@ const past      = allEvents.filter((e: any) => e.past == true).sort((a: any, b: 
                 {ev.location && <span>&#128205; {ev.location}</span>}
               </div>
               {ev.description && <p class="desc">{ev.description}</p>}
-              {ev.ticket_url && (
-                <a class="btn btn-primary" href={ev.ticket_url} target="_blank" rel="noopener">
+              {ticketUrl(ev) && (
+                <a class="btn btn-primary" href={ticketUrl(ev)} target="_blank" rel="noopener">
                   {ev.ticket_label || 'Get Tickets'}
                 </a>
               )}
