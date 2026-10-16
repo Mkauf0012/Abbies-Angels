@@ -229,12 +229,18 @@ export const schemaTypes: SchemaTypeDefinition[] = [
           },
         }],
       },
+      {name: 'button_text', title: '(Old – no longer used) Donate Button Text', type: 'string', readOnly: true, description: 'Replaced by "Ways to Donate (buttons)" above. Kept only so the old value is not lost.'},
+      {name: 'button_url', title: '(Old – no longer used) Donate Button URL', type: 'string', readOnly: true, description: 'Replaced by "Ways to Donate (buttons)" above.'},
       {name: 'mail_address', title: 'Donate by Mail – Address', type: 'text', rows: 2},
       {name: 'sponsor_cta', title: 'Sponsorship Call-to-Action', type: 'text', rows: 2},
       {name: 'newsletter_heading', title: 'Newsletter – Heading', type: 'string'},
       {name: 'newsletter_body', title: 'Newsletter – Body', type: 'text', rows: 2},
       {name: 'ein_note', title: '501(c)(3) / EIN Note', type: 'text', rows: 2},
     ],
+    preview: {
+      select: {subtitle: 'heading'},
+      prepare: ({subtitle}: any) => ({title: 'Donate Page', subtitle}),
+    },
   },
   {
     name: 'donation',
