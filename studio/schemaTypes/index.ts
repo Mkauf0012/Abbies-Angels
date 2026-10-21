@@ -222,6 +222,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
           fields: [
             {name: 'label', title: 'Button Text', type: 'string', validation: (R: any) => R.required()},
             {name: 'url', title: 'Link (must start with https://)', type: 'url', validation: (R: any) => R.required().uri({scheme: ['https', 'http']})},
+            {name: 'logo', title: 'Logo', type: 'string', description: 'Optional logo shown on the button.', options: {list: [{title: 'None', value: 'none'}, {title: 'PayPal', value: 'paypal'}, {title: 'Zelle', value: 'zelle'}, {title: 'SwipeSimple', value: 'swipesimple'}], layout: 'dropdown'}, initialValue: 'none'},
             {name: 'visible', title: 'Show on website', type: 'boolean', initialValue: true},
           ],
           preview: {
