@@ -3,6 +3,11 @@ import Base from '../layouts/Base.astro';
 import { getSingleton } from '../lib/sanity';
 
 const d = await getSingleton('donate');
+const LOGOS: Record<string, string> = {
+  paypal: '/images/pay/paypal.svg',
+  zelle: '/images/pay/zelle.svg',
+  swipesimple: '/images/pay/swipesimple.svg',
+};
 const configured = Array.isArray(d?.donate_options) ? d.donate_options : [];
 const options = configured
   .filter((o: any) => o && o.visible !== false && o.url && o.label);
@@ -36,6 +41,10 @@ const options = configured
     transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   }
   .btn-donate:hover { background: #0070cc; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,140,255,0.4); text-decoration: none; }
+  .btn-donate.has-logo { background: #fff; color: #0f172a; border: 2px solid #dbe3ee; box-shadow: 0 2px 10px rgba(15,23,42,0.08); min-width: 300px; }
+  .btn-donate.has-logo:hover { background: #f5f9ff; border-color: #008CFF; box-shadow: 0 6px 18px rgba(0,140,255,0.25); }
+  .pay-logo { height: 26px; width: auto; display: block; }
+  .pay-logo-swipesimple { height: 20px; }
   .venmo-note { margin-top: 18px; font-size: 0.85rem; color: var(--text-muted); }
   .give-section { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border-soft); text-align: left; }
   .give-section h3 { font-size: 1.05rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
@@ -61,7 +70,10 @@ const options = configured
     <div class="heart">&#10084;&#65039;</div>
     <div class="donate-options">
       {options.map((o: any) => (
-        <a class="btn-donate" href={o.url} target="_blank" rel="noopener noreferrer">{o.label}</a>
+        <a class:list={['btn-donate', LOGOS[o.logo] && 'has-logo']} href={o.url} target="_blank" rel="noopener noreferrer">
+          {LOGOS[o.logo] && <img class={`pay-logo pay-logo-${o.logo}`} src={LOGOS[o.logo]} alt="" aria-hidden="true" />}
+          <span>{o.label}</span>
+        </a>
       ))}
     </div>
 
